@@ -1,0 +1,17 @@
+name: Simple CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+    name: A simple print job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Print Message
+        run: echo "Hello, CI/CD!"
