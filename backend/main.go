@@ -1,6 +1,7 @@
 package main
 
-import ("net/http";"fmt")
+// import ("net/http";"fmt")
+import ("fmt")
 		
 // func homepage( w http.ResponseWriter, r *http.Request){
 // 	fmt.Fprintf(w, "Hello from can")
