@@ -26,4 +26,4 @@ jobs:
       run: ls
 
     - name: Run main.go
-      run: go run main.go
+      run: go run backend/main.go
