@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"fmt"
 	"encoding/json"
+	"github.com/gorilla/mux"
 	)
 		
 
@@ -29,8 +30,12 @@ func returnAllMenu( w http.ResponseWriter, r *http.Request){
 }
 
 func getMenu( w http.ResponseWriter, r *http.Request){
-	log.Println(r.URL.Path)
-	key := r.URL.Path[len("/menu/"):]
+	// log.Println(r.URL.Path)
+	// key := r.URL.Path[len("/menu/"):]
+
+	vars := mux.Vars(r)
+	key := vars["id"]
+	
 	for _,food := range Menu{
 		if food.Id == key{
 			json.NewEncoder(w).Encode(food)
@@ -40,10 +45,11 @@ func getMenu( w http.ResponseWriter, r *http.Request){
 }
 
 func handleRequests(){
-	http.HandleFunc("/menu", returnAllMenu)
-	http.HandleFunc("/menu/", getMenu)
-	http.HandleFunc("/", homepage)
-	http.ListenAndServe("localhost:10000",nil)
+	myRouter := mux.NewRouter().StrictSlash(true)
+	myRouter.HandleFunc("/menu", returnAllMenu)
+	myRouter.HandleFunc("/menu/{id}", getMenu)
+	myRouter.HandleFunc("/", homepage)
+	http.ListenAndServe("localhost:10000", myRouter)
 }
 
 func main(){
