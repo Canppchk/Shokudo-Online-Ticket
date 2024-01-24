@@ -30,5 +30,5 @@ jobs:
 
     - name: Check web service output
       run: |
-        curl http://localhost:10000/
+        curl http://localhost:10000/menu
 
