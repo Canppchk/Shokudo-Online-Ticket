@@ -22,5 +22,8 @@ jobs:
     - name: Change to backend directory
       run: cd backend
 
+    - name: list
+      run: ls
+
     - name: Run main.go
       run: go run main.go
