@@ -22,5 +22,12 @@ jobs:
     - name: Run main.go in backend directory
       run: |
         cd backend
-        go build
-        ./backend
+        go run main.go
+
+    - name: Wait for the server to start
+      run: sleep 10  # Adjust the sleep time as needed
+
+    - name: Check web service output
+      run: |
+        curl http://localhost:10000/
+
