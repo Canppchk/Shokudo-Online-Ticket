@@ -1,0 +1,21 @@
+name: Go Run Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-main:
+    name: Run main.go
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Change to backend directory
+      run: cd backend
+
+    - name: Run main.go
+      run: go run main.go
