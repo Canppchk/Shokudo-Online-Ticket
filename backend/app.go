@@ -21,6 +21,11 @@ type Food struct {
     Picture string  // Store Base64 encoded image
 }
 
+type App struct {
+	Router *mux.Router
+	DB     *sql.DB
+}
+
 // var Menu []Food_set
 
 // func homepage( w http.ResponseWriter, r *http.Request){
@@ -60,6 +65,22 @@ type Food struct {
 // 		log.Fatalln(e)
 // 	}
 // }
+
+func (app *App) Initialise() error {
+	connectionString := fmt.Sprintf("%v:%v@tcp(163.221.29.107:3306)/%v",DbUser,DbPassword,DBName)
+	var err error
+	app.DB,err = sql.Open("mysql",connectionString)
+	if err != nil{
+		return err
+	}
+	app.Router = mux.NewRouter().StrictSlash(true)
+	return nil
+
+}
+
+func (app *App) Run(address string){
+	log.Fatal(http.ListenAndServe(address, app.Router))
+}
 
 func main(){
 	
