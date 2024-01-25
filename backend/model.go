@@ -18,22 +18,17 @@ func getFoods(db *sql.DB) ([]Food, err){
 		return nil,err
 	}
 
-	foods := []food
-	//----
-	checkError(err)
-
-	defer db.Close()
-
-	rows, err := db.Query("SELECT * from Food")
-	checkError(err)
-
+	foods := []Food{}
 	for rows.Next(){
-		var food Food
-		err := rows.Scan(&food.Id, &food.Name , &food.Meal, &food.Detail, &food.Stock, &food.Price, &food.Picture )
-		checkError(err)
-		fmt.Println(food)
+		var f Food
+		err := rows.Scan(&f.Id, &f.Name , &f.Meal, &f.Detail, &f.Stock, &f.Price, &f.Picture )
+		if err != nil {
+			return nil,err
+		}
+		foods = append(foods,f)
 	}
-	
+
+	//defer db.Close()
 }
 
 

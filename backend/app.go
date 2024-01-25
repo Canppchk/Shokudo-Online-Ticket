@@ -15,28 +15,6 @@ type App struct {
 	DB     *sql.DB
 }
 
-// var Menu []Food_set
-
-// func getMenu( w http.ResponseWriter, r *http.Request){
-// 	// log.Println(r.URL.Path)
-// 	// key := r.URL.Path[len("/menu/"):]
-
-// 	vars := mux.Vars(r)
-// 	key := vars["id"]
-	
-// 	for _,food := range Menu{
-// 		if food.Id == key{
-// 			json.NewEncoder(w).Encode(food)
-// 		}
-// 	}
-// }
-
-// func checkError(e error){
-// 	if e!=nil{
-// 		log.Fatalln(e)
-// 	}
-// }
-
 func (app *App) Initialise() error {
 	connectionString := fmt.Sprintf("%v:%v@tcp(163.221.29.107:3306)/%v",DbUser,DbPassword,DBName)
 	var err error
@@ -72,7 +50,7 @@ func sendError( w http.ResponseWriter, statusCode int, err string){
 func (app *App) getFoods( w http.ResponseWriter, r *http.Request){
 	foods , err := getFoods(app.DB)
 	if err != nil {
-		sendError(w, http.StatusInternalServerError, err)
+		sendError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	sendResponse(w, http.StatusOk , foods)
