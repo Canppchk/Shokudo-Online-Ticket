@@ -33,10 +33,7 @@ type App struct {
 // 	fmt.Fprintf(w, "Hello from can")
 // }
 
-// func returnAllMenu( w http.ResponseWriter, r *http.Request){
-// 	log.Println("Endpoint Hit: return all menu")
-// 	json.NewEncoder(w).Encode(Menu)
-// }
+
 
 // func getMenu( w http.ResponseWriter, r *http.Request){
 // 	// log.Println(r.URL.Path)
@@ -51,13 +48,6 @@ type App struct {
 // 		}
 // 	}
 
-// }
-
-// func handleRequests(){
-// 	myRouter.HandleFunc("/menu", returnAllMenu)
-// 	myRouter.HandleFunc("/menu/{id}", getMenu)
-// 	myRouter.HandleFunc("/", homepage)
-// 	http.ListenAndServe("localhost:10000", myRouter)
 // }
 
 // func checkError(e error){
@@ -82,24 +72,14 @@ func (app *App) Run(address string){
 	log.Fatal(http.ListenAndServe(address, app.Router))
 }
 
-func main(){
+func getFoods( w http.ResponseWriter, r *http.Request){
+	log.Println("Endpoint Hit: return all menu")
+	json.NewEncoder(w).Encode(Menu)
+}
+
+func (app *App) handleRoutes(){
+	app.Router.HandleFunc("/foods", getFoods).Methods("GET")
+	app.Router.HandleFunc("/menu/{id}", getMenu)
+	app.Router.HandleFunc("/", homepage)
 	
-	checkError(err)
-
-	defer db.Close()
-
-	rows, err := db.Query("SELECT * from Food")
-	checkError(err)
-
-	for rows.Next(){
-		var food Food
-		err := rows.Scan(&food.Id, &food.Name , &food.Meal, &food.Detail, &food.Stock, &food.Price, &food.Picture )
-		checkError(err)
-		fmt.Println(food)
-	}
-	// Menu = []Food_set{
-	// 	Food_set{Id:"1",Name:"Steak Salmon",Meal:"lunch",Stock:20,Price:100.00},
-	// 	Food_set{Id:"2",Name:"Grill Pork",Meal:"dinner",Stock:20,Price:100.00},
-	// }
-	// handleRequests()
 }

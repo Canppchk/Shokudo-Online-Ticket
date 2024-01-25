@@ -62,7 +62,12 @@ type Food struct {
 // }
 
 func main(){
-	
+	app := App{}
+	app.Initialise()
+	app.Run("localhost:10000")
+
+	//---
+
 	checkError(err)
 
 	defer db.Close()
@@ -76,9 +81,5 @@ func main(){
 		checkError(err)
 		fmt.Println(food)
 	}
-	// Menu = []Food_set{
-	// 	Food_set{Id:"1",Name:"Steak Salmon",Meal:"lunch",Stock:20,Price:100.00},
-	// 	Food_set{Id:"2",Name:"Grill Pork",Meal:"dinner",Stock:20,Price:100.00},
-	// }
-	// handleRequests()
+	
 }
