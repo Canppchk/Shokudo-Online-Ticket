@@ -58,9 +58,5 @@ func (app *App) getFoods( w http.ResponseWriter, r *http.Request){
 
 func (app *App) handleRoutes(){
 	app.Router.HandleFunc("/foods", app.getFoods).Methods("GET")
-
-	//---
-	app.Router.HandleFunc("/menu/{id}", getMenu)
-	app.Router.HandleFunc("/", homepage)
 	
 }
