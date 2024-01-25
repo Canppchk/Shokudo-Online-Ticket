@@ -53,7 +53,7 @@ func (app *App) getFoods( w http.ResponseWriter, r *http.Request){
 		sendError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	sendResponse(w, http.StatusOk , foods)
+	sendResponse(w, http.StatusOK , foods)
 }
 
 func (app *App) handleRoutes(){

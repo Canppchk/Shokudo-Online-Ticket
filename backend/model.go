@@ -1,5 +1,9 @@
 package main
 
+import (
+	"database/sql"
+	)
+
 type Food struct {
     Id      string   `json:"id"`
     Name    string   `json:"name"`
@@ -10,7 +14,7 @@ type Food struct {
     Picture string   `json:"picture"` // Store Base64 encoded image
 }
 
-func getFoods(db *sql.DB) ([]Food, err){
+func getFoods(db *sql.DB) ([]Food, error){
 	query := "SELECT id, name , meal, detail, stock, price, picture from Food"
 	rows, err := db.Query(query)
 
@@ -27,7 +31,7 @@ func getFoods(db *sql.DB) ([]Food, err){
 		}
 		foods = append(foods,f)
 	}
-
+	return foods, nil
 	//defer db.Close()
 }
 
