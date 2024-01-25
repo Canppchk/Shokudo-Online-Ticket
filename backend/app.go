@@ -28,11 +28,6 @@ type App struct {
 
 // var Menu []Food_set
 
-// func homepage( w http.ResponseWriter, r *http.Request){
-// 	log.Println("Endpoint Hit: Homepage")
-// 	fmt.Fprintf(w, "Hello from can")
-// }
-
 
 
 // func getMenu( w http.ResponseWriter, r *http.Request){
@@ -72,13 +67,35 @@ func (app *App) Run(address string){
 	log.Fatal(http.ListenAndServe(address, app.Router))
 }
 
-func getFoods( w http.ResponseWriter, r *http.Request){
-	log.Println("Endpoint Hit: return all menu")
-	json.NewEncoder(w).Encode(Menu)
+func sendResponse( w http.ResponseWriter, statusCode int, payload interface{}){
+	//Marshal is to convert payload into json
+	response, _ := json.Marshal(payload)
+	w.Header().Set("Content-type", "application/json")
+	w.WriteHeader(statusCode)
+	w.Write(response)
+	
+}
+
+//this func is to handle non-okay and non 200 responses.
+func sendError( w http.ResponseWriter, statusCode int, err string){
+	error_message := map[string]string{"error": err}
+	sendResponse(w, statusCode, error_message)
+	
+}
+
+func (app *App) getFoods( w http.ResponseWriter, r *http.Request){
+	foods , err := getFoods(app.DB)
+	if err != nil {
+		sendError(w, http.StatusInternalServerError, err)
+		return
+	}
+	sendResponse(w, http.StatusOk , foods)
 }
 
 func (app *App) handleRoutes(){
-	app.Router.HandleFunc("/foods", getFoods).Methods("GET")
+	app.Router.HandleFunc("/foods", app.getFoods).Methods("GET")
+
+	//---
 	app.Router.HandleFunc("/menu/{id}", getMenu)
 	app.Router.HandleFunc("/", homepage)
 	
