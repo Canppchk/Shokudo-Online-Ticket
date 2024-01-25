@@ -22,7 +22,9 @@ func (app *App) Initialise() error {
 	if err != nil{
 		return err
 	}
+
 	app.Router = mux.NewRouter().StrictSlash(true)
+	app.handleRoutes()
 	return nil
 
 }
