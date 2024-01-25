@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	_ "github.com/go-sql-driver/mysql"
 	"database/sql"
+	"strconv"
 	)
 		
 type App struct {
@@ -58,7 +59,30 @@ func (app *App) getFoods( w http.ResponseWriter, r *http.Request){
 	sendResponse(w, http.StatusOK , foods)
 }
 
+func (app *App) getFood( w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	key,err := strconv.Atoi(vars["id"])
+	if err != nil {
+		sendError(w, http.StatusInternalServerError, "Invalid food ID")
+		return
+	}
+
+	f := Food{Id: key}
+	err = f.getFood(app.DB)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			sendError(w, http.StatusNotFound, "Food not found")
+		default:
+			sendError(w, http.StatusInternalServerError, err.Error())
+		}
+		return
+	}
+	sendResponse(w, http.StatusOK , f)
+}
+
 func (app *App) handleRoutes(){
 	app.Router.HandleFunc("/foods", app.getFoods).Methods("GET")
+	app.Router.HandleFunc("/food/{id}", app.getFood).Methods("GET")
 	
 }

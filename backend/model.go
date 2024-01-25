@@ -1,11 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"database/sql"
 	)
 
 type Food struct {
-    Id      string   `json:"id"`
+    Id      int      `json:"id"`
     Name    string   `json:"name"`
     Meal    string   `json:"meal"`
     Detail  string   `json:"detail"`
@@ -32,7 +33,17 @@ func getFoods(db *sql.DB) ([]Food, error){
 		foods = append(foods,f)
 	}
 	return foods, nil
-	//defer db.Close()
+}
+
+func (f *Food) getFood(db *sql.DB) error {
+	query := fmt.Sprintf("SELECT name , meal, detail, stock, price, picture from Food where id=%v", f.Id)
+	row := db.QueryRow(query)
+	err := row.Scan(&f.Name , &f.Meal, &f.Detail, &f.Stock, &f.Price, &f.Picture)
+
+	if err !=  nil{
+		return err
+	}
+	return nil
 }
 
 
