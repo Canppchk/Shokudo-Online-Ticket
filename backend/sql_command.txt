@@ -1,0 +1,12 @@
+CREATE DATABASE sot;
+
+CREATE TABLE Food (
+    Id VARCHAR(255) PRIMARY KEY,
+    Name VARCHAR(255),
+    Meal VARCHAR(255),
+    Detail TEXT,  -- Assuming details could be long text
+    Stock INT,
+    Price DECIMAL(10, 2),
+    Picture TEXT  -- Base64 encoded image, potentially long
+);
+
