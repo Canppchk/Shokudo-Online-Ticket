@@ -10,25 +10,12 @@ import (
 	"database/sql"
 	)
 		
-
-type Food struct {
-    Id      string
-    Name    string
-    Meal    string
-    Detail  string
-    Stock   int
-    Price   float64
-    Picture string  // Store Base64 encoded image
-}
-
 type App struct {
 	Router *mux.Router
 	DB     *sql.DB
 }
 
 // var Menu []Food_set
-
-
 
 // func getMenu( w http.ResponseWriter, r *http.Request){
 // 	// log.Println(r.URL.Path)
@@ -42,7 +29,6 @@ type App struct {
 // 			json.NewEncoder(w).Encode(food)
 // 		}
 // 	}
-
 // }
 
 // func checkError(e error){

@@ -11,16 +11,6 @@ import (
 	)
 		
 
-type Food struct {
-    Id      string
-    Name    string
-    Meal    string
-    Detail  string
-    Stock   int
-    Price   float64
-    Picture string  // Store Base64 encoded image
-}
-
 // var Menu []Food_set
 
 // func homepage( w http.ResponseWriter, r *http.Request){
@@ -65,21 +55,4 @@ func main(){
 	app := App{}
 	app.Initialise()
 	app.Run("localhost:10000")
-
-	//---
-
-	checkError(err)
-
-	defer db.Close()
-
-	rows, err := db.Query("SELECT * from Food")
-	checkError(err)
-
-	for rows.Next(){
-		var food Food
-		err := rows.Scan(&food.Id, &food.Name , &food.Meal, &food.Detail, &food.Stock, &food.Price, &food.Picture )
-		checkError(err)
-		fmt.Println(food)
-	}
-	
 }
