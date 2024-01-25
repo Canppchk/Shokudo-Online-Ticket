@@ -10,3 +10,16 @@ CREATE TABLE Food (
     Picture TEXT  -- Base64 encoded image, potentially long
 );
 
+
+INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
+('1', 'Grilled Chicken', 'Dinner', 'Delicious grilled chicken with herbs', 20, 12.99, 'base64-encoded-image-string');
+
+INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
+('2', 'Vegetable Pasta', 'Lunch', 'Healthy vegetable pasta with a light sauce', 15, 8.50, 'base64-encoded-image-string');
+
+INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
+('3', 'Beef Burger', 'Lunch', 'Juicy beef burger with cheese and lettuce', 10, 11.00, 'base64-encoded-image-string');
+
+INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
+('4', 'Seafood Salad', 'Dinner', 'Fresh seafood salad with shrimp and lemon dressing', 12, 15.00, 'base64-encoded-image-string');
+
