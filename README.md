@@ -2,12 +2,18 @@
 UML:https://drive.google.com/file/d/1tXODg6YZPozVCrdPJpoSbEewdpAuibFr/view?usp=sharing
 
 ## Use case Diagram
-<img width="598" alt="Screenshot 2024-01-19 at 17 52 50" src="https://github.com/Canppchk/Shokudo-Online-Ticket/assets/61746127/924b4816-c880-41d7-97eb-ff66f95b5ed4">
+![messageImage_1706248510643](https://github.com/Canppchk/Shokudo-Online-Ticket/assets/61746127/86f340b3-8d1c-4883-9292-a7c759b65da8)
+
 
 ## Domain Diagram
-<img width="421" alt="Screenshot 2024-01-19 at 17 50 07" src="https://github.com/Canppchk/Shokudo-Online-Ticket/assets/61746127/fbf48fe6-fbfd-483d-9c12-5ec94674b201">
+![messageImage_1706254606089](https://github.com/Canppchk/Shokudo-Online-Ticket/assets/61746127/ae048aa4-5c13-4ef1-9922-9984d6b25ab3)
+
 
 ## Robustness Diagram
-<img width="593" alt="Screenshot 2024-01-19 at 17 47 58" src="https://github.com/Canppchk/Shokudo-Online-Ticket/assets/61746127/784c2d94-5010-4785-a1db-5bb9de0d4bad">
+![messageImage_1706255336277](https://github.com/Canppchk/Shokudo-Online-Ticket/assets/61746127/1ff0e856-75d7-43d6-b64b-2c39de1c4e32)
+
+
+## Class Diagram
+![messageImage_1706254063294(1)](https://github.com/Canppchk/Shokudo-Online-Ticket/assets/61746127/dbfe8b61-c271-47be-afb8-504a463d152d)
 
 
