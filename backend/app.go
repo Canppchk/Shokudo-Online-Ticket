@@ -121,9 +121,26 @@ func (app *App) updateFood( w http.ResponseWriter, r *http.Request){
 	sendResponse(w, http.StatusOK , f)
 }
 
+func (app *App) deleteFood( w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	key,err := strconv.Atoi(vars["id"])
+	if err != nil {
+		sendError(w, http.StatusInternalServerError, "Invalid food ID")
+		return
+	}
+	f := Food{Id:key}
+	err = f.deleteFood(app.DB)
+	if err != nil{
+		sendError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	sendResponse(w, http.StatusOK , map[string]string{"result": "successful deletion"})
+}
+
 func (app *App) handleRoutes(){
 	app.Router.HandleFunc("/foods", app.getFoods).Methods("GET")
 	app.Router.HandleFunc("/food/{id}", app.getFood).Methods("GET")
 	app.Router.HandleFunc("/food", app.createFood).Methods("POST")
 	app.Router.HandleFunc("/food/{id}", app.updateFood).Methods("PUT")
+	app.Router.HandleFunc("/food/{id}", app.deleteFood).Methods("DELETE")
 }

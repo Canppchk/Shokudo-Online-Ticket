@@ -80,3 +80,9 @@ func (f *Food) updateFood(db *sql.DB) error {
 
 }
 
+func (f *Food) deleteFood(db *sql.DB) error {
+	query := fmt.Sprintf("delete from Food where id=%v", f.Id )
+	_, err := db.Exec(query)
+	return err
+}
+
