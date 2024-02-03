@@ -1,4 +1,5 @@
 import { getAllMenus } from "./api";
+import Header from "./components/Header";
 import MenuList from "./components/MenuList";
 
 export default async function Home() {
@@ -8,7 +9,7 @@ export default async function Home() {
 
     return (
         <div>
-            <h1 className="text-4xl font-bold m-5">🍚Shokudo System🍚</h1>
+            <Header />
             <div className="flex flex-col items-center"> 
                 <div className="grid grid-cols-12 gap-4 w-full">
                     <div className="col-span-8">
