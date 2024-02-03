@@ -12,6 +12,19 @@ go run .
 ```
 The mysql server is automatically connected to the lab's server and the api server is set up on the university's local network.
 
+### Frontend
+```
+cd frontend
+```
+start app
+```
+npm run dev
+```
+mock api
+```
+npm run json server 
+```
+
 ## Use case Diagram
 ![messageImage_1706248510643](https://github.com/Canppchk/Shokudo-Online-Ticket/assets/61746127/86f340b3-8d1c-4883-9292-a7c759b65da8)
 
