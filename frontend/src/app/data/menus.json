@@ -1,0 +1,29 @@
+{
+    "menus":[
+        {
+            "id": "1",
+            "menu": "carry"
+        },
+        {
+            "id": "2",
+            "menu": "udon"
+        },
+        {
+            "id": "3",
+            "menu": "ramen"
+        },
+        {
+            "id": "4",
+            "menu": "katudon"
+        },
+        {
+            "id": "5",
+            "menu": "oyakodon"
+        },
+        {
+            "id": "6",
+            "menu": "soba"
+        }
+        
+    ]
+}
