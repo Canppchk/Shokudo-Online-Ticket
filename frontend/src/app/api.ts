@@ -1,7 +1,7 @@
 import { Menu } from "./types";
 
 
-export const getAllMenus = async (): Promise<Menu[]> => {
+export const getAllMenusGo = async (): Promise<Menu[]> => {
     const res = await fetch('http://localhost:3001/menus',{
         cache: 'no-store' //SSR
     })
@@ -10,15 +10,25 @@ export const getAllMenus = async (): Promise<Menu[]> => {
     return menus;
 }
 
-export const addMenu = async (menu: Menu): Promise<Menu[]> => {
+export const addMenuGo = async (menu: Menu) => {
     const res = await fetch('http://localhost:3001/menus',{
         method: "POST",
         headers: {
-            "Content-Type": "applocation/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(menu)
     })
-    const newMenus = res.json()
+}
 
-    return newMenus;
+export const deleteMenuGo = async (menuId: string) => {
+    const res = await fetch(`http://localhost:3001/menus/${menuId}`, {
+        method: "DELETE"
+    });
+
+    if (res.ok) {
+        // 削除が成功した場合の処理
+    } else {
+        // 削除が失敗した場合のエラーハンドリング
+        console.error("Failed to delete menu");
+    }
 }
