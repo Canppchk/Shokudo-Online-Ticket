@@ -4,6 +4,7 @@ import MenuList from "./components/MenuList";
 
 export default async function Home() {
     //TODO:temporarily use json-server (npm run json-server)
+    //TODO:if we will add function that update datas, chidelen component has to have this method?
     const menus = await getAllMenus();
     console.log(menus)
 
