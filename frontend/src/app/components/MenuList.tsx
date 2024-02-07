@@ -5,6 +5,7 @@ interface MenuProps {
   menus: Menu[]
 }
 
+// Because it is a destructuring assignment, it is written as {menus}:MenuProps instead of props: MenuProps.
 const MenuList = ({menus}:MenuProps) => {
   
   return (
@@ -13,7 +14,7 @@ const MenuList = ({menus}:MenuProps) => {
       
       {
         menus.map(menu => (
-          <div className='w-1/3'>
+          <div key={menu.id} className='w-1/3'>
             <div className="m-2 max-w-md overflow-hidden rounded-lg bg-white shadow">
               <img src="https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80" className="aspect-video w-full object-cover" alt="" />
               <div className="p-4">

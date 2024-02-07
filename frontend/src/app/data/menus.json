@@ -1,29 +1,16 @@
 {
-    "menus":[
-        {
-            "id": "1",
-            "menu": "carry"
-        },
-        {
-            "id": "2",
-            "menu": "udon"
-        },
-        {
-            "id": "3",
-            "menu": "ramen"
-        },
-        {
-            "id": "4",
-            "menu": "katudon"
-        },
-        {
-            "id": "5",
-            "menu": "oyakodon"
-        },
-        {
-            "id": "6",
-            "menu": "soba"
-        }
-        
-    ]
+  "menus": [
+    {
+      "id": "907360f3-0b99-4922-a18e-7a3b0d1ca417",
+      "menu": "soba"
+    },
+    {
+      "id": "c288f08d-4ee2-4bc7-a795-360300da615d",
+      "menu": "kome"
+    },
+    {
+      "id": "48676a0f-8fff-454c-a504-d04205cbd015",
+      "menu": "udon"
+    }
+  ]
 }
