@@ -17,7 +17,6 @@ Response:
   * HTTP Status Code: 400 Bad Request
   * Response Body:
     * message: Account creation failed (string)
-    * cause: reason (string)
 
 ## Authenticate User
 
@@ -38,4 +37,3 @@ Response:
   * HTTP Status Code: 401 Unauthorized
   * Response Body:
     * message: Account authentication failed (string)
-    * cause: reason (string)
