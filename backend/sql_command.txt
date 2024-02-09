@@ -23,3 +23,19 @@ INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
 INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
 (4, 'Seafood Salad', 'Dinner', 'Fresh seafood salad with shrimp and lemon dressing', 12, 15.00, 'base64-encoded-image-string');
 
+------------------------------------
+Ticker TABLE
+
+CREATE TABLE Ticket (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Food_Id INT,
+    Date DATE,
+    Expire DATETIME,
+    Status VARCHAR(255),
+    FOREIGN KEY (Food_Id) REFERENCES Food(Id)
+);
+
+SELECT Ticket.Id, Food.Name AS Food_name, Food.Meal, Food.Price, Food.Picture, Ticket.Date, Ticket.Expire, Ticket.Status
+FROM Ticket
+JOIN Food ON Ticket.Food_Id = Food.Id;
+
