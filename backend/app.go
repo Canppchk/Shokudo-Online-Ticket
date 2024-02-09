@@ -9,6 +9,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"database/sql"
 	"strconv"
+	"github.com/rs/cors"
 	)
 		
 type App struct {
@@ -32,8 +33,25 @@ func (app *App) Initialise() error {
 
 }
 
-func (app *App) Run(address string){
-	log.Fatal(http.ListenAndServe(address, app.Router))
+// func (app *App) Run(address string){
+// 	log.Fatal(http.ListenAndServe(address, app.Router))
+// }
+
+func (app *App) Run(addr string) {
+    // Setup the CORS middleware with desired options
+    c := cors.New(cors.Options{
+        AllowedOrigins:   []string{"*"}, // Adjust according to your needs
+        AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+        AllowedHeaders:   []string{"Content-Type", "Authorization"},
+        AllowCredentials: true,
+        Debug:            true, // Consider setting this to false in production
+    })
+
+    // Wrap the router with CORS middleware
+    handler := c.Handler(app.Router)
+
+    // Start the server with the CORS-wrapped router
+    log.Fatal(hhttp.ListenAndServe(addr, handler))
 }
 
 func sendResponse( w http.ResponseWriter, statusCode int, payload interface{}){
@@ -52,8 +70,8 @@ func sendError( w http.ResponseWriter, statusCode int, err string){
 	
 }
 
-func (app *App) getFoodnow( w http.ResponseWriter, r *http.Request){
-	foods , err := getFoods(app.DB)
+func (app *App) getFoodNow( w http.ResponseWriter, r *http.Request){
+	foods , err := getFoodNow(app.DB)
 	if err != nil {
 		sendError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -160,7 +178,7 @@ func (app *App) deleteFood( w http.ResponseWriter, r *http.Request){
 // }
 
 func (app *App) handleRoutes(){
-	app.Router.HandleFunc("/food/now", app.getFoods).Methods("GET")
+	app.Router.HandleFunc("/food/now", app.getFoodNow).Methods("GET")
 	app.Router.HandleFunc("/food/{id}", app.getFood).Methods("GET")
 	app.Router.HandleFunc("/food", app.createFood).Methods("POST")
 	app.Router.HandleFunc("/food/{id}", app.updateFood).Methods("PUT")

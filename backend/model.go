@@ -18,15 +18,15 @@ type Food struct {
 	Date      string    `json:"date"` // Representing the DateAdded column
 }
 
-type Ticket struct {
-	Id        int       `json:"id"`
-	FoodId    int       `json:"food_id"`
-	Date      string    `json:"date"` // Assuming date is stored in a string format otherwise use time.Time for actual date handling
-	Expire    time.Time `json:"expire"`
-	Status    string    `json:"status"`
-}
+// type Ticket struct {
+// 	Id        int       `json:"id"`
+// 	FoodId    int       `json:"food_id"`
+// 	Date      string    `json:"date"` // Assuming date is stored in a string format otherwise use time.Time for actual date handling
+// 	Expire    time.Time `json:"expire"`
+// 	Status    string    `json:"status"`
+// }
 
-func getFoodnow(db *sql.DB) ([]Food, error){
+func getFoodNow(db *sql.DB) ([]Food, error){
 	query := "SELECT id, name , meal, detail, stock, price, picture , date from Food"
 	rows, err := db.Query(query)
 
