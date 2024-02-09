@@ -1,16 +1,17 @@
-package main 
+package main
 
 import (
+	"database/sql"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"fmt"
-	"encoding/json"
-	"github.com/gorilla/mux"
-	_ "github.com/go-sql-driver/mysql"
-	"database/sql"
 	"strconv"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 	"github.com/rs/cors"
-	)
+)
 		
 type App struct {
 	Router *mux.Router
@@ -42,7 +43,7 @@ func (app *App) Run(addr string) {
     c := cors.New(cors.Options{
         AllowedOrigins:   []string{"*"}, // Adjust according to your needs
         AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
-        AllowedHeaders:   []string{"Content-Type", "Authorization"},
+        AllowedHeaders:   []string{"X-Requested-With", "Content-Type", "Authorization"},
         AllowCredentials: true,
         Debug:            true, // Consider setting this to false in production
     })
