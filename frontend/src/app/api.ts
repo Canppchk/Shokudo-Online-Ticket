@@ -2,7 +2,7 @@ import { Menu } from "./types";
 
 
 export const getAllMenusGo = async (): Promise<Menu[]> => {
-    const res = await fetch('http://localhost:3001/menus',{
+    const res = await fetch('http://localhost:10000/food/now',{
         cache: 'no-store' //SSR
     })
     const menus = res.json()
