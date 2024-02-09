@@ -5,10 +5,17 @@ slides: [link](https://naistjp-my.sharepoint.com/personal/kohei_ichikawa_ms_ext_
 
 ## Getting started
 ### Backend
-Run a server.
 ```
 cd backend
+```
+Run a server.
+```
 go run .
+```
+or
+```
+go build
+./backend
 ```
 The mysql server is automatically connected to the lab's server and the api server is set up on the university's local network.
 
