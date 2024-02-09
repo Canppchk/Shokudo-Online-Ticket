@@ -34,5 +34,6 @@ CREATE TABLE User (
     role INT NOT NULL
 );
 
-INSERT INTO User VALUES (1, 'admin user1', '$2a$08$E9YhIBENIW9yPaaFpqHPI.BzpLfooSy8b8CUKgYlD8/rny2CyEn9e', 1);
-INSERT INTO User VALUES (2, 'customer user1', '$2a$08$E9YhIBENIW9yPaaFpqHPI.BzpLfooSy8b8CUKgYlD8/rny2CyEn9e', 2);
+# The password is the result of encrypting the string P4ssword by bcrypt with the number of stretches set to 8.
+INSERT INTO User VALUES (1, 'admin user1', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', 1);
+INSERT INTO User VALUES (2, 'customer user1', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', 2);
