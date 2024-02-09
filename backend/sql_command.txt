@@ -1,6 +1,6 @@
 CREATE DATABASE sot;
 
-CREATE TABLE Food_New (
+CREATE TABLE Food (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Meal VARCHAR(255),
@@ -23,3 +23,17 @@ INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
 INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
 (4, 'Seafood Salad', 'Dinner', 'Fresh seafood salad with shrimp and lemon dressing', 12, 15.00, 'base64-encoded-image-string');
 
+
+# Create a user table.
+# Role: 1 represents "admin", while 2 represents "customer".
+
+CREATE TABLE User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role INT NOT NULL
+);
+
+# The password is the result of encrypting the string P4ssword by bcrypt with the number of stretches set to 8.
+INSERT INTO User VALUES (1, 'admin user1', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', 1);
+INSERT INTO User VALUES (2, 'customer user1', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', 2);
