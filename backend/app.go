@@ -52,7 +52,7 @@ func sendError( w http.ResponseWriter, statusCode int, err string){
 	
 }
 
-func (app *App) getFoods( w http.ResponseWriter, r *http.Request){
+func (app *App) getFoodnow( w http.ResponseWriter, r *http.Request){
 	foods , err := getFoods(app.DB)
 	if err != nil {
 		sendError(w, http.StatusInternalServerError, err.Error())
@@ -137,10 +137,33 @@ func (app *App) deleteFood( w http.ResponseWriter, r *http.Request){
 	sendResponse(w, http.StatusOK , map[string]string{"result": "successful deletion"})
 }
 
+// func (app *App) getTicket( w http.ResponseWriter, r *http.Request){
+// 	vars := mux.Vars(r)
+// 	key,err := strconv.Atoi(vars["id"])
+// 	if err != nil {
+// 		sendError(w, http.StatusInternalServerError, "Invalid ticket ID")
+// 		return
+// 	}
+
+// 	f := Ticket{Id: key}
+// 	err = f.getTicket(app.DB)
+// 	if err != nil {
+// 		switch err {
+// 		case sql.ErrNoRows:
+// 			sendError(w, http.StatusNotFound, "Ticket not found")
+// 		default:
+// 			sendError(w, http.StatusInternalServerError, err.Error())
+// 		}
+// 		return
+// 	}
+// 	sendResponse(w, http.StatusOK , f)
+// }
+
 func (app *App) handleRoutes(){
-	app.Router.HandleFunc("/foods", app.getFoods).Methods("GET")
+	app.Router.HandleFunc("/food/now", app.getFoods).Methods("GET")
 	app.Router.HandleFunc("/food/{id}", app.getFood).Methods("GET")
 	app.Router.HandleFunc("/food", app.createFood).Methods("POST")
 	app.Router.HandleFunc("/food/{id}", app.updateFood).Methods("PUT")
 	app.Router.HandleFunc("/food/{id}", app.deleteFood).Methods("DELETE")
+	// app.Router.HandleFunc("/ticket/{id}", app.getTicket).Methods("GET")
 }

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"database/sql"
-	// "time"
+	"time"
 	"errors"
 	)
 
@@ -18,9 +18,15 @@ type Food struct {
 	Date      string    `json:"date"` // Representing the DateAdded column
 }
 
-//add date
+type Ticket struct {
+	Id        int       `json:"id"`
+	FoodId    int       `json:"food_id"`
+	Date      string    `json:"date"` // Assuming date is stored in a string format otherwise use time.Time for actual date handling
+	Expire    time.Time `json:"expire"`
+	Status    string    `json:"status"`
+}
 
-func getFoods(db *sql.DB) ([]Food, error){
+func getFoodnow(db *sql.DB) ([]Food, error){
 	query := "SELECT id, name , meal, detail, stock, price, picture , date from Food"
 	rows, err := db.Query(query)
 
