@@ -17,7 +17,7 @@ or
 go build
 ./backend
 ```
-The mysql server is automatically connected to the lab's server and the api server is set up on the university's local network.
+The MySQL server is automatically connected to the lab's server, and the API server is set up on the university's local network.
 
 ### Frontend
 ```
