@@ -51,7 +51,7 @@ func (app *App) Run(addr string) {
     handler := c.Handler(app.Router)
 
     // Start the server with the CORS-wrapped router
-    log.Fatal(hhttp.ListenAndServe(addr, handler))
+    log.Fatal(http.ListenAndServe(addr, handler))
 }
 
 func sendResponse( w http.ResponseWriter, statusCode int, payload interface{}){
