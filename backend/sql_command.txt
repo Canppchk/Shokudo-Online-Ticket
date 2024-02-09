@@ -52,5 +52,5 @@ CREATE TABLE User (
 );
 
 # The password is the result of encrypting the string P4ssword by bcrypt with the number of stretches set to 8.
-INSERT INTO User VALUES (1, 'admin user1', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', sample@naist.com, true);
-INSERT INTO User VALUES (2, 'customer user1', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', sample@naist.com, false);
+INSERT INTO User VALUES (1, 'admin user1', 'sample@naist.com', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', true);
+INSERT INTO User VALUES (2, 'customer user1', 'sample@naist.com', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', false);
