@@ -65,18 +65,57 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 	dinnerEnd := time.Date(year, month, day, 22, 0, 0, 0, loc)  // 10:00 PM
 
 	// Determine mealType based on the current time in Japan
+	// var mealType string
+	// if currentTime.After(lunchStart) && currentTime.Before(lunchEnd) {
+	// 	mealType = "Lunch"
+	// } else if currentTime.After(lunchEnd) && currentTime.Before(dinnerEnd) {
+	// 	mealType = "Dinner"
+	// } else {
+    //     // Return a slice with one Food item indicating it's not meal time
+    //     return []Food{{
+    //         Id:      0,
+    //         Name:    "Food is not available.",
+    //         Meal:    "Food is not available.",
+    //         Detail:  "It's not meal time currently",
+    //         Stock:   0,
+    //         Price:   0.00,
+    //         Picture: NotAvailableFood,
+    //     }}, nil
+    // }
 	var mealType string
 	if currentTime.After(lunchStart) && currentTime.Before(lunchEnd) {
-		mealType = "Lunch"
+		return []Food{{
+            Id:      0,
+            Name:    "Food is not available.",
+            Meal:    "Food is not available.",
+            Detail:  "It's not meal time currently",
+            Stock:   0,
+            Price:   0.00,
+            Picture: NotAvailableFood,
+        }}, nil
 	} else if currentTime.After(lunchEnd) && currentTime.Before(dinnerEnd) {
-		mealType = "Dinner"
+		return []Food{{
+            Id:      0,
+            Name:    "Food is not available.",
+            Meal:    "Food is not available.",
+            Detail:  "It's not meal time currently",
+            Stock:   0,
+            Price:   0.00,
+            Picture: NotAvailableFood,
+        }}, nil
 	} else {
         // Return a slice with one Food item indicating it's not meal time
         return []Food{{
-            Detail: "It's not meal time currently",
+            Id:      0,
+            Name:    "Food is not available.",
+            Meal:    "Food is not available.",
+            Detail:  "It's not meal time currently",
+            Stock:   0,
+            Price:   0.00,
+            Picture: NotAvailableFood,
         }}, nil
     }
-	
+
 	//fmt.Println("Meal type:", mealType)
 	
 	//mealType := "Dinner"
