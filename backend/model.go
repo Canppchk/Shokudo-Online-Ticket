@@ -76,7 +76,7 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
             Detail: "It's not meal time currently",
         }}, nil
     }
-
+	
 	//fmt.Println("Meal type:", mealType)
 	
 	//mealType := "Dinner"
