@@ -73,10 +73,16 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 	} else {
         // Return a slice with one Food item indicating it's not meal time
         return []Food{{
-            Detail: "It's not meal time currently",
+            Id:      0,
+            Name:    "Food is not available.",
+            Meal:    "Food is not available.",
+            Detail:  "It's not meal time currently",
+            Stock:   0,
+            Price:   0.00,
+            Picture: NotAvailableFood,
         }}, nil
     }
-	
+
 	//fmt.Println("Meal type:", mealType)
 	
 	//mealType := "Dinner"
