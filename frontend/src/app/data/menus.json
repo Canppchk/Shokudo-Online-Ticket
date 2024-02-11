@@ -1,16 +1,30 @@
 {
   "menus": [
     {
-      "id": "907360f3-0b99-4922-a18e-7a3b0d1ca417",
-      "menu": "soba"
+      "id": "722e576e-81be-4f5a-8ab3-65037497734c",
+      "name": "udon"
     },
     {
-      "id": "c288f08d-4ee2-4bc7-a795-360300da615d",
-      "menu": "kome"
+      "id": "a0e1b2c7-f22b-458a-bf92-a3fde0643a28",
+      "name": "ramen"
     },
     {
-      "id": "48676a0f-8fff-454c-a504-d04205cbd015",
-      "menu": "udon"
+      "id": "1e95d3d7-66be-4b0e-bc8b-e0dd7d5f34fe",
+      "name": "kome"
+    }
+  ],
+  "basket": [
+    {
+      "id": "722e576e-81be-4f5a-8ab3-65037497734c",
+      "name": "udon"
+    },
+    {
+      "id": "a0e1b2c7-f22b-458a-bf92-a3fde0643a28",
+      "name": "ramen"
+    },
+    {
+      "id": "1e95d3d7-66be-4b0e-bc8b-e0dd7d5f34fe",
+      "name": "kome"
     }
   ]
 }

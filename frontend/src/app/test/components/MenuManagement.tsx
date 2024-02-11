@@ -21,7 +21,7 @@ const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
             return;
         }
 
-        await addMenu({ id: uuidv4(), menu: text });
+        await addMenu({ id: uuidv4(), name: text });
         setText('');
     };
 
@@ -42,10 +42,10 @@ const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
                 menus.map(menu => (
                     <div key = {menu.id} className='flex items-center space-x-2'>
                         <div className='m-2 text-gray-500'>
-                            {menu.menu}
+                            {menu.name}
                         </div>
                         <button className='px-1 bg-gray-500 text-white shadow-md rounded'>⚙️</button>
-                        <button onClick={() => {deleteMenu(menu.id)}} className='px-2 bg-red-700 text-white shadow-md rounded'>-</button>
+                        <button onClick={() => {deleteMenu(menu.id)}} className='px-2 bg-gray-500 text-white shadow-md rounded'>-</button>
                     </div>
                 ))
             }
