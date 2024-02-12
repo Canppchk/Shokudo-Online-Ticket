@@ -26,14 +26,14 @@ type Ticket struct {
 // 	return nil
 // }
 func (t *Ticket) getTicket(db *sql.DB) error {
-    query := "SELECT Food_Id, Date, Expire, Status FROM Ticket WHERE Id = ?"
+    query := "SELECT FoodId, Date, Expire, Status FROM Ticket WHERE Id = ?"
     return db.QueryRow(query, t.Id).Scan(&t.FoodId, &t.Date, &t.Expire, &t.Status)
 }
 
 
 func (t *Ticket) createTicket(db *sql.DB) error {
     // Prepare the insert statement
-    stmt, err := db.Prepare("INSERT INTO Ticket(Food_Id, Date, Expire, Status) VALUES(?, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 'Useable')")
+    stmt, err := db.Prepare("INSERT INTO Ticket(FoodId, Date, Expire, Status) VALUES(?, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 'Useable')")
     if err != nil {
         return err
     }
