@@ -89,7 +89,20 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
         if err != nil {
             return nil, err
         }
-        foods = append(foods, f)
+		if f.Stock > 0 {
+			foods = append(foods, f)
+		} else {
+			return []Food{{
+				Id:      0,
+				Name:    "Food is not available.",
+				Meal:    "Food is not available.",
+				Detail:  "It's not meal time currently",
+				Stock:   0,
+				Price:   0.00,
+				Picture: NotAvailableFood,
+			}}, nil
+		}
+        
     }
 
     if err = rows.Err(); err != nil {
@@ -144,5 +157,24 @@ func (f *Food) deleteFood(db *sql.DB) error {
 	query := fmt.Sprintf("delete from Food where id=%v", f.Id )
 	_, err := db.Exec(query)
 	return err
+}
+
+func (f *Food) DecrementStock(db *sql.DB ,foodID int) error {
+    query := "UPDATE Food SET stock = stock - 1 WHERE id = ? AND stock > 0"
+    result, err := db.Exec(query, foodID)
+    if err != nil {
+        return err
+    }
+
+    rowsAffected, err := result.RowsAffected()
+    if err != nil {
+        return err
+    }
+
+    if rowsAffected == 0 {
+        return errors.New("no such row exists or stock is already zero")
+    }
+
+    return nil
 }
 

@@ -187,7 +187,15 @@ func (app *App) createTicket(w http.ResponseWriter, r *http.Request) {
         return
     }
 
+	err = f.DecrementStock(app.DB , f.Id)
+	if err != nil {
+		// Handle the error appropriately, maybe roll back the ticket creation or log the error
+		sendError(w, http.StatusInternalServerError, "Failed to decrement food stock")
+		return
+	}
+
     sendResponse(w, http.StatusCreated, t)
+
 }
 
 func (app *App) getTicket(w http.ResponseWriter, r *http.Request) {
