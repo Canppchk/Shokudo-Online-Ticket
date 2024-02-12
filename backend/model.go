@@ -18,14 +18,6 @@ type Food struct {
 	Date      string    `json:"date"` // Representing the DateAdded column
 }
 
-// type Ticket struct {
-// 	Id        int       `json:"id"`
-// 	FoodId    int       `json:"food_id"`
-// 	Date      string    `json:"date"` // Assuming date is stored in a string format otherwise use time.Time for actual date handling
-// 	Expire    time.Time `json:"expire"`
-// 	Status    string    `json:"status"`
-// }
-
 // func getFoodNow(db *sql.DB) ([]Food, error){
 // 	query := "SELECT id, name , meal, detail, stock, price, picture , date from Food"
 // 	rows, err := db.Query(query)
@@ -54,7 +46,6 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 
 	// Get the current time in Japan
 	currentTime := time.Now().In(loc)
-	fmt.Println("Current time in Japan:", currentTime)
 
 	// Extract the year, month, and day from the current time to use in lunch/dinner time ranges
 	year, month, day := currentTime.Date()
@@ -82,10 +73,6 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
             Picture: NotAvailableFood,
         }}, nil
     }
-
-	//fmt.Println("Meal type:", mealType)
-	
-	//mealType := "Dinner"
     // Use CURRENT_DATE to filter by today's date, which matches the 'YYYY-MM-DD' format of your Date field
     query := "SELECT id, name, meal, detail, stock, price, picture, date FROM Food WHERE meal = ? AND DATE(date) = CURRENT_DATE"
 
