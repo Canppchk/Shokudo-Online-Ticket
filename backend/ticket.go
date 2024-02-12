@@ -4,15 +4,15 @@ import (
 	"database/sql"
 	// "errors"
 	// "fmt"
-	"time"
+	// "time"
 )
 
 type Ticket struct {
 	Id        int       `json:"id"`
 	FoodId    int       `json:"food_id"`
 	Date      string    `json:"date"` // Assuming date is stored in a string format otherwise use time.Time for actual date handling
-	Expire    time.Time `json:"expire"`
 	Status    string    `json:"status"`
+	Owner     string    `json:"owner"`
 }
 
 // func (t *Ticket) getTicket(db *sql.DB) error {
@@ -25,15 +25,41 @@ type Ticket struct {
 // 	}
 // 	return nil
 // }
+
+// func (t *Ticket) getTicketold(db *sql.DB) error {
+//     query := "SELECT FoodId, Date, Status ,Owner FROM Ticket WHERE Id = ?"
+//     return db.QueryRow(query, t.Id).Scan(&t.FoodId, &t.Date, &t.Status, &t.Owner)
+// }
+
 func (t *Ticket) getTicket(db *sql.DB) error {
-    query := "SELECT FoodId, Date, Expire, Status FROM Ticket WHERE Id = ?"
-    return db.QueryRow(query, t.Id).Scan(&t.FoodId, &t.Date, &t.Expire, &t.Status)
+    var query string
+    var args []interface{}
+
+    // If the Owner is "Admin", retrieve tickets for all owners
+    if t.Owner == "Admin" {
+        query = "SELECT Id, Date, Owner FROM Ticket WHERE FoodId = ? AND Status = ?"
+        args = append(args, t.FoodId, t.Status)
+    } else {
+        // For other owners, filter by the specific owner
+        query = "SELECT Id, Date FROM Ticket WHERE FoodId = ? AND Owner = ? AND Status = ?"
+        args = append(args, t.FoodId, t.Owner, t.Status)
+    }
+
+    // Execute the query with the appropriate arguments
+    row := db.QueryRow(query, args...)
+
+    // For "Admin", also scan the Owner field from the result set
+    if t.Owner == "Admin" {
+        return row.Scan(&t.Id, &t.Date, &t.Owner)
+    } else {
+        return row.Scan(&t.Id, &t.Date)
+    }
 }
 
 
 func (t *Ticket) createTicket(db *sql.DB) error {
     // Prepare the insert statement
-    stmt, err := db.Prepare("INSERT INTO Ticket(FoodId, Date, Expire, Status) VALUES(?, NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 'Useable')")
+    stmt, err := db.Prepare("INSERT INTO Ticket(FoodId, Date, Status, Owner) VALUES(?, NOW(), 'Useable' , 'Can')")
     if err != nil {
         return err
     }
@@ -56,8 +82,8 @@ func (t *Ticket) createTicket(db *sql.DB) error {
 }
 
 func (t *Ticket) updateTicket(db *sql.DB) error {
-    query := "UPDATE Ticket SET Expire = ?, Status = ? WHERE Id = ?"
-    _, err := db.Exec(query, t.Expire, t.Status, t.Id)
+    query := "UPDATE Ticket SET Status = ? WHERE Id = ?"
+    _, err := db.Exec(query, t.Status, t.Id, t.Owner)
     return err
 }
 

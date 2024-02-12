@@ -19,8 +19,8 @@ type App struct {
 }
 
 func (app *App) Initialise() error {
-	// connectionString := fmt.Sprintf("%v:%v@tcp(163.221.29.107:3306)/%v",DbUser,DbPassword,DBName)
-	connectionString := fmt.Sprintf("%v:%v@tcp(163.221.29.107:3306)/%v?parseTime=true&charset=utf8", DbUser, DbPassword, DBName)
+	connectionString := fmt.Sprintf("%v:%v@tcp(163.221.29.107:3306)/%v",DbUser,DbPassword,DBName)
+	// connectionString := fmt.Sprintf("%v:%v@tcp(163.221.29.107:3306)/%v?parseTime=true&charset=utf8", DbUser, DbPassword, DBName)
 
 	var err error
 	app.DB,err = sql.Open("mysql",connectionString)
@@ -158,6 +158,8 @@ func (app *App) deleteFood( w http.ResponseWriter, r *http.Request){
 
 // -------------------------------------------------------------
 func (app *App) createTicket(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	key := vars["owner"]
     // Fetch the current available foods
     foods, err := getFoodNow(app.DB)
     if err != nil {
@@ -177,6 +179,7 @@ func (app *App) createTicket(w http.ResponseWriter, r *http.Request) {
     // Create a new ticket using the selected food's Id
     t := Ticket{
         FoodId: f.Id,
+		Owner:key,
         // Set other fields like Date, Expire, Status as per your requirement
     }
 
@@ -198,26 +201,81 @@ func (app *App) createTicket(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (app *App) getTicket(w http.ResponseWriter, r *http.Request) {
-    vars := mux.Vars(r)
-    id, err := strconv.Atoi(vars["id"])
+// func (app *App) getTicket(w http.ResponseWriter, r *http.Request) {
+//     vars := mux.Vars(r)
+//     id, err := strconv.Atoi(vars["id"])
+//     if err != nil {
+//         sendError(w, http.StatusBadRequest, "Invalid ticket ID")
+//         return
+//     }
+
+//     t := Ticket{Id: id}
+//     err = t.getTicket(app.DB)
+//     if err != nil {
+//         if err == sql.ErrNoRows {
+//             sendError(w, http.StatusNotFound, "Ticket not found")
+//         } else {
+//             sendError(w, http.StatusInternalServerError, err.Error())
+//         }
+//         return
+//     }
+
+//     sendResponse(w, http.StatusOK, t)
+// }
+
+func (app *App) getTicket( w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	key := vars["owner"]
+
+	foods, err := getFoodNow(app.DB)
     if err != nil {
-        sendError(w, http.StatusBadRequest, "Invalid ticket ID")
+        sendError(w, http.StatusInternalServerError, "Failed to fetch current food")
+        return
+    }
+	// fmt.Println(foods[0].Id)
+    // Check if there are available foods
+    if len(foods) == 0 || foods[0].Id == 0 { // Assuming an Id of 0 indicates no available food
+        sendError(w, http.StatusNotFound, "No food available at the moment")
         return
     }
 
-    t := Ticket{Id: id}
-    err = t.getTicket(app.DB)
-    if err != nil {
-        if err == sql.ErrNoRows {
-            sendError(w, http.StatusNotFound, "Ticket not found")
-        } else {
-            sendError(w, http.StatusInternalServerError, err.Error())
-        }
-        return
-    }
-
-    sendResponse(w, http.StatusOK, t)
+    // Select the first available food item for the ticket
+    f := foods[0]
+	
+	if key == "Admin"{
+		t := Ticket{
+			FoodId: f.Id,
+			Status: "Pending",
+		}
+		err = t.getTicket(app.DB)
+		if err != nil {
+			switch err {
+			case sql.ErrNoRows:
+				sendError(w, http.StatusNotFound, "Ticket not found")
+			default:
+				sendError(w, http.StatusInternalServerError, err.Error())
+			}
+			return
+		}
+		sendResponse(w, http.StatusOK , t)
+	}else{
+		t := Ticket{
+        FoodId: f.Id,
+		Owner:key,
+        Status: "Useable",
+    	}
+		err = t.getTicket(app.DB)
+		if err != nil {
+			switch err {
+			case sql.ErrNoRows:
+				sendError(w, http.StatusNotFound, "Ticket not found")
+			default:
+				sendError(w, http.StatusInternalServerError, err.Error())
+			}
+			return
+		}
+		sendResponse(w, http.StatusOK , t)
+	}
 }
 
 func (app *App) updateTicket(w http.ResponseWriter, r *http.Request) {
@@ -270,8 +328,8 @@ func (app *App) handleRoutes(){
 	app.Router.HandleFunc("/food", app.createFood).Methods("POST")
 	app.Router.HandleFunc("/food/{id}", app.updateFood).Methods("PUT")
 	app.Router.HandleFunc("/food/{id}", app.deleteFood).Methods("DELETE")
-	app.Router.HandleFunc("/ticket", app.createTicket).Methods("POST")
-	app.Router.HandleFunc("/ticket/{id}", app.getTicket).Methods("GET")
+	app.Router.HandleFunc("/ticket/{owner}", app.createTicket).Methods("POST")
+	app.Router.HandleFunc("/ticket/{owner}", app.getTicket).Methods("GET")
 	app.Router.HandleFunc("/ticket/{id}", app.updateTicket).Methods("PUT")
 	app.Router.HandleFunc("/ticket/{id}", app.deleteTicket).Methods("DELETE")
 }
