@@ -18,14 +18,6 @@ type Food struct {
 	Date      string    `json:"date"` // Representing the DateAdded column
 }
 
-// type Ticket struct {
-// 	Id        int       `json:"id"`
-// 	FoodId    int       `json:"food_id"`
-// 	Date      string    `json:"date"` // Assuming date is stored in a string format otherwise use time.Time for actual date handling
-// 	Expire    time.Time `json:"expire"`
-// 	Status    string    `json:"status"`
-// }
-
 // func getFoodNow(db *sql.DB) ([]Food, error){
 // 	query := "SELECT id, name , meal, detail, stock, price, picture , date from Food"
 // 	rows, err := db.Query(query)
@@ -54,7 +46,6 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 
 	// Get the current time in Japan
 	currentTime := time.Now().In(loc)
-	fmt.Println("Current time in Japan:", currentTime)
 
 	// Extract the year, month, and day from the current time to use in lunch/dinner time ranges
 	year, month, day := currentTime.Date()
@@ -82,10 +73,6 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
             Picture: NotAvailableFood,
         }}, nil
     }
-
-	//fmt.Println("Meal type:", mealType)
-	
-	//mealType := "Dinner"
     // Use CURRENT_DATE to filter by today's date, which matches the 'YYYY-MM-DD' format of your Date field
     query := "SELECT id, name, meal, detail, stock, price, picture, date FROM Food WHERE meal = ? AND DATE(date) = CURRENT_DATE"
 
@@ -102,7 +89,20 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
         if err != nil {
             return nil, err
         }
-        foods = append(foods, f)
+		if f.Stock > 0 {
+			foods = append(foods, f)
+		} else {
+			return []Food{{
+				Id:      f.Id,
+				Name:    "Food is not available.",
+				Meal:    "Food is not available.",
+				Detail:  "It's not meal time currently",
+				Stock:   0,
+				Price:   0.00,
+				Picture: NotAvailableFood,
+			}}, nil
+		}
+        
     }
 
     if err = rows.Err(); err != nil {
@@ -157,5 +157,24 @@ func (f *Food) deleteFood(db *sql.DB) error {
 	query := fmt.Sprintf("delete from Food where id=%v", f.Id )
 	_, err := db.Exec(query)
 	return err
+}
+
+func (f *Food) DecrementStock(db *sql.DB ,foodID int) error {
+    query := "UPDATE Food SET stock = stock - 1 WHERE id = ? AND stock > 0"
+    result, err := db.Exec(query, foodID)
+    if err != nil {
+        return err
+    }
+
+    rowsAffected, err := result.RowsAffected()
+    if err != nil {
+        return err
+    }
+
+    if rowsAffected == 0 {
+        return errors.New("no such row exists or stock is already zero")
+    }
+
+    return nil
 }
 

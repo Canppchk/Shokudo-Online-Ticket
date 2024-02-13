@@ -156,27 +156,173 @@ func (app *App) deleteFood( w http.ResponseWriter, r *http.Request){
 	sendResponse(w, http.StatusOK , map[string]string{"result": "successful deletion"})
 }
 
-// func (app *App) getTicket( w http.ResponseWriter, r *http.Request){
-// 	vars := mux.Vars(r)
-// 	key,err := strconv.Atoi(vars["id"])
-// 	if err != nil {
-// 		sendError(w, http.StatusInternalServerError, "Invalid ticket ID")
-// 		return
-// 	}
+// -------------------------------------------------------------
+func (app *App) createTicket(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	key := vars["owner"]
+    // Fetch the current available foods
+    foods, err := getFoodNow(app.DB)
+    if err != nil {
+        sendError(w, http.StatusInternalServerError, "Failed to fetch current food")
+        return
+    }
+	// fmt.Println(foods[0].Id)
+    // Check if there are available foods
+    if len(foods) == 0 || foods[0].Id == 0 { // Assuming an Id of 0 indicates no available food
+        sendError(w, http.StatusNotFound, "No food available at the moment")
+        return
+    }
 
-// 	f := Ticket{Id: key}
-// 	err = f.getTicket(app.DB)
-// 	if err != nil {
-// 		switch err {
-// 		case sql.ErrNoRows:
-// 			sendError(w, http.StatusNotFound, "Ticket not found")
-// 		default:
-// 			sendError(w, http.StatusInternalServerError, err.Error())
-// 		}
-// 		return
-// 	}
-// 	sendResponse(w, http.StatusOK , f)
+    // Select the first available food item for the ticket
+    f := foods[0]
+
+    // Create a new ticket using the selected food's Id
+    t := Ticket{
+        FoodId: f.Id,
+		Owner:key,
+        // Set other fields like Date, Expire, Status as per your requirement
+    }
+
+    // Insert the new ticket into the database
+    err = t.createTicket(app.DB)
+    if err != nil {
+        sendError(w, http.StatusInternalServerError, err.Error())
+        return
+    }
+
+	err = f.DecrementStock(app.DB , f.Id)
+	if err != nil {
+		// Handle the error appropriately, maybe roll back the ticket creation or log the error
+		sendError(w, http.StatusInternalServerError, "Failed to decrement food stock")
+		return
+	}
+
+    sendResponse(w, http.StatusCreated, t)
+
+}
+
+// func (app *App) getTicket(w http.ResponseWriter, r *http.Request) {
+//     vars := mux.Vars(r)
+//     id, err := strconv.Atoi(vars["id"])
+//     if err != nil {
+//         sendError(w, http.StatusBadRequest, "Invalid ticket ID")
+//         return
+//     }
+
+//     t := Ticket{Id: id}
+//     err = t.getTicket(app.DB)
+//     if err != nil {
+//         if err == sql.ErrNoRows {
+//             sendError(w, http.StatusNotFound, "Ticket not found")
+//         } else {
+//             sendError(w, http.StatusInternalServerError, err.Error())
+//         }
+//         return
+//     }
+
+//     sendResponse(w, http.StatusOK, t)
 // }
+
+func (app *App) getTicket( w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	key := vars["owner"]
+
+	foods, err := getFoodNow(app.DB)
+    if err != nil {
+        sendError(w, http.StatusInternalServerError, "Failed to fetch current food")
+        return
+    }
+	// fmt.Println(foods[0].Id)
+    // Check if there are available foods
+    if len(foods) == 0 || foods[0].Id == 0 { // Assuming an Id of 0 indicates no available food
+        sendError(w, http.StatusNotFound, "No food available at the moment")
+        return
+    }
+
+    // Select the first available food item for the ticket
+    f := foods[0]
+	//fmt.Println(key == "Admin")
+	
+	if key == "Admin"{
+		t := Ticket{
+			FoodId: f.Id,
+			Owner:key,
+			Status: "Pending",
+		}
+		err = t.getTicket(app.DB)
+		if err != nil {
+			switch err {
+			case sql.ErrNoRows:
+				sendError(w, http.StatusNotFound, "Ticket not found")
+			default:
+				sendError(w, http.StatusInternalServerError, err.Error())
+			}
+			return
+		}
+		sendResponse(w, http.StatusOK , t)
+	}else{
+		t := Ticket{
+        FoodId: f.Id,
+		Owner:key,
+        Status: "Useable",
+    	}
+		err = t.getTicket(app.DB)
+		if err != nil {
+			switch err {
+			case sql.ErrNoRows:
+				sendError(w, http.StatusNotFound, "Ticket not found")
+			default:
+				sendError(w, http.StatusInternalServerError, err.Error())
+			}
+			return
+		}
+		sendResponse(w, http.StatusOK , t)
+	}
+}
+
+func (app *App) updateTicket(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    id, err := strconv.Atoi(vars["id"])
+    if err != nil {
+        sendError(w, http.StatusBadRequest, "Invalid ticket ID")
+        return
+    }
+
+    var t Ticket
+    err = json.NewDecoder(r.Body).Decode(&t)
+    if err != nil {
+        sendError(w, http.StatusBadRequest, "Invalid request payload")
+        return
+    }
+    t.Id = id
+
+    err = t.updateTicket(app.DB)
+    if err != nil {
+        sendError(w, http.StatusInternalServerError, err.Error())
+        return
+    }
+
+    sendResponse(w, http.StatusOK, t)
+}
+
+func (app *App) deleteTicket(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    id, err := strconv.Atoi(vars["id"])
+    if err != nil {
+        sendError(w, http.StatusBadRequest, "Invalid ticket ID")
+        return
+    }
+
+    t := Ticket{Id: id}
+    err = t.deleteTicket(app.DB)
+    if err != nil {
+        sendError(w, http.StatusInternalServerError, err.Error())
+        return
+    }
+
+    sendResponse(w, http.StatusOK, map[string]string{"result": "success"})
+}
+
 
 func (app *App) handleRoutes(){
 	app.Router.HandleFunc("/food/now", app.getFoodNow).Methods("GET")
@@ -184,5 +330,8 @@ func (app *App) handleRoutes(){
 	app.Router.HandleFunc("/food", app.createFood).Methods("POST")
 	app.Router.HandleFunc("/food/{id}", app.updateFood).Methods("PUT")
 	app.Router.HandleFunc("/food/{id}", app.deleteFood).Methods("DELETE")
-	// app.Router.HandleFunc("/ticket/{id}", app.getTicket).Methods("GET")
+	app.Router.HandleFunc("/ticket/{owner}", app.createTicket).Methods("POST")
+	app.Router.HandleFunc("/ticket/{owner}", app.getTicket).Methods("GET")
+	app.Router.HandleFunc("/ticket/{id}", app.updateTicket).Methods("PUT")
+	app.Router.HandleFunc("/ticket/{id}", app.deleteTicket).Methods("DELETE")
 }
