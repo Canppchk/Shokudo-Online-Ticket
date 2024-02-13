@@ -83,7 +83,7 @@ func (t *Ticket) createTicket(db *sql.DB) error {
 
 func (t *Ticket) updateTicket(db *sql.DB) error {
     query := "UPDATE Ticket SET Status = ? WHERE Id = ?"
-    _, err := db.Exec(query, t.Status, t.Id, t.Owner)
+    _, err := db.Exec(query, t.Status, t.Id)
     return err
 }
 

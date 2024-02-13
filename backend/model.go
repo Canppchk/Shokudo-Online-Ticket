@@ -93,7 +93,7 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 			foods = append(foods, f)
 		} else {
 			return []Food{{
-				Id:      0,
+				Id:      f.Id,
 				Name:    "Food is not available.",
 				Meal:    "Food is not available.",
 				Detail:  "It's not meal time currently",

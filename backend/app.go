@@ -241,10 +241,12 @@ func (app *App) getTicket( w http.ResponseWriter, r *http.Request){
 
     // Select the first available food item for the ticket
     f := foods[0]
+	//fmt.Println(key == "Admin")
 	
 	if key == "Admin"{
 		t := Ticket{
 			FoodId: f.Id,
+			Owner:key,
 			Status: "Pending",
 		}
 		err = t.getTicket(app.DB)
