@@ -39,7 +39,17 @@ SELECT Ticket.Id, Food.Name AS Food_name, Food.Meal, Food.Price, Food.Picture, T
 FROM Ticket
 JOIN Food ON Ticket.Food_Id = Food.Id;
 
+-- Rename the 'Food_Id' column to 'FoodId'
+ALTER TABLE Ticket CHANGE COLUMN Food_Id FoodId INT;
 
+-- Drop the 'Expire' column
+ALTER TABLE Ticket DROP COLUMN Expire;
+
+-- Add a new 'Owner' column, assuming it's of type VARCHAR
+ALTER TABLE Ticket ADD COLUMN Owner VARCHAR(255);
+
+------------------------------------------
+User TABLE
 # Create a user table.
 # Role: true represents "admin", while false represents "customer".
 
