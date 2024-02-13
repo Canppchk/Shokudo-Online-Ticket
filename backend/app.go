@@ -249,7 +249,7 @@ func (app *App) getTicket( w http.ResponseWriter, r *http.Request){
 			Owner:key,
 			Status: "Pending",
 		}
-		err = t.getTicket(app.DB)
+		tickets , err := t.getTicket(app.DB)
 		if err != nil {
 			switch err {
 			case sql.ErrNoRows:
@@ -259,14 +259,14 @@ func (app *App) getTicket( w http.ResponseWriter, r *http.Request){
 			}
 			return
 		}
-		sendResponse(w, http.StatusOK , t)
+		sendResponse(w, http.StatusOK , tickets)
 	}else{
 		t := Ticket{
         FoodId: f.Id,
 		Owner:key,
         Status: "Useable",
     	}
-		err = t.getTicket(app.DB)
+		tickets , err := t.getTicket(app.DB)
 		if err != nil {
 			switch err {
 			case sql.ErrNoRows:
@@ -276,7 +276,7 @@ func (app *App) getTicket( w http.ResponseWriter, r *http.Request){
 			}
 			return
 		}
-		sendResponse(w, http.StatusOK , t)
+		sendResponse(w, http.StatusOK , tickets)
 	}
 }
 
