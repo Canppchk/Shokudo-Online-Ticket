@@ -31,29 +31,71 @@ type Ticket struct {
 //     return db.QueryRow(query, t.Id).Scan(&t.FoodId, &t.Date, &t.Status, &t.Owner)
 // }
 
-func (t *Ticket) getTicket(db *sql.DB) error {
-    var query string
-    var args []interface{}
+// func (t *Ticket) getTicket(db *sql.DB) error {
+//     var query string
+//     var args []interface{}
 
-    // If the Owner is "Admin", retrieve tickets for all owners
-    if t.Owner == "Admin" {
-        query = "SELECT Id, Date, Owner FROM Ticket WHERE FoodId = ? AND Status = ?"
-        args = append(args, t.FoodId, t.Status)
-    } else {
-        // For other owners, filter by the specific owner
-        query = "SELECT Id, Date FROM Ticket WHERE FoodId = ? AND Owner = ? AND Status = ?"
-        args = append(args, t.FoodId, t.Owner, t.Status)
-    }
+//     // If the Owner is "Admin", retrieve tickets for all owners
+//     if t.Owner == "Admin" {
+//         query = "SELECT Id, Date, Owner FROM Ticket WHERE FoodId = ? AND Status = ?"
+//         args = append(args, t.FoodId, t.Status)
+//     } else {
+//         // For other owners, filter by the specific owner
+//         query = "SELECT Id, Date FROM Ticket WHERE FoodId = ? AND Owner = ? AND Status = ?"
+//         args = append(args, t.FoodId, t.Owner, t.Status)
+//     }
 
-    // Execute the query with the appropriate arguments
-    row := db.QueryRow(query, args...)
+//     // Execute the query with the appropriate arguments
+//     row := db.QueryRow(query, args...)
 
-    // For "Admin", also scan the Owner field from the result set
-    if t.Owner == "Admin" {
-        return row.Scan(&t.Id, &t.Date, &t.Owner)
-    } else {
-        return row.Scan(&t.Id, &t.Date)
-    }
+//     // For "Admin", also scan the Owner field from the result set
+//     if t.Owner == "Admin" {
+//         return row.Scan(&t.Id, &t.Date, &t.Owner)
+//     } else {
+//         return row.Scan(&t.Id, &t.Date)
+//     }
+// }
+
+func (t *Ticket) getTicket(db *sql.DB) ([]Ticket, error) {
+	var tickets []Ticket // Slice to hold the resulting tickets
+
+	var query string
+	var args []interface{}
+
+	// If the Owner is "Admin", retrieve tickets for all owners
+	if t.Owner == "Admin" {
+		query = "SELECT Id, FoodId, Date, Status, Owner FROM Ticket WHERE FoodId = ? AND Status = ?"
+		args = append(args, t.FoodId, t.Status)
+	} else {
+		// For other owners, filter by the specific owner
+		query = "SELECT Id, FoodId, Date, Status, Owner FROM Ticket WHERE FoodId = ? AND Owner = ? AND Status = ?"
+		args = append(args, t.FoodId, t.Owner, t.Status)
+	}
+
+	// Execute the query
+	rows, err := db.Query(query, args...)
+	if err != nil {
+		return nil, err // Return the error to the caller
+	}
+	defer rows.Close() // Ensure the rows are closed after the function returns
+
+	// Iterate over the rows
+	for rows.Next() {
+		var ticket Ticket
+		// Scan the result into a new Ticket struct
+		if err := rows.Scan(&ticket.Id, &ticket.FoodId, &ticket.Date, &ticket.Status, &ticket.Owner); err != nil {
+			return nil, err // Return the error to the caller
+		}
+		// Append the new Ticket to the slice
+		tickets = append(tickets, ticket)
+	}
+
+	// Check for errors from iterating over rows
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return tickets, nil // Return the slice of tickets
 }
 
 
