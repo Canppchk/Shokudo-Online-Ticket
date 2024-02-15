@@ -1,6 +1,5 @@
 import { Menu } from "./types";
 
-// http://localhost:10000/food/now
 export const getAllMenusGo = async (): Promise<Menu[]> => {
     const res = await fetch('http://localhost:10000/food/now',{
         cache: 'no-store' //SSR
@@ -19,8 +18,8 @@ export const getAllBasketGo = async (): Promise<Menu[]> => {
 }
 
 export const addMenuGo = async (menu: Menu) => {
-    const res = await fetch('http://localhost:3001/menus',{
-        method: "POST",
+    const res = await fetch(`http://localhost:10000/food/${menu.id}`,{
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },

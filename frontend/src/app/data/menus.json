@@ -25,6 +25,16 @@
     {
       "id": "1e95d3d7-66be-4b0e-bc8b-e0dd7d5f34fe",
       "name": "kome"
+    },
+    {
+      "id": 20,
+      "name": "dinner for 15/2/2024",
+      "meal": "Dinner",
+      "detail": "Test",
+      "stock": 1,
+      "price": 5,
+      "picture": "base64-encoded-image-string",
+      "date": "2024-02-15"
     }
   ]
 }

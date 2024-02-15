@@ -7,7 +7,7 @@ import { v4 as uuidv4} from 'uuid';
 interface MenuProps{
     menus: Menu[]
     addMenu: (additionalMenu: Menu) => void
-    deleteMenu: (menuId: string) => void
+    deleteMenu: (menuId: number) => void
 }
 
 const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
@@ -21,7 +21,8 @@ const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
             return;
         }
 
-        await addMenu({ id: uuidv4(), name: text });
+        // await addMenu({ id: uuidv4(), name: text });
+        await addMenu({ id: 3, name: text, meal: 'dinner', detail: 'aaaa', stock: 3, price: 400, picture: 'aaa', date: 'aaa'});
         setText('');
     };
 
@@ -42,7 +43,7 @@ const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
                 menus.map(menu => (
                     <div key = {menu.id} className='flex items-center space-x-2'>
                         <div className='m-2 text-gray-500'>
-                            {menu.name}
+                            {menu.meal}
                         </div>
                         <button className='px-1 bg-gray-500 text-white shadow-md rounded'>⚙️</button>
                         <button onClick={() => {deleteMenu(menu.id)}} className='px-2 bg-gray-500 text-white shadow-md rounded'>-</button>

@@ -36,7 +36,7 @@ export default function Home() {
         fetchBasket();
     }
 
-    const deleteMenu = (menuId: string) => {
+    const deleteMenu = (menuId: number) => {
         deleteMenuGo(menuId)
         fetchMenus();
     }

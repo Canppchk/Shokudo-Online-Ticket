@@ -1,7 +1,7 @@
 export interface Menu {
     id: number
     // id: string
-    // name: string
+    name: string
     meal: string
     detail: string
     stock: number

@@ -14,7 +14,7 @@ const Basket = ({basket}:BasketProps) => {
         basket.map(menu => (
           <div key = {menu.id} className='flex items-center space-x-2'>
             <div className='m-2 text-gray-500'>
-              {menu.name}
+              {menu.meal}
             </div>
           </div>
             ))
