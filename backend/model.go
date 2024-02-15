@@ -80,6 +80,7 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
     if err != nil {
         return nil, err
     }
+	
     defer rows.Close()
 
     var foods []Food
@@ -108,7 +109,18 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
     if err = rows.Err(); err != nil {
         return nil, err
     }
-
+	if foods == nil {
+		return []Food{{
+            Id:      0,
+            Name:    "Food is not available.",
+            Meal:    "Food is not available.",
+            Detail:  "It's not meal time currently",
+            Stock:   0,
+            Price:   0.00,
+            Picture: NotAvailableFood,
+        }}, nil
+	}
+	
     return foods, nil
 }
 
