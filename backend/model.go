@@ -8,14 +8,14 @@ import (
 )
 
 type Food struct {
-	Id        int       `json:"id"`
-	Name      string    `json:"name"`
-	Meal      string    `json:"meal"`  
-	Detail    string    `json:"detail"`
-	Stock     int       `json:"stock"`
-	Price     float64   `json:"price"`
-	Picture   string    `json:"picture"` // Store Base64 encoded image
-	Date      string    `json:"date"` // Representing the DateAdded column
+	Id      int     `json:"id"`
+	Name    string  `json:"name"`
+	Meal    string  `json:"meal"`
+	Detail  string  `json:"detail"`
+	Stock   int     `json:"stock"`
+	Price   float64 `json:"price"`
+	Picture string  `json:"picture"` // Store Base64 encoded image
+	Date    string  `json:"date"`    // Representing the DateAdded column
 }
 
 // func getFoodNow(db *sql.DB) ([]Food, error){
@@ -26,19 +26,19 @@ type Food struct {
 // 		return nil,err
 // 	}
 
-// 	foods := []Food{}
-// 	for rows.Next(){
-// 		var f Food
-// 		err := rows.Scan(&f.Id, &f.Name , &f.Meal, &f.Detail, &f.Stock, &f.Price, &f.Picture , &f.Date)
-// 		if err != nil {
-// 			return nil,err
-// 		}
-// 		foods = append(foods,f)
-// 	}
-// 	return foods, nil
-// }
+//		foods := []Food{}
+//		for rows.Next(){
+//			var f Food
+//			err := rows.Scan(&f.Id, &f.Name , &f.Meal, &f.Detail, &f.Stock, &f.Price, &f.Picture , &f.Date)
+//			if err != nil {
+//				return nil,err
+//			}
+//			foods = append(foods,f)
+//		}
+//		return foods, nil
+//	}
 func getFoodNow(db *sql.DB) ([]Food, error) {
-    // Set the location to Japan Standard Time (JST), UTC+9
+	// Set the location to Japan Standard Time (JST), UTC+9
 	loc, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
 		fmt.Printf("Failed to load location for JST: %v\n", err)
@@ -62,34 +62,34 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 	} else if currentTime.After(lunchEnd) && currentTime.Before(dinnerEnd) {
 		mealType = "Dinner"
 	} else {
-        // Return a slice with one Food item indicating it's not meal time
-        return []Food{{
-            Id:      0,
-            Name:    "Food is not available.",
-            Meal:    "Food is not available.",
-            Detail:  "It's not meal time currently",
-            Stock:   0,
-            Price:   0.00,
-            Picture: NotAvailableFood,
-        }}, nil
-    }
-    // Use CURRENT_DATE to filter by today's date, which matches the 'YYYY-MM-DD' format of your Date field
-    query := "SELECT id, name, meal, detail, stock, price, picture, date FROM Food WHERE meal = ? AND DATE(date) = CURRENT_DATE"
+		// Return a slice with one Food item indicating it's not meal time
+		return []Food{{
+			Id:      0,
+			Name:    "Food is not available.",
+			Meal:    "Food is not available.",
+			Detail:  "It's not meal time currently",
+			Stock:   0,
+			Price:   0.00,
+			Picture: NotAvailableFood,
+		}}, nil
+	}
+	// Use CURRENT_DATE to filter by today's date, which matches the 'YYYY-MM-DD' format of your Date field
+	query := "SELECT id, name, meal, detail, stock, price, picture, date FROM Food WHERE meal = ? AND DATE(date) = CURRENT_DATE"
 
-    rows, err := db.Query(query, mealType)
-    if err != nil {
-        return nil, err
-    }
-	
-    defer rows.Close()
+	rows, err := db.Query(query, mealType)
+	if err != nil {
+		return nil, err
+	}
 
-    var foods []Food
-    for rows.Next() {
-        var f Food
-        err := rows.Scan(&f.Id, &f.Name, &f.Meal, &f.Detail, &f.Stock, &f.Price, &f.Picture, &f.Date)
-        if err != nil {
-            return nil, err
-        }
+	defer rows.Close()
+
+	var foods []Food
+	for rows.Next() {
+		var f Food
+		err := rows.Scan(&f.Id, &f.Name, &f.Meal, &f.Detail, &f.Stock, &f.Price, &f.Picture, &f.Date)
+		if err != nil {
+			return nil, err
+		}
 		if f.Stock > 0 {
 			foods = append(foods, f)
 		} else {
@@ -103,90 +103,87 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 				Picture: NotAvailableFood,
 			}}, nil
 		}
-        
-    }
 
-    if err = rows.Err(); err != nil {
-        return nil, err
-    }
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
 	if foods == nil {
 		return []Food{{
-            Id:      0,
-            Name:    "Food is not available.",
-            Meal:    "Food is not available.",
-            Detail:  "It's not meal time currently",
-            Stock:   0,
-            Price:   0.00,
-            Picture: NotAvailableFood,
-        }}, nil
+			Id:      0,
+			Name:    "Food is not available.",
+			Meal:    "Food is not available.",
+			Detail:  "It's not meal time currently",
+			Stock:   0,
+			Price:   0.00,
+			Picture: NotAvailableFood,
+		}}, nil
 	}
-	
-    return foods, nil
-}
 
+	return foods, nil
+}
 
 func (f *Food) getFood(db *sql.DB) error {
 	query := fmt.Sprintf("SELECT name , meal, detail, stock, price, picture , date FROM Food where id=%v", f.Id)
 	row := db.QueryRow(query)
-	err := row.Scan(&f.Name , &f.Meal, &f.Detail, &f.Stock, &f.Price, &f.Picture , &f.Date)
+	err := row.Scan(&f.Name, &f.Meal, &f.Detail, &f.Stock, &f.Price, &f.Picture, &f.Date)
 
-	if err !=  nil{
+	if err != nil {
 		return err
 	}
 	return nil
 }
 
 func (f *Food) createFood(db *sql.DB) error {
-	query := fmt.Sprintf("insert into Food(name , meal, detail, stock, price, picture , date) values('%v' , '%v', '%v', %v, %v, '%v' , DATE(NOW()) )", f.Name , f.Meal, f.Detail, f.Stock, f.Price, f.Picture )
+	query := fmt.Sprintf("insert into Food(name , meal, detail, stock, price, picture , date) values('%v' , '%v', '%v', %v, %v, '%v' , DATE(NOW()) )", f.Name, f.Meal, f.Detail, f.Stock, f.Price, f.Picture)
 	result, err := db.Exec(query)
-	if err !=  nil{
+	if err != nil {
 		return err
 	}
 
-	id,err := result.LastInsertId()
-	if err !=  nil{
+	id, err := result.LastInsertId()
+	if err != nil {
 		return err
 	}
 	f.Id = int(id)
 	return nil
 }
 
-
 func (f *Food) updateFood(db *sql.DB) error {
-	query := fmt.Sprintf("update Food set name='%v' , meal='%v', detail='%v', stock=%v, price=%v, picture='%v' where id=%v", f.Name , f.Meal, f.Detail, f.Stock, f.Price, f.Picture, f.Id )
-	result, err := db.Exec(query)
+	query := fmt.Sprintf("update Food set name='%v' , meal='%v', detail='%v', stock=%v, price=%v, picture='%v' where id=%v", f.Name, f.Meal, f.Detail, f.Stock, f.Price, f.Picture, f.Id)
+	result, _ := db.Exec(query)
 	// log.Println(result.RowsAffected())
-	rowsAffected,err := result.RowsAffected()
-	if rowsAffected == 0{
-			return errors.New("No such row exists")
+	rowsAffected, err := result.RowsAffected()
+	if rowsAffected == 0 {
+		return errors.New("no such row exists")
 	}
-	
+
 	return err
 
 }
 
 func (f *Food) deleteFood(db *sql.DB) error {
-	query := fmt.Sprintf("delete from Food where id=%v", f.Id )
+	query := fmt.Sprintf("delete from Food where id=%v", f.Id)
 	_, err := db.Exec(query)
 	return err
 }
 
-func (f *Food) DecrementStock(db *sql.DB ,foodID int) error {
-    query := "UPDATE Food SET stock = stock - 1 WHERE id = ? AND stock > 0"
-    result, err := db.Exec(query, foodID)
-    if err != nil {
-        return err
-    }
+func (f *Food) DecrementStock(db *sql.DB, foodID int) error {
+	query := "UPDATE Food SET stock = stock - 1 WHERE id = ? AND stock > 0"
+	result, err := db.Exec(query, foodID)
+	if err != nil {
+		return err
+	}
 
-    rowsAffected, err := result.RowsAffected()
-    if err != nil {
-        return err
-    }
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
 
-    if rowsAffected == 0 {
-        return errors.New("no such row exists or stock is already zero")
-    }
+	if rowsAffected == 0 {
+		return errors.New("no such row exists or stock is already zero")
+	}
 
-    return nil
+	return nil
 }
-
