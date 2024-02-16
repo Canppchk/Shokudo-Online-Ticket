@@ -402,5 +402,5 @@ func (app *App) handleRoutes() {
 	app.Router.HandleFunc("/ticket/{id}", app.deleteTicket).Methods("DELETE")
 	app.Router.HandleFunc("/register", app.createUser).Methods("POST")
 	app.Router.HandleFunc("/user/{id}", app.getUserById).Methods("GET")
-	app.Router.HandleFunc("/authenticate", app.authenticateUser).Methods("POST")
+	app.Router.HandleFunc("/authenticate", app.authenticateUser).Methods("GET")
 }
