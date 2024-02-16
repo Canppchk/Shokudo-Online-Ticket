@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 )
 
@@ -43,9 +44,24 @@ func (u *User) getUserByEmail(db *sql.DB) error {
 	query := fmt.Sprintf("SELECT password FROM User where email='%s'", u.Email)
 	row := db.QueryRow(query)
 	err := row.Scan(&u.Password)
-
 	if err !=  nil{
 		return err
 	}
 	return nil
+}
+func (u *User) checkDuplicateEmail(db *sql.DB) error {
+	query := fmt.Sprintf("SELECT COUNT(*) FROM User WHERE email = '%s'", u.Email)
+	var count int
+	err := db.QueryRow(query).Scan(&count)
+	if err != nil {
+		return err
+	}
+
+	if count == 0 {
+		// No duplicates found, email is not in the database
+		return nil
+	} else {
+		// Email is a duplicate
+		return errors.New("email already exists in the database")
+	}
 }
