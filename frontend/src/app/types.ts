@@ -9,3 +9,14 @@ export interface Menu {
     picture: string
     date: string
 }
+
+export interface addMenu {
+    id: number
+    name: string
+    meal: string
+    detail: string
+    stock: number
+    price: number
+    picture: string
+    date: string
+}

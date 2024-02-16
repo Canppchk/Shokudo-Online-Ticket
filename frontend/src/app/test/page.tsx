@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Counter from "./components/Counter";
 import MenuManagement from "./components/MenuManagement";
-import { Menu } from "../types";
+import { Menu, addMenu } from "../types";
 import { addCartGo, addMenuGo, deleteMenuGo, getAllBasketGo, getAllMenusGo } from "../api";
 import Basket from "./components/Basket";
 import MenuListTest from "./components/MenuListTest";
@@ -22,13 +22,13 @@ export default function Home() {
     }
 
     useEffect(() => {
-        // fetchMenus();
+        fetchMenus();
         fetchBasket();
     },[])
 
-    const addMenu = async (additionalMenu:Menu) => {
+    const addMenu = async (additionalMenu:addMenu) => {
         addMenuGo(additionalMenu)
-        // fetchMenus();
+        fetchMenus();
     }
 
     const addCart = async (additionalMenu:Menu) => {

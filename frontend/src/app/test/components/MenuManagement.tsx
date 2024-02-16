@@ -1,12 +1,12 @@
 'use client'
 
-import { Menu } from '@/app/types'
+import { Menu, addMenu } from '@/app/types'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { v4 as uuidv4} from 'uuid';
 
 interface MenuProps{
     menus: Menu[]
-    addMenu: (additionalMenu: Menu) => void
+    addMenu: (additionalMenu: addMenu) => void
     deleteMenu: (menuId: number) => void
 }
 
@@ -22,7 +22,7 @@ const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
         }
 
         // await addMenu({ id: uuidv4(), name: text });
-        await addMenu({ id: 5, name: text, meal: 'Dinner', detail: 'bibibi', stock: 3, price: 400, picture: 'aaa', date: '2024-02-15'});
+        await addMenu({id: 1 , name: text, meal: 'Lunch', detail: 'bibibi', stock: 3, price: 400.00, picture: 'aaa', date: ""});
         setText('');
     };
 
