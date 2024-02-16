@@ -1,4 +1,14 @@
-import { Menu, addMenu } from "./types";
+import { Menu, User} from "./types";
+
+export const userValidate = async (user: User) => {
+    const res = await fetch('http://localhost:10000/food/now',{
+        cache: 'no-store' 
+    })
+    const resultVal = res.
+
+    return 
+
+}
 
 export const getAllMenusGo = async (): Promise<Menu[]> => {
     const res = await fetch('http://localhost:10000/food/now',{
@@ -17,7 +27,7 @@ export const getAllBasketGo = async (): Promise<Menu[]> => {
     return basket;
 }
 
-export const addMenuGo = async (menu: addMenu) => {
+export const addMenuGo = async (menu: Menu) => {
     const res = await fetch('http://localhost:10000/food',{
         method: "POST",
         headers: {
