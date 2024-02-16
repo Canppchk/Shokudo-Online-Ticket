@@ -387,7 +387,8 @@ func (app *App) authenticateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sendResponse(w, http.StatusOK, map[string]string{"result": "Account successfully authenticated"})
+	// sendResponse(w, http.StatusOK, map[string]string{"result": "Account successfully authenticated"})
+	sendResponse(w, http.StatusOK, map[string]bool{"role": u.Role})
 }
 
 func (app *App) handleRoutes() {

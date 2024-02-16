@@ -41,9 +41,9 @@ func (u *User) getUserById(db *sql.DB) error {
 }
 
 func (u *User) getUserByEmail(db *sql.DB) error {
-	query := fmt.Sprintf("SELECT password FROM User where email='%s'", u.Email)
+	query := fmt.Sprintf("SELECT password ,role FROM User where email='%s'", u.Email)
 	row := db.QueryRow(query)
-	err := row.Scan(&u.Password)
+	err := row.Scan(&u.Password, &u.Role)
 	if err !=  nil{
 		return err
 	}
