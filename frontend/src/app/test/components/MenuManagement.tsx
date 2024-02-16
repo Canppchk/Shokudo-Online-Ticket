@@ -22,7 +22,7 @@ const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
         }
 
         // await addMenu({ id: uuidv4(), name: text });
-        await addMenu({id: 1 , name: text, meal: 'Lunch', detail: 'bibibi', stock: 3, price: 400.00, picture: 'aaa', date: ""});
+        await addMenu({id: 1 , name: text, meal: 'Dinner', detail: 'bibibi', stock: 3, price: 400.00, picture: 'aaa', date: ""});
         setText('');
     };
 
