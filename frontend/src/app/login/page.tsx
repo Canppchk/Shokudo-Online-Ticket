@@ -21,18 +21,19 @@ export default function LoginPage() {
 
 
     const onLogin = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.post("/api/users/login", user);
-            console.log("Login success", response.data);
-            toast.success("Login success");
-            router.push("/profile");
-        } catch (error:any) {
-            console.log("Login failed", error.message);
-            toast.error(error.message);
-        } finally{
-        setLoading(false);
-        }
+        console.log(user)
+        // try {
+        //     setLoading(true);
+        //     const response = await axios.post("/api/users/login", user);
+        //     console.log("Login success", response.data);
+        //     toast.success("Login success");
+        //     router.push("/profile");
+        // } catch (error:any) {
+        //     console.log("Login failed", error.message);
+        //     toast.error(error.message);
+        // } finally{
+        // setLoading(false);
+        // }
     }
 
     useEffect(() => {
