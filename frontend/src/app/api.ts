@@ -18,8 +18,8 @@ export const getAllBasketGo = async (): Promise<Menu[]> => {
 }
 
 export const addMenuGo = async (menu: Menu) => {
-    const res = await fetch(`http://localhost:10000/food/${menu.id}`,{
-        method: "PUT",
+    const res = await fetch('http://localhost:10000/food/',{
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
@@ -37,7 +37,7 @@ export const addCartGo = async (menu: Menu) => {
     })
 }
 
-export const deleteMenuGo = async (menuId: string) => {
+export const deleteMenuGo = async (menuId: number) => {
     const res = await fetch(`http://localhost:3001/menus/${menuId}`, {
         method: "DELETE"
     });

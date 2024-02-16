@@ -22,13 +22,13 @@ export default function Home() {
     }
 
     useEffect(() => {
-        fetchMenus();
+        // fetchMenus();
         fetchBasket();
     },[])
 
     const addMenu = async (additionalMenu:Menu) => {
         addMenuGo(additionalMenu)
-        fetchMenus();
+        // fetchMenus();
     }
 
     const addCart = async (additionalMenu:Menu) => {
