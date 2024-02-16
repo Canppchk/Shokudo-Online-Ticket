@@ -330,6 +330,12 @@ func (app *App) createUser(w http.ResponseWriter, r *http.Request) {
 		sendError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
+
+	if err = u.getUserByEmail(app.DB); err != nil {
+		sendError(w, http.StatusBadRequest, "Email already registered")
+		return
+	}
+
 	err = u.createUser(app.DB)
 	if err != nil {
 		sendError(w, http.StatusInternalServerError, err.Error())
