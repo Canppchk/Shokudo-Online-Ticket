@@ -331,7 +331,8 @@ func (app *App) createUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = u.getUserByEmail(app.DB); err != nil {
+	err = u.getUserByEmail(app.DB);
+	if err != nil {
 		sendError(w, http.StatusBadRequest, "Email already registered")
 		return
 	}
