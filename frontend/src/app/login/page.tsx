@@ -58,7 +58,7 @@ export default function LoginPage() {
         {loading ? (
         <h1>Processing</h1>
         ) : (
-        <Image src="/images/naist_logo_fix.png" alt="Login Logo" width={100} height={100} />
+        <Image src="/naist_logo_fix.png" alt="Login Logo" width={100} height={100} />
         )}
         <hr />
         <input 
