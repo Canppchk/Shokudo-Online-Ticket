@@ -1,13 +1,13 @@
 'use client'
 
-import { Menu } from '@/app/types'
+import { Menu, addMenu } from '@/app/types'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { v4 as uuidv4} from 'uuid';
 
 interface MenuProps{
     menus: Menu[]
-    addMenu: (additionalMenu: Menu) => void
-    deleteMenu: (menuId: string) => void
+    addMenu: (additionalMenu: addMenu) => void
+    deleteMenu: (menuId: number) => void
 }
 
 const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
@@ -21,7 +21,8 @@ const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
             return;
         }
 
-        await addMenu({ id: uuidv4(), menu: text });
+        // await addMenu({ id: uuidv4(), name: text });
+        await addMenu({id: 1 , name: text, meal: 'Lunch', detail: 'bibibi', stock: 3, price: 400.00, picture: 'aaa', date: ""});
         setText('');
     };
 
@@ -42,10 +43,10 @@ const MenuManagement = ({menus, addMenu, deleteMenu}:MenuProps) => {
                 menus.map(menu => (
                     <div key = {menu.id} className='flex items-center space-x-2'>
                         <div className='m-2 text-gray-500'>
-                            {menu.menu}
+                            {menu.meal}
                         </div>
                         <button className='px-1 bg-gray-500 text-white shadow-md rounded'>⚙️</button>
-                        <button onClick={() => {deleteMenu(menu.id)}} className='px-2 bg-red-700 text-white shadow-md rounded'>-</button>
+                        <button onClick={() => {deleteMenu(menu.id)}} className='px-2 bg-gray-500 text-white shadow-md rounded'>-</button>
                     </div>
                 ))
             }

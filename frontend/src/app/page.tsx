@@ -1,12 +1,25 @@
+'use client'
+
+import { useEffect, useState } from "react";
 import { getAllMenusGo } from "./api";
 import Header from "./components/Header";
 import MenuList from "./components/MenuList";
+import { Menu } from "./types";
 
-export default async function Home() {
+export default function Home() {
     //TODO:temporarily use json-server (npm run json-server)
     //TODO:if we will add function that update datas, chidelen component has to have this method?
-    const menus = await getAllMenusGo();
-    console.log(menus)
+    const [menus, setMenus] = useState<Menu[]>([])
+    const fetchMenus = async () => {
+        const fetchedMenus = await getAllMenusGo()
+        setMenus(fetchedMenus)
+    }
+
+    useEffect(() => {
+        fetchMenus();
+
+    },[])
+
 
     return (
         <div>

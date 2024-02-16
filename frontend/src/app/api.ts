@@ -1,5 +1,4 @@
-import { Menu } from "./types";
-
+import { Menu, addMenu } from "./types";
 
 export const getAllMenusGo = async (): Promise<Menu[]> => {
     const res = await fetch('http://localhost:10000/food/now',{
@@ -9,9 +8,17 @@ export const getAllMenusGo = async (): Promise<Menu[]> => {
 
     return menus;
 }
+export const getAllBasketGo = async (): Promise<Menu[]> => {
+    const res = await fetch('http://localhost:3001/basket',{
+        cache: 'no-store' //SSR
+    })
+    const basket = res.json()
 
-export const addMenuGo = async (menu: Menu) => {
-    const res = await fetch('http://localhost:3001/menus',{
+    return basket;
+}
+
+export const addMenuGo = async (menu: addMenu) => {
+    const res = await fetch('http://localhost:10000/food',{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -20,7 +27,17 @@ export const addMenuGo = async (menu: Menu) => {
     })
 }
 
-export const deleteMenuGo = async (menuId: string) => {
+export const addCartGo = async (menu: Menu) => {
+    const res = await fetch('http://localhost:3001/basket',{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(menu)
+    })
+}
+
+export const deleteMenuGo = async (menuId: number) => {
     const res = await fetch(`http://localhost:3001/menus/${menuId}`, {
         method: "DELETE"
     });
