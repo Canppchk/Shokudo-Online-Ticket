@@ -5,8 +5,10 @@ import {useRouter} from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import Image from 'next/image';
+import { genSaltSync, hashSync } from "bcrypt-ts";
+import { userValidate } from "../api";
 
-
+// source https://github.com/Mister-Hope/bcrypt-ts, https://github.com/hiteshchoudhary/nextjs-fullstack-auth/tree/main
 
 
 export default function LoginPage() {
@@ -21,7 +23,13 @@ export default function LoginPage() {
 
 
     const onLogin = async () => {
+        const salt = genSaltSync(10);
+        const hash = hashSync(user.password, salt);
+        setUser({...user, password: hash})
         console.log(user)
+        const resultVal = userValidate(user)
+        console.log(resultVal)
+        
         // try {
         //     setLoading(true);
         //     const response = await axios.post("/api/users/login", user);

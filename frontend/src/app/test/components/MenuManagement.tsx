@@ -1,12 +1,12 @@
 'use client'
 
-import { Menu, addMenu } from '@/app/types'
+import { Menu} from '@/app/types'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { v4 as uuidv4} from 'uuid';
 
 interface MenuProps{
     menus: Menu[]
-    addMenu: (additionalMenu: addMenu) => void
+    addMenu: (additionalMenu: Menu) => void
     deleteMenu: (menuId: number) => void
 }
 
