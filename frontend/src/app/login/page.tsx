@@ -54,8 +54,8 @@ export default function LoginPage() {
         const hash = hashSync(user.password, salt);
         setUser({...user, password: hash})
         console.log(user)
-        const resultVal = userValidate(user)
-        console.log(resultVal)
+        const result = await userValidate(user)
+        console.log('ここに結果を表示'+result.result)
         
         // try {
         //     setLoading(true);

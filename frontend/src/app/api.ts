@@ -1,14 +1,19 @@
-import { Menu, User} from "./types";
+import {Menu, User, } from "./types";
 
-export const userValidate = async (user: User) => {
-    const res = await fetch('http://localhost:10000/food/now',{
-        cache: 'no-store' 
-    })
-    const resultVal = res.
+export const userValidate = async (user: User)  => {
+    
+    const res = await fetch('http://localhost:10000/authenticate', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json'
+            },
+            cache: 'no-store'
+        });
+    const result = await res.json(); // JSON形式のレスポンスを解析
+    return result
 
-    return 
+};
 
-}
 
 export const getAllMenusGo = async (): Promise<Menu[]> => {
     const res = await fetch('http://localhost:10000/food/now',{
