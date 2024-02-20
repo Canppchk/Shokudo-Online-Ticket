@@ -56,7 +56,9 @@ export default function uiPage() {
             </div>
             </nav>
             <div className="container mx-auto flex justify-between items-end py-6">
+                {/* edit here */}
                 <h1 className="font-serif text-6xl text-black">Welcome</h1>
+                {/* ------------- */}
                 <span className="font-sans text-3xl text-black">
                     <strong className="font-bold">{meal}</strong>  —  {date}
                 </span>
@@ -67,8 +69,10 @@ export default function uiPage() {
 
             <div className="flex justify-center items-center w-full my-20">
                 <div className="block max-w-sm p-20 min-h-64 bg-pearlwhite rounded-3xl shadow-lg p-6 m-4">
+                    {/* edit here */}
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
                     <p className="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                    {/* ------------- */}
                 </div>
             </div>
             </body>
