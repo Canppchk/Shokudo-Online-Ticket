@@ -10,6 +10,7 @@ CREATE TABLE Food (
     Picture TEXT
 );
 
+ALTER TABLE Food MODIFY Picture LONGTEXT;
 
 INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
 (1, 'Grilled Chicken', 'Dinner', 'Delicious grilled chicken with herbs', 20, 12.99, 'base64-encoded-image-string');
