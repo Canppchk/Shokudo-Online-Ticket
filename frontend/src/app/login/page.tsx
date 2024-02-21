@@ -87,7 +87,6 @@ export default function LoginPage() {
             <title>Shokudo Online Ticket</title>
         </head>
         <body>
-        
         <nav className="p-10">
         <div className="container mx-auto flex justify-between items-center">
             <a href="#" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
