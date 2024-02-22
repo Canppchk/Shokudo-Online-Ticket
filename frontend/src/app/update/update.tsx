@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Menu } from "../types";
+import { updateMenuGo } from "../api";
 
 interface MenuProps {
   fetchedMenu: Menu;
@@ -9,6 +10,9 @@ interface MenuProps {
 
 export default function UpdatePage({ fetchedMenu }: MenuProps) {
   const [updatedMenu, setMenu] = useState(fetchedMenu);
+  const updateMenu = (menu: Menu) => {
+    updateMenuGo(menu)
+}
 
   const getCurrentDate = () => {
     const dateOptions: Intl.DateTimeFormatOptions = {
@@ -110,13 +114,13 @@ export default function UpdatePage({ fetchedMenu }: MenuProps) {
                   className="bg-gray-50 border border-black text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 focus:outline-spgreen"
                   id="username"
                   type="text"
-                  onChange={(e) => setMenu({...updatedMenu, stock: Number(e.target.value)})}
+                  onChange={(e) => setMenu({...updatedMenu, price: Number(e.target.value)})}
                   placeholder={"Price: " + String(updatedMenu.price)}
                 />
               </div>
               <div className="flex items-center justify-between py-3">
                 <button
-                  // onClick={onSignup}
+                  onClick={() => updateMenu(updatedMenu)}
                   className="w-full text-white bg-spgreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-green-600 focus:outline-none"
                 >
                   Update

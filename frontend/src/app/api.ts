@@ -59,3 +59,13 @@ export const deleteMenuGo = async (menuId: number) => {
         console.error("Failed to delete menu");
     }
 }
+
+export const updateMenuGo = async (menu: Menu) => {
+    const res = await fetch(`http://localhost:10000/food/${menu.id}`,{
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(menu)
+    })
+}
