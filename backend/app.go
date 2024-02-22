@@ -4,12 +4,16 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
+	"github.com/mythrnr/paypayopa-sdk-go"
 	"github.com/rs/cors"
 )
 
@@ -391,7 +395,155 @@ func (app *App) authenticateUser(w http.ResponseWriter, r *http.Request) {
 	sendResponse(w, http.StatusOK, map[string]bool{"role": u.Role})
 }
 
+func setHeader(w http.ResponseWriter) {
+    w.Header().Set("Content-Type", "application/json")
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+    w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+}
+
+func createQR(wp *paypayopa.WebPayment) func(http.ResponseWriter, *http.Request) {
+	type request struct {
+		OrderItems []struct {
+			Name      string `json:"name"`
+			Category  string `json:"category"`
+			Quantity  uint   `json:"quantity"`
+			ProductID uint   `json:"productId"`
+			UnitPrice struct {
+				Amount   uint   `json:"amount"`
+				Currency string `json:"currency"`
+			} `json:"unitPrice"`
+		} `json:"orderItems"`
+		Amount struct {
+			Amount   uint   `json:"amount"`
+			Currency string `json:"currency"`
+		} `json:"amount"`
+	}
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		setHeader(w)
+
+		body := &request{}
+		b, _ := io.ReadAll(r.Body)
+
+		if err := json.Unmarshal(b, body); err != nil {
+			fmt.Fprint(w, `{ "errors": [{
+				"code": 400,
+				"message": "Bad Request"
+			}] }`)
+
+			w.WriteHeader(http.StatusBadRequest)
+
+			return
+		}
+
+		merchantPaymentID := uuid.NewString()
+		orders := make([]*paypayopa.MerchantOrderItem, 0)
+
+		for _, o := range body.OrderItems {
+			orders = append(orders, &paypayopa.MerchantOrderItem{
+				Name:      o.Name,
+				Category:  o.Category,
+				Quantity:  int(o.Quantity),
+				ProductID: strconv.FormatUint(uint64(o.ProductID), 10),
+				UnitPrice: &paypayopa.MoneyAmount{
+					Amount:   int(o.UnitPrice.Amount),
+					Currency: paypayopa.CurrencyJPY,
+				},
+			})
+		}
+
+		payload := &paypayopa.CreateQRCodePayload{
+			MerchantPaymentID: merchantPaymentID,
+			Amount: &paypayopa.MoneyAmount{
+				Amount:   int(body.Amount.Amount),
+				Currency: paypayopa.CurrencyJPY,
+			},
+			OrderItems:   orders,
+			CodeType:     paypayopa.CodeTypeOrderQR,
+			RequestedAt:  time.Now().Unix(),
+			RedirectType: paypayopa.RedirectTypeWebLink,
+			RedirectURL:  "http://localhost:10000/orderpayment/" + merchantPaymentID,
+		}
+
+		qrcode, info, err := wp.CreateQRCode(r.Context(), payload)
+		if err != nil {
+			fmt.Fprint(w, `{ "errors": [{
+				"code": 500,
+				"message": "Internal Server Error"
+			}] }`)
+
+			w.WriteHeader(http.StatusInternalServerError)
+
+			return
+		}
+
+		if !info.Success() {
+			b, _ := json.Marshal(info)
+			log.Println(string(b))
+			fmt.Fprint(w, `{"resultInfo": `+string(b)+`}`)
+			w.WriteHeader(info.StatusCode)
+
+			return
+		}
+
+		b, _ = json.Marshal(qrcode)
+		log.Println(string(b))
+		fmt.Fprint(w, `{"data": `+string(b)+`}`)
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
+func orderStatus(wp *paypayopa.WebPayment) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		setHeader(w)
+
+		// Using mux.Vars to retrieve route variables with Gorilla Mux
+		vars := mux.Vars(r)
+		merchantPaymentId := vars["merchantPaymentId"] // Accessing the parameter by name
+
+		payment, info, err := wp.GetPaymentDetails(
+			r.Context(),
+			merchantPaymentId, // Use the variable directly
+		)
+
+		if err != nil {
+			fmt.Fprint(w, `{ "errors": [{
+				"code": 500,
+				"message": "Internal Server Error"
+			}] }`)
+
+			w.WriteHeader(http.StatusInternalServerError)
+
+			return
+		}
+
+		if !info.Success() {
+			b, _ := json.Marshal(info)
+			log.Println(string(b))
+			fmt.Fprint(w, `{"resultInfo": `+string(b)+`}`)
+			w.WriteHeader(info.StatusCode)
+
+			return
+		}
+
+		b, _ := json.Marshal(payment)
+		log.Println(string(b))
+		fmt.Fprint(w, `{"data": `+string(b)+`}`)
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
 func (app *App) handleRoutes() {
+	wp := paypayopa.NewWebPayment(
+		paypayopa.NewCredentials(
+			paypayopa.EnvSandbox,
+			"a_5tW30Yqslc_4Jhe",
+			"y/Rp41c5AvLy6XjwqukUY0N30b8XDUcxYB9QUDieYSY=",
+			"735282888246697984",
+		),
+	)
+
 	app.Router.HandleFunc("/food/now", app.getFoodNow).Methods("GET")
 	app.Router.HandleFunc("/food/{id}", app.getFood).Methods("GET")
 	app.Router.HandleFunc("/food", app.createFood).Methods("POST")
@@ -404,4 +556,6 @@ func (app *App) handleRoutes() {
 	app.Router.HandleFunc("/register", app.createUser).Methods("POST")
 	app.Router.HandleFunc("/user/{id}", app.getUserById).Methods("GET")
 	app.Router.HandleFunc("/authenticate", app.authenticateUser).Methods("GET")
+    app.Router.HandleFunc("/create-qr", createQR(wp)).Methods("POST")
+    app.Router.HandleFunc("/order-status/{merchantPaymentId}", orderStatus(wp)).Methods("GET")
 }
