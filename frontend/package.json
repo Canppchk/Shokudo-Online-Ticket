@@ -10,6 +10,7 @@
     "json-server": "json-server --watch src/app/data/menus.json --port 3001"
   },
   "dependencies": {
+    "@paypayopa/paypayopa-sdk-node": "^2.1.0",
     "@types/bcrypt": "^5.0.2",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
