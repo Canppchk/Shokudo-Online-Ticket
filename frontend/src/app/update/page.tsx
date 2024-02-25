@@ -1,14 +1,28 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Menu } from "../types";
 import UpdatePage from "./update";
+import { getAllMenusGo } from "../api";
 
 export default function Page() {
-    const menu: Menu = {id: 2, name: "aaa", meal: "Dinner", detail: "aaaa", stock: 3, price: 400.00, picture: "aaa", date: "2024-01-26"}
+  const [menu, setMenu] = useState<Menu | null>(null); // State for a single Menu object
 
-    return (
-        <div>
-          <UpdatePage fetchedMenu={menu}></UpdatePage>
-        </div>
-    )
+  useEffect(() => {
+    const fetchMenu = async () => {
+      const fetchedMenus = await getAllMenusGo(); // Fetching an array of Menu objects
+      if (fetchedMenus.length > 0) {
+        setMenu(fetchedMenus[0]); // Assuming you want the first Menu object
+      } else {
+        setMenu(null); // Set to null if no menus are fetched
+      }
+    };
+
+    fetchMenu();
+  }, []); // Effect runs once on mount
+
+  return (
+    <div>
+      {menu && <UpdatePage fetchedMenu={menu} />}
+    </div>
+  );
 }
