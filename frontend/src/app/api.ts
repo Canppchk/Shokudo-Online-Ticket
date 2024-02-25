@@ -1,4 +1,4 @@
-import {Menu, User, } from "./types";
+import {Menu, User} from "./types";
 
 export const userValidate = async (user: User)  => {
     
