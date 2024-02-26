@@ -5,7 +5,7 @@ import { getAllMenusGo, userValidate } from "../api";
 import { Menu } from "../types";
 import FoodAdmin from "./components/FoodAdmin";
 import FoodUser from "./components/FoodUser";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function uiPage() {
   const searchParams = useSearchParams()
@@ -46,6 +46,11 @@ export default function uiPage() {
           setMenus(fetchedMenus)
           
       }
+
+      const router = useRouter()
+      const handleTicketButtonClick = () => {
+        router.push(`/ticket?name=${name}&role=${role}`);
+      };
   
       useEffect(() => {
           fetchMenus();
@@ -66,7 +71,7 @@ export default function uiPage() {
                 <a href="#" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
                 <div className="flex items-center">
                     <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
-                    <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
+                    <button onClick={handleTicketButtonClick} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
                         <Link href="/ticket">Ticket</Link>
                     </button>
                 </div>  
