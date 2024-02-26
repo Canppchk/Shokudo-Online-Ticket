@@ -95,3 +95,17 @@ export const getTicketGo = async (): Promise<Ticket[]> => {
 
     return menus;
 }
+
+export const changeTicketStatus = async (status: string, num: number): Promise<Ticket[]> => {
+    const res = await fetch(`http://localhost:10000/ticket/${num}`,{
+        cache: 'no-store', //SSR
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({status: status})
+    })
+    const menus = res.json()
+
+    return menus;
+}
