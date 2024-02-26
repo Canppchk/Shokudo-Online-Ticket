@@ -49,7 +49,9 @@ export default function LoginPage() {
     const [loading, setLoading] = React.useState(false);
 
 
-    const onLogin = async () => {
+    const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); 
+
         const salt = genSaltSync(10);
         const hash = hashSync(user.password, salt);
         setUser({...user, password: hash})

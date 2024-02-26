@@ -23,7 +23,7 @@ const FoodAdmin = ({menus}:MenuProps) => {
                               <p className="font-normal text-gray-700 dark:text-gray-400">stock left: {menu.stock}</p>
                           </div>
                           <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
-                              <Link href={`/updatemenu${menu.id}`}>Update</Link>
+                              <Link href={`/update`}>Update</Link>
                           </button>
                       </div>
                   </div>
