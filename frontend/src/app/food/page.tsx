@@ -5,8 +5,13 @@ import { getAllMenusGo, userValidate } from "../api";
 import { Menu } from "../types";
 import FoodAdmin from "./components/FoodAdmin";
 import FoodUser from "./components/FoodUser";
+import { useSearchParams } from "next/navigation";
 
 export default function uiPage() {
+  const searchParams = useSearchParams()
+  const role = searchParams.get('role')
+  console.log(role)
+
     const getCurrentDate = () => {
         const dateOptions: Intl.DateTimeFormatOptions = {
           year: 'numeric',
@@ -43,7 +48,6 @@ export default function uiPage() {
           fetchMenus();
       },[])
 
-      const authority: number = 0
 
     return (
             <html lang="en">
@@ -78,7 +82,7 @@ export default function uiPage() {
             </div>
 
             {
-              authority === 1 ? <FoodAdmin menus={menus}/> : <FoodUser menus={menus}/>
+              role == 'true' ? <FoodAdmin menus={menus}/> : <FoodUser menus={menus}/>
             }
 
             </body>

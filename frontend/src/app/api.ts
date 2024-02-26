@@ -1,17 +1,16 @@
 import {Menu, User} from "./types";
 
-export const userValidate = async (user: User)  => {
-    
+export const userValidate = async (user: User) => {
     const res = await fetch('http://localhost:10000/authenticate', {
-        method: 'POST', 
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-            },
-            cache: 'no-store'
-        });
+        },
+        body: JSON.stringify(user), // user オブジェクトを JSON に変換して body に設定
+        cache: 'no-store'
+    });
     const result = await res.json(); // JSON形式のレスポンスを解析
-    return result
-
+    return result;
 };
 
 
