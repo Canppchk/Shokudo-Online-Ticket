@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import Image from 'next/image';
 import { genSaltSync, hashSync } from "bcrypt-ts";
-import { userValidate } from "../api";
+import { getTicketGo, userValidate } from "../api";
+import TicketShow from "../components/TicketShow";
+import { Ticket } from "../types";
 
 export default function uiPage() {
     const getCurrentDate = () => {
@@ -34,6 +36,18 @@ export default function uiPage() {
       // Get the current meal and date
       const meal = getCurrentMeal();
       const date = getCurrentDate();
+
+
+      const [tickets, setTickets] = useState<Ticket[]>([])
+      const fetchMenus = async () => {
+          const fetchedMenus = await getTicketGo()
+          setTickets(fetchedMenus)
+      }
+
+      useEffect(() => {
+          fetchMenus();
+
+      },[])
 
     return (
             <html lang="en">
@@ -70,8 +84,7 @@ export default function uiPage() {
             <div className="flex justify-center items-center w-full my-20">
                 <div className="block max-w-sm p-20 min-h-64 bg-pearlwhite rounded-3xl shadow-lg p-6 m-4">
                     {/* edit here */}
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                    <p className="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                    <TicketShow tickets={tickets}></TicketShow>
                     {/* ------------- */}
                 </div>
             </div>
