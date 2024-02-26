@@ -1,6 +1,6 @@
 import React from 'react'
-import { Ticket } from '../types'
-import { changeTicketStatus } from '../api'
+import { Menu, Ticket } from '../types'
+import { changeTicketStatus, updateMenuStock } from '../api'
 
 interface TicketProps {
   tickets: Ticket[]
@@ -10,6 +10,7 @@ const TicketShowUser = ({tickets}:TicketProps) => {
 
   const toPending = (id: number) => {
     changeTicketStatus('Pending', id)
+
   }
   
   return (

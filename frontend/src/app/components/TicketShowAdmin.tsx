@@ -1,6 +1,6 @@
 import React from 'react'
-import { Ticket } from '../types'
-import { changeTicketStatus } from '../api'
+import { Menu, Ticket } from '../types'
+import { changeTicketStatus, updateMenuStock } from '../api'
 
 interface TicketProps {
   adminTickets: Ticket[]
@@ -9,6 +9,7 @@ interface TicketProps {
 const TicketShowAdmin = ({adminTickets}:TicketProps) => {
   const toAccepted = (id: number) => {
     changeTicketStatus('Accepted', id)
+
   }
   
   return (

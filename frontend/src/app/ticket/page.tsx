@@ -6,9 +6,9 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import Image from 'next/image';
 import { genSaltSync, hashSync } from "bcrypt-ts";
-import { getTicketGo, getTicketGoAdmin, userValidate } from "../api";
+import { getAllMenusGo, getTicketGo, getTicketGoAdmin, updateMenuStock, userValidate } from "../api";
 import TicketShowUser from "../components/TicketShowUser";
-import { Ticket } from "../types";
+import { Menu, Ticket } from "../types";
 import TicketShowAdmin from "../components/TicketShowAdmin";
 import { strict } from "assert";
 
@@ -42,6 +42,7 @@ export default function uiPage() {
       // Get the current meal and date
       const meal = getCurrentMeal();
       const date = getCurrentDate();
+      const [menus, setMenus] = useState<Menu[]>([])
 
 
       const [tickets, setTickets] = useState<Ticket[]>([])
@@ -61,10 +62,21 @@ export default function uiPage() {
         } 
       }
 
+      const updateMenu = async () => {
+        if (owner != null) {
+          const result = await updateMenuStock()
+        }
+      }
+
+     const fetchMenu = async () => {
+      const fetchedMenu = await getAllMenusGo()
+      setMenus(fetchedMenu)
+  }
+
       useEffect(() => {
+          fetchMenu();
           fetchMenus();
           fetchAdminTickets();
-
       },[])
 
     return (
@@ -89,7 +101,10 @@ export default function uiPage() {
             </nav>
             <div className="container mx-auto flex justify-between items-end py-6">
                 {/* edit here */}
-                <h1 className="font-serif text-6xl text-black">Ticket</h1>
+                {
+                      role == 'true' ? <h1 className="font-serif text-6xl text-black">Confirm Ticket</h1> : <h1 className="font-serif text-6xl text-black">Ticket</h1> 
+                }
+                items:{adminTickets.length}
                 {/* ------------- */}
                 <span className="font-sans text-3xl text-black">
                     <strong className="font-bold">{meal}</strong>  —  {date}
@@ -100,12 +115,30 @@ export default function uiPage() {
             </div>
 
             <div className="container mx-auto ">
-                <div className="block min-h-64 w-1/2 rounded-3xl">
-                      {
-                        role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
-                      }
+              <div className="flex block p-20 min-h-64 bg-pearlwhite w-full rounded-3xl shadow-lg p-6 m-4">
+                
+
+                    <div className="p-10">
+                      <div className="m-3 p-3 rounded bg-white shadow-md flex flex-wrap">
+                        
+                        {
+                            menus.map(menu => (
+                              <div>
+                                <div>
+                                  {
+                                    role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
+                                  }
+                                </div>
+                                <div key = {menu.id} className='flex items-center space-x-2'>
+                                  {menu.stock}
+                                </div>
+                              </div>
+
+                            ))
+                        }
+                      </div>
+                    </div>
                 </div>
-                <div className="w-1/3"></div>
             </div>
             </body>
             </html>

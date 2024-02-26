@@ -119,3 +119,13 @@ export const getTicketGoAdmin = async (status: string): Promise<Ticket[]> => {
 
     return menus;
 }
+
+export const updateMenuStock = async (menu: Menu) => {
+    const res = await fetch(`http://localhost:10000/food/${menu.id}`,{
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(menu)
+    })
+}
