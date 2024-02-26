@@ -555,7 +555,7 @@ func (app *App) handleRoutes() {
 	app.Router.HandleFunc("/ticket/{id}", app.deleteTicket).Methods("DELETE")
 	app.Router.HandleFunc("/register", app.createUser).Methods("POST")
 	app.Router.HandleFunc("/user/{id}", app.getUserById).Methods("GET")
-	app.Router.HandleFunc("/authenticate", app.authenticateUser).Methods("GET")
+	app.Router.HandleFunc("/authenticate", app.authenticateUser).Methods("POST")
     app.Router.HandleFunc("/create-qr", createQR(wp)).Methods("POST")
     app.Router.HandleFunc("/order-status/{merchantPaymentId}", orderStatus(wp)).Methods("GET")
 }
