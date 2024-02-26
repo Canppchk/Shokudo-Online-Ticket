@@ -1,4 +1,4 @@
-import {Menu, User} from "./types";
+import {Menu, Ticket, User} from "./types";
 
 export const userValidate = async (user: User) => {
     const res = await fetch('http://localhost:10000/authenticate', {
@@ -72,4 +72,13 @@ export const updateMenuGo = async (menu: Menu) => {
         },
         body: JSON.stringify(menu)
     })
+}
+
+export const getTicketGo = async (): Promise<Ticket[]> => {
+    const res = await fetch('http://localhost:10000/ticket/Can',{
+        cache: 'no-store' //SSR
+    })
+    const menus = res.json()
+
+    return menus;
 }
