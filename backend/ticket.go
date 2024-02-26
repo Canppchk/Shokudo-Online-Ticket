@@ -100,15 +100,15 @@ func (t *Ticket) getTicket(db *sql.DB) ([]Ticket, error) {
 
 
 func (t *Ticket) createTicket(db *sql.DB) error {
-    // Prepare the insert statement
-    stmt, err := db.Prepare("INSERT INTO Ticket(FoodId, Date, Status, Owner) VALUES(?, NOW(), 'Useable' , Owner)")
+    // Prepare the insert statement with placeholders for values
+    stmt, err := db.Prepare("INSERT INTO Ticket(FoodId, Date, Status, Owner) VALUES(?, NOW(), 'Useable', ?)")
     if err != nil {
         return err
     }
     defer stmt.Close()
 
-    // Execute the statement
-    result, err := stmt.Exec(t.FoodId)
+    // Execute the statement with the actual values from the Ticket struct
+    result, err := stmt.Exec(t.FoodId, t.Owner)
     if err != nil {
         return err
     }
