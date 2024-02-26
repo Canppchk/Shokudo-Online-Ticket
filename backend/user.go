@@ -15,7 +15,7 @@ type User struct {
 }
 
 func (u *User) createUser(db *sql.DB) error {
-	query := fmt.Sprintf("insert into User(name , email, password, role) values('%v', '%v', '%v', %v)", u.Name, u.Email, u.Password, u.Role)
+	query := fmt.Sprintf("insert into User(name , email, password, role) values('%v', '%v', '%v', %v)", u.Name, u.Email, u.Password, 0)
 	result, err := db.Exec(query)
 	if err != nil {
 		return err
@@ -41,9 +41,9 @@ func (u *User) getUserById(db *sql.DB) error {
 }
 
 func (u *User) getUserByEmail(db *sql.DB) error {
-	query := fmt.Sprintf("SELECT password ,role FROM User where email='%s'", u.Email)
+	query := fmt.Sprintf("SELECT name , password ,role  FROM User where email='%s'", u.Email)
 	row := db.QueryRow(query)
-	err := row.Scan(&u.Password, &u.Role)
+	err := row.Scan( &u.Name , &u.Password, &u.Role )
 	if err !=  nil{
 		return err
 	}
