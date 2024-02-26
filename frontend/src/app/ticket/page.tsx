@@ -1,16 +1,22 @@
 "use client";
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import Image from 'next/image';
 import { genSaltSync, hashSync } from "bcrypt-ts";
-import { getTicketGo, userValidate } from "../api";
-import TicketShow from "../components/TicketShow";
-import { Ticket } from "../types";
+import { getAllMenusGo, getTicketGo, getTicketGoAdmin, updateMenuStock, userValidate } from "../api";
+import TicketShowUser from "../components/TicketShowUser";
+import { Menu, Ticket } from "../types";
+import TicketShowAdmin from "../components/TicketShowAdmin";
+import { strict } from "assert";
 
 export default function uiPage() {
+    const searchParams = useSearchParams()
+    const role = searchParams.get('role')
+    const owner = searchParams.get('name')
+
     const getCurrentDate = () => {
         const dateOptions: Intl.DateTimeFormatOptions = {
           year: 'numeric',
@@ -36,17 +42,41 @@ export default function uiPage() {
       // Get the current meal and date
       const meal = getCurrentMeal();
       const date = getCurrentDate();
+      const [menus, setMenus] = useState<Menu[]>([])
 
 
       const [tickets, setTickets] = useState<Ticket[]>([])
+      const [adminTickets, setAdminTickets] = useState<Ticket[]>([])
+
       const fetchMenus = async () => {
-          const fetchedMenus = await getTicketGo()
-          setTickets(fetchedMenus)
+          if (owner != null) {
+            const fetchedMenus = await getTicketGo(owner)
+            setTickets(fetchedMenus)
+          }
+      }
+      const fetchAdminTickets = async () => {
+        if (owner) { // ownerがnullでないことを確認
+          console.log(owner)
+          const fetchedMenus = await getTicketGoAdmin(owner);
+          setAdminTickets(fetchedMenus);
+        } 
       }
 
-      useEffect(() => {
-          fetchMenus();
+      const updateMenu = async () => {
+        if (owner != null) {
+          const result = await updateMenuStock()
+        }
+      }
 
+     const fetchMenu = async () => {
+      const fetchedMenu = await getAllMenusGo()
+      setMenus(fetchedMenu)
+  }
+
+      useEffect(() => {
+          fetchMenu();
+          fetchMenus();
+          fetchAdminTickets();
       },[])
 
     return (
@@ -71,7 +101,10 @@ export default function uiPage() {
             </nav>
             <div className="container mx-auto flex justify-between items-end py-6">
                 {/* edit here */}
-                <h1 className="font-serif text-6xl text-black">Ticket</h1>
+                {
+                      role == 'true' ? <h1 className="font-serif text-6xl text-black">Confirm Ticket</h1> : <h1 className="font-serif text-6xl text-black">Ticket</h1> 
+                }
+                items:{adminTickets.length}
                 {/* ------------- */}
                 <span className="font-sans text-3xl text-black">
                     <strong className="font-bold">{meal}</strong>  —  {date}
@@ -82,12 +115,30 @@ export default function uiPage() {
             </div>
 
             <div className="container mx-auto ">
-                <div className="block  min-h-64  w-1/2 rounded-3xl ">
-                    {/* edit here */}
-                    <TicketShow tickets={tickets}></TicketShow>
-                    {/* ------------- */}
+              <div className="flex block p-20 min-h-64 bg-pearlwhite w-full rounded-3xl shadow-lg p-6 m-4">
+                
+
+                    <div className="p-10">
+                      <div className="m-3 p-3 rounded bg-white shadow-md flex flex-wrap">
+                        
+                        {
+                            menus.map(menu => (
+                              <div>
+                                <div>
+                                  {
+                                    role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
+                                  }
+                                </div>
+                                <div key = {menu.id} className='flex items-center space-x-2'>
+                                  {menu.stock}
+                                </div>
+                              </div>
+
+                            ))
+                        }
+                      </div>
+                    </div>
                 </div>
-                <div className="w-1/3"></div>
             </div>
             </body>
             </html>
