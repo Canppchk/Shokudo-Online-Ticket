@@ -57,31 +57,21 @@ export default function LoginPage() {
         // setUser({...user, password: hash})
         console.log(user)
         const result = await userValidate(user)
-        console.log('ここに結果を表示'+result.role)
+        console.log('ここに結果を表示'+result.role+result.name)
+
+
 
         if (result.role == true) {
-            router.push(`/food?role=${result.role}`);
+            router.push(`/food?role=${result.role}&email=${user.email}&name=${result.name}`);
         } else {
             alert('ユーザ名とパスワードが一致しません')
         }
-        
-       
-        // try {
-        //     setLoading(true);
-        //     const response = await axios.post("/api/users/login", user);
-        //     console.log("Login success", response.data);
-        //     toast.success("Login success");
-        //     router.push("/profile");
-        // } catch (error:any) {
-        //     console.log("Login failed", error.message);
-        //     toast.error(error.message);
-        // } finally{
-        // setLoading(false);
-        // }
+
     }
     
 
     useEffect(() => {
+        console.log(user)
         if(user.email.length > 0 && user.password.length > 0) {
             setButtonDisabled(false);
         } else{

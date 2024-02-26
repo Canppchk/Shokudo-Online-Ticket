@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Menu } from "../types";
 import { getAllMenusGo } from "../api";
+interface UserProps {
+  name: string; // email is now optional
+}
 
-
-function PaymentButton() {
+function PaymentButton({name}:UserProps) {
     const [merchantPaymentId, setMerchantPaymentId] = useState("");
     const [paymentStatus, setPaymentStatus] = useState("");
     const ticketCreated = useRef(false);  // Using ref to immediately block further executions
@@ -89,11 +91,12 @@ function PaymentButton() {
         if (data.data.status === "COMPLETED" && !ticketCreated.current) {
           ticketCreated.current = true;  // Update the ref to block further executions
 
-          const ticketResponse = await fetch(`http://localhost:10000/ticket/can`, {
+          const ticketResponse = await fetch(`http://localhost:10000/ticket/${name}`, {
             method: "POST",
             headers: {
               'Content-Type': 'application/json',
             },
+            // body: JSON.stringify({ status: "Useable" }),
             body: JSON.stringify({ status: "Useable" }),
           });
 

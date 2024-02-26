@@ -10,7 +10,10 @@ import { useSearchParams } from "next/navigation";
 export default function uiPage() {
   const searchParams = useSearchParams()
   const role = searchParams.get('role')
-  console.log(role)
+  const email = searchParams.get('email')
+  const name = searchParams.get('name')
+  console.log(role,email,name)
+
 
     const getCurrentDate = () => {
         const dateOptions: Intl.DateTimeFormatOptions = {
@@ -82,7 +85,7 @@ export default function uiPage() {
             </div>
 
             {
-              role == 'true' ? <FoodAdmin menus={menus}/> : <FoodUser menus={menus}/>
+              role == 'true' ? <FoodAdmin menus={menus}/> : <FoodUser menus={menus} name={name}/>
             }
 
             </body>
