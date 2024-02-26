@@ -15,3 +15,10 @@ export interface User {
     password: string
 }
 
+export interface Ticket {
+    id: number
+    food_id: number
+    date: string
+    status: string
+    owner: string
+}

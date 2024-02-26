@@ -64,7 +64,7 @@ export default function uiPage() {
                 <div className="flex items-center">
                     <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
                     <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
-                        <Link href="/signup">Register</Link>
+                        <Link href="/ticket">Ticket</Link>
                     </button>
                 </div>  
             </div>
