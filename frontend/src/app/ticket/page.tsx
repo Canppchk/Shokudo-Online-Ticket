@@ -62,11 +62,7 @@ export default function uiPage() {
         } 
       }
 
-      const updateMenu = async () => {
-        if (owner != null) {
-          const result = await updateMenuStock()
-        }
-      }
+      
 
      const fetchMenu = async () => {
       const fetchedMenu = await getAllMenusGo()
@@ -102,9 +98,23 @@ export default function uiPage() {
             <div className="container mx-auto flex justify-between items-end py-6">
                 {/* edit here */}
                 {
-                      role == 'true' ? <h1 className="font-serif text-6xl text-black">Confirm Ticket</h1> : <h1 className="font-serif text-6xl text-black">Ticket</h1> 
+                  role === 'true' 
+                    ? (
+                      <>
+                        <h1 className="font-serif text-6xl text-black">Confirm Ticket</h1>
+                        <p>Items: {adminTickets.length}</p>
+                      </>
+                    ) 
+                    : (
+                      <>
+                        <h1 className="font-serif text-6xl text-black">Ticket</h1>
+                        <p>Items: {tickets.length}</p>
+                      </>
+                    )
                 }
-                items:{adminTickets.length}
+
+                {/* {role === 'true' ? `Items: ${adminTickets.length}` : `Items: ${tickets.length}`} */}
+
                 {/* ------------- */}
                 <span className="font-sans text-3xl text-black">
                     <strong className="font-bold">{meal}</strong>  —  {date}
@@ -115,29 +125,24 @@ export default function uiPage() {
             </div>
 
             <div className="container mx-auto ">
-              <div className="flex block p-20 min-h-64 bg-pearlwhite w-full rounded-3xl shadow-lg p-6 m-4">
-                
-
-                    <div className="p-10">
-                      <div className="m-3 p-3 rounded bg-white shadow-md flex flex-wrap">
-                        
-                        {
-                            menus.map(menu => (
+              <div className="block  min-h-64  w-1/2 rounded-3xl ">             
                               <div>
                                 <div>
                                   {
                                     role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
                                   }
                                 </div>
-                                <div key = {menu.id} className='flex items-center space-x-2'>
-                                  {menu.stock}
-                                </div>
-                              </div>
-
+                          
+                            </div>
+                </div>
+                <div className="w-1/3">
+                          {
+                            menus.map(menu => (           
+                                  <div key = {menu.id} className='flex items-center space-x-2'>
+                                      {menu.stock}
+                                  </div>
                             ))
                         }
-                      </div>
-                    </div>
                 </div>
             </div>
             </body>
