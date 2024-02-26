@@ -3,10 +3,12 @@ import { Menu } from '@/app/types'
 import Link from 'next/link'
 import React from 'react'
 interface MenuProps {
-    menus: Menu[]
-  }
+    menus: Menu[];
+    email: string;
+}
 
-const FoodUser = ({menus}:MenuProps) => {
+const FoodUser = ({ menus, email }: MenuProps) => {
+    console.log(email)
   return (
     <div className="flex justify-center items-center w-full my-20">
         <div className="block max-w-sm p-20 min-h-64 bg-pearlwhite rounded-3xl shadow-lg p-6 m-4">
@@ -23,7 +25,7 @@ const FoodUser = ({menus}:MenuProps) => {
                             <div>
                                 <p className="font-normal text-gray-700 dark:text-gray-400">stock left: {menu.stock}</p>
                             </div>
-                            <PayButton></PayButton>
+                            <PayButton email={email}></PayButton>
                         </div>
                     </div>
                 ))

@@ -57,10 +57,12 @@ export default function LoginPage() {
         // setUser({...user, password: hash})
         console.log(user)
         const result = await userValidate(user)
-        console.log('ここに結果を表示'+result.role)
+        console.log('ここに結果を表示'+result.role+result.name)
+
+
 
         if (result.role == true) {
-            router.push(`/food?role=${result.role}`);
+            router.push(`/food?role=${result.role}&email=${user.email}&name=${user.name}`);
         } else {
             alert('ユーザ名とパスワードが一致しません')
         }
