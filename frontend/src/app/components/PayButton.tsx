@@ -91,11 +91,11 @@ function PaymentButton() {
   }, [merchantPaymentId]);  // Dependency array
 
   return (
-    <div>
-      <button onClick={handlePayment} className="payment-button">
-        Pay with QR
-      </button>
-      {merchantPaymentId && <div>Payment Status: {paymentStatus}</div>}
+    <div className="pt-5">
+      <button onClick={handlePayment} className="w-full text-white bg-spgreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-green-600 focus:outline-none">
+        Payment
+      </button >
+      {merchantPaymentId && <div className="pt-5">Payment Status: {paymentStatus}</div>}
     </div>
   );
 }
