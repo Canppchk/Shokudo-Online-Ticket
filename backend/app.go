@@ -239,7 +239,7 @@ func (app *App) getTicket(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println(foods[0].Id)
 	// Check if there are available foods
 	if len(foods) == 0 || foods[0].Id == 0 { // Assuming an Id of 0 indicates no available food
-		sendError(w, http.StatusNotFound, "No food available at the moment")
+		sendResponse(w, http.StatusOK, nil)
 		return
 	}
 
