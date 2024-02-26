@@ -23,6 +23,9 @@ const TicketShow = ({tickets}:TicketProps) => {
                 <div className="mt-4 flex gap-2">
                   <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-yellow-600"> nodle </span>
                   <span className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-600"> big </span>
+                  <button>
+                    Button
+                  </button>
                 </div>
               </div>
             </div>

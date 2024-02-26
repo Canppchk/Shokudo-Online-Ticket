@@ -82,7 +82,7 @@ export default function uiPage() {
             </div>
 
             <div className="flex justify-center items-center w-full my-20">
-                <div className="block max-w-sm p-20 min-h-64 bg-pearlwhite rounded-3xl shadow-lg p-6 m-4">
+                <div className="block p-20 min-h-64 bg-pearlwhite w-full rounded-3xl shadow-lg p-6 m-4">
                     {/* edit here */}
                     <TicketShow tickets={tickets}></TicketShow>
                     {/* ------------- */}
