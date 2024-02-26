@@ -371,29 +371,57 @@ func (app *App) getUserById(w http.ResponseWriter, r *http.Request) {
 	sendResponse(w, http.StatusOK, u)
 }
 
+// func (app *App) authenticateUser(w http.ResponseWriter, r *http.Request) {
+// 	var u User
+// 	err := json.NewDecoder(r.Body).Decode(&u)
+// 	requestPass := u.Password
+// 	if err != nil {
+// 		sendError(w, http.StatusBadRequest, "Invalid request payload")
+// 		return
+// 	}
+
+// 	err = u.getUserByEmail(app.DB)
+// 	if err != nil {
+// 		sendError(w, http.StatusInternalServerError, err.Error())
+// 		return
+// 	}
+
+// 	if requestPass != u.Password {
+// 		sendError(w, http.StatusUnauthorized, "Account authentication failed")
+// 		return
+// 	}
+
+// 	// sendResponse(w, http.StatusOK, map[string]string{"result": "Account successfully authenticated"})
+// 	sendResponse(w, http.StatusOK, map[string]bool{"role": u.Role})
+// }
+
 func (app *App) authenticateUser(w http.ResponseWriter, r *http.Request) {
-	var u User
-	err := json.NewDecoder(r.Body).Decode(&u)
-	requestPass := u.Password
-	if err != nil {
-		sendError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
+    var u User
+    err := json.NewDecoder(r.Body).Decode(&u)
+    requestPass := u.Password
+    if err != nil {
+        sendError(w, http.StatusBadRequest, "Invalid request payload")
+        return
+    }
 
-	err = u.getUserByEmail(app.DB)
-	if err != nil {
-		sendError(w, http.StatusInternalServerError, err.Error())
-		return
-	}
+    err = u.getUserByEmail(app.DB)
+    if err != nil {
+        sendError(w, http.StatusInternalServerError, err.Error())
+        return
+    }
 
-	if requestPass != u.Password {
-		sendError(w, http.StatusUnauthorized, "Account authentication failed")
-		return
-	}
+    if requestPass != u.Password {
+        sendError(w, http.StatusUnauthorized, "Account authentication failed")
+        return
+    }
 
-	// sendResponse(w, http.StatusOK, map[string]string{"result": "Account successfully authenticated"})
-	sendResponse(w, http.StatusOK, map[string]bool{"role": u.Role})
+    // Adjusted the response payload to include both Role and Name
+    sendResponse(w, http.StatusOK, map[string]interface{}{
+        "role": u.Role,
+        "name": u.Name, // Assuming 'Name' is the correct field you want to send
+    })
 }
+
 
 func setHeader(w http.ResponseWriter) {
     w.Header().Set("Content-Type", "application/json")
@@ -463,7 +491,7 @@ func createQR(wp *paypayopa.WebPayment) func(http.ResponseWriter, *http.Request)
 			CodeType:     paypayopa.CodeTypeOrderQR,
 			RequestedAt:  time.Now().Unix(),
 			RedirectType: paypayopa.RedirectTypeWebLink,
-			RedirectURL:  "http://localhost:3000/",
+			RedirectURL:  "http://localhost:3000/food",
 			// RedirectURL:  "http://localhost:10000/orderpayment/" + merchantPaymentID,
 		}
 
