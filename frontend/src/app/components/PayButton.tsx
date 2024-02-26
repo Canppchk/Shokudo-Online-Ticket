@@ -1,29 +1,52 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Menu } from "../types";
+import { getAllMenusGo } from "../api";
+
 
 function PaymentButton() {
     const [merchantPaymentId, setMerchantPaymentId] = useState("");
     const [paymentStatus, setPaymentStatus] = useState("");
     const ticketCreated = useRef(false);  // Using ref to immediately block further executions
 
-  const handlePayment = async () => {
-    const payload = {
-      orderItems: [
-        {
-          name: "Green Tea Ice Cream",
-          category: "Desserts",
-          quantity: 1,
-          productId: 201,
-          unitPrice: {
-            amount: 1,
-            currency: "JPY"
-          }
-        }
-      ],
-      amount: {
-        amount: 1,
-        currency: "JPY"
+    const [menu, setMenu] = useState<Menu | null>(null); // State for a single Menu object
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      const fetchedMenus = await getAllMenusGo(); // Fetching an array of Menu objects
+      if (fetchedMenus.length > 0) {
+        setMenu(fetchedMenus[0]); // Assuming you want the first Menu object
+      } else {
+        setMenu(null); // Set to null if no menus are fetched
       }
     };
+
+    fetchMenu();
+  }, []); // Effect runs once on mount
+
+  const handlePayment = async () => {
+    if (!menu) {
+        console.error("No menu available for payment");
+        return;
+      }
+
+    const payload = {
+        orderItems: [
+          {
+            name: menu.name,  // Use 'menu' state variable
+            category: "Food Set",
+            quantity: 1,
+            productId: menu.id,
+            unitPrice: {
+              amount: menu.price,
+              currency: "JPY"
+            }
+          }
+        ],
+        amount: {
+          amount: menu.price,
+          currency: "JPY"
+        }
+      };
 
     try {
       const response = await fetch('http://localhost:10000/create-qr', {
@@ -92,10 +115,11 @@ function PaymentButton() {
 
   return (
     <div className="pt-5">
-      <button onClick={handlePayment} className="w-full text-white bg-spgreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-green-600 focus:outline-none">
+      {/* <button onClick={handlePayment} className="w-full text-white bg-spgreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-green-600 focus:outline-none"> */}
+      <button onClick={handlePayment} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
         Payment
       </button >
-      {merchantPaymentId && <div className="pt-5">Payment Status: {paymentStatus}</div>}
+      {/* {merchantPaymentId && <div className="pt-5">Payment Status: {paymentStatus}</div>} */}
     </div>
   );
 }
