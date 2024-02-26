@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, {useEffect} from "react";
-import {useRouter} from "next/navigation";
+import { useRouter } from 'next/navigation';
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import Image from 'next/image';
@@ -49,14 +49,23 @@ export default function LoginPage() {
     const [loading, setLoading] = React.useState(false);
 
 
-    const onLogin = async () => {
-        const salt = genSaltSync(10);
-        const hash = hashSync(user.password, salt);
-        setUser({...user, password: hash})
+    const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); 
+
+        // const salt = genSaltSync(10);
+        // const hash = hashSync(user.password, salt);
+        // setUser({...user, password: hash})
         console.log(user)
-        const resultVal = userValidate(user)
-        console.log(resultVal)
+        const result = await userValidate(user)
+        console.log('ここに結果を表示'+result.role)
+
+        if (result.role == true) {
+            router.push(`/food?role=${result.role}`);
+        } else {
+            alert('ユーザ名とパスワードが一致しません')
+        }
         
+       
         // try {
         //     setLoading(true);
         //     const response = await axios.post("/api/users/login", user);
@@ -70,6 +79,7 @@ export default function LoginPage() {
         // setLoading(false);
         // }
     }
+    
 
     useEffect(() => {
         if(user.email.length > 0 && user.password.length > 0) {
