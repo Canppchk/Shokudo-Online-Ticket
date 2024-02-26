@@ -6,14 +6,16 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import Image from 'next/image';
 import { genSaltSync, hashSync } from "bcrypt-ts";
-import { getTicketGo, userValidate } from "../api";
+import { getTicketGo, getTicketGoAdmin, userValidate } from "../api";
 import TicketShowUser from "../components/TicketShowUser";
 import { Ticket } from "../types";
 import TicketShowAdmin from "../components/TicketShowAdmin";
+import { strict } from "assert";
 
 export default function uiPage() {
     const searchParams = useSearchParams()
     const role = searchParams.get('role')
+    const owner = searchParams.get('name')
 
     const getCurrentDate = () => {
         const dateOptions: Intl.DateTimeFormatOptions = {
@@ -43,13 +45,25 @@ export default function uiPage() {
 
 
       const [tickets, setTickets] = useState<Ticket[]>([])
+      const [adminTickets, setAdminTickets] = useState<Ticket[]>([])
+
       const fetchMenus = async () => {
-          const fetchedMenus = await getTicketGo()
-          setTickets(fetchedMenus)
+          if (owner != null) {
+            const fetchedMenus = await getTicketGo(owner)
+            setTickets(fetchedMenus)
+          }
+      }
+      const fetchAdminTickets = async () => {
+        if (owner) { // ownerがnullでないことを確認
+          console.log(owner)
+          const fetchedMenus = await getTicketGoAdmin(owner);
+          setAdminTickets(fetchedMenus);
+        } 
       }
 
       useEffect(() => {
           fetchMenus();
+          fetchAdminTickets();
 
       },[])
 
@@ -86,7 +100,7 @@ export default function uiPage() {
             </div>
 
             <div className="container mx-auto ">
-                <div>
+                <div className="block min-h-64 w-1/2 rounded-3xl">
                       {
                         role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
                       }

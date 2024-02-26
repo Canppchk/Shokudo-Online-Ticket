@@ -87,8 +87,8 @@ export const updateMenuGo = async (menu: Menu) => {
     })
 }
 
-export const getTicketGo = async (): Promise<Ticket[]> => {
-    const res = await fetch('http://localhost:10000/ticket/Can',{
+export const getTicketGo = async (owner:string): Promise<Ticket[]> => {
+    const res = await fetch(`http://localhost:10000/ticket/${owner}`,{
         cache: 'no-store' //SSR
     })
     const menus = res.json()
@@ -104,6 +104,16 @@ export const changeTicketStatus = async (status: string, num: number): Promise<T
             "Content-Type": "application/json",
         },
         body: JSON.stringify({status: status})
+    })
+    const menus = res.json()
+
+    return menus;
+}
+
+export const getTicketGoAdmin = async (status: string): Promise<Ticket[]> => {
+    const res = await fetch(`http://localhost:10000/ticket/Admin`,{
+        cache: 'no-store', //SSR
+        method: "GET",
     })
     const menus = res.json()
 
