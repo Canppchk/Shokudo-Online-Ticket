@@ -101,7 +101,7 @@ func (t *Ticket) getTicket(db *sql.DB) ([]Ticket, error) {
 
 func (t *Ticket) createTicket(db *sql.DB) error {
     // Prepare the insert statement
-    stmt, err := db.Prepare("INSERT INTO Ticket(FoodId, Date, Status, Owner) VALUES(?, NOW(), 'Useable' , 'Can')")
+    stmt, err := db.Prepare("INSERT INTO Ticket(FoodId, Date, Status, Owner) VALUES(?, NOW(), 'Useable' , Owner)")
     if err != nil {
         return err
     }
