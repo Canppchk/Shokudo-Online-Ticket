@@ -15,7 +15,7 @@ type User struct {
 }
 
 func (u *User) createUser(db *sql.DB) error {
-	query := fmt.Sprintf("insert into User(name , email, password, role) values('%v', '%v', '%v', %v)", u.Name, u.Email, u.Password, 0)
+	query := fmt.Sprintf("insert into User(name , email, password, role) values('%v', '%v', '%v', %v)", u.Name, u.Email, u.Password, u.Role)
 	result, err := db.Exec(query)
 	if err != nil {
 		return err
