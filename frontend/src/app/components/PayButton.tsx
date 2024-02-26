@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Menu } from "../types";
 import { getAllMenusGo } from "../api";
 interface UserProps {
-  email: string; // email is now optional
+  name: string; // email is now optional
 }
 
-function PaymentButton({email}:UserProps) {
-    console.log('aaaa'+ email)
+function PaymentButton({name}:UserProps) {
     const [merchantPaymentId, setMerchantPaymentId] = useState("");
     const [paymentStatus, setPaymentStatus] = useState("");
     const ticketCreated = useRef(false);  // Using ref to immediately block further executions
@@ -92,7 +91,7 @@ function PaymentButton({email}:UserProps) {
         if (data.data.status === "COMPLETED" && !ticketCreated.current) {
           ticketCreated.current = true;  // Update the ref to block further executions
 
-          const ticketResponse = await fetch(`http://localhost:10000/ticket/${email}`, {
+          const ticketResponse = await fetch(`http://localhost:10000/ticket/${name}`, {
             method: "POST",
             headers: {
               'Content-Type': 'application/json',

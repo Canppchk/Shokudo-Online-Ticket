@@ -13,6 +13,19 @@ export const userValidate = async (user: User) => {
     return result;
 };
 
+export const userResister = async (user: User) => {
+    const res = await fetch('http://localhost:10000/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user), // user オブジェクトを JSON に変換して body に設定
+        cache: 'no-store'
+    });
+    const result = await res.json(); // JSON形式のレスポンスを解析
+    return result;
+};
+
 
 export const getAllMenusGo = async (): Promise<Menu[]> => {
     const res = await fetch('http://localhost:10000/food/now',{

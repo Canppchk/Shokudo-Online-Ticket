@@ -85,7 +85,7 @@ export default function uiPage() {
             </div>
 
             {
-              role == 'true' ? <FoodAdmin menus={menus}/> : <FoodUser menus={menus} email={email}/>
+              role == 'true' ? <FoodAdmin menus={menus}/> : <FoodUser menus={menus} name={name}/>
             }
 
             </body>
