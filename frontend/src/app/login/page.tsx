@@ -163,9 +163,7 @@ export default function LoginPage() {
                                     <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                                  */}
                                 <div className="flex items-center justify-between py-3">
-                                <form onSubmit={onLogin}>
-                                <button type="submit" className="w-full text-white bg-spgreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-green-600 focus:outline-none">Sign in</button>
-                                </form>
+                                <button onClick={onLogin} className="w-full text-white bg-spgreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-green-600 focus:outline-none">Sign in</button>
                                 </div>
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                     Don’t have an account yet? <a href="/signup" className="font-medium text-spgreen hover:underline dark:text-primary-500">Sign up</a>
