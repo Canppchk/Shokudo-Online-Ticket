@@ -2,52 +2,40 @@ import React from 'react'
 import { Ticket } from '../types'
 
 interface TicketProps {
-  tickets: Ticket[]
+  tickets: Ticket[];
 }
 
-const TicketShow = ({tickets}:TicketProps) => {
-  
+const TicketShow = ({ tickets }: TicketProps) => {
+  // Assuming you want to count all tickets as the stock left
+  const stockLeft = tickets.length;
+
   return (
-    
-    <div className="m-3 p-3 rounded bg-white shadow-md flex flex-wrap">
-      
-      {
-        tickets.map(ticket => (
-          <div key={ticket.id} className='w-1/3'>
-            <div className="m-2 max-w-md overflow-hidden rounded-lg bg-white shadow">
-              <img src="https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80" className="aspect-video w-full object-cover" alt="" />
-              <div className="p-4">
-                <p className="mb-1 text-sm text-primary-500">added • <time>18 Nov 2023</time></p>
-                <h3 className="text-xl font-medium text-gray-900">{ticket.id}</h3>
-                <p className="mt-1 text-gray-500">This food include egg, apple, ...</p>
-                <div className="mt-4 flex gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-yellow-600"> nodle </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-600"> big </span>
-                  <button>
-                    Button
-                  </button>
-                </div>
-              </div>
+    <div className="flex flex-col items-center">
+      <div className="m-3 w-full">
+            {tickets.map((ticket) => (
+        <div key={ticket.id} className="m-8 p-3 rounded-3xl bg-pearlwhite shadow-lg w-full relative">
+          <div className="flex items-center">
+            <img src="/Ticket-icon.png" alt="Ticket Icon" className="h-40 w-40 mr-4" /> {/* Adjust the path to your ticket icon */}
+            <div>
+              <div className="font-bold">Ticket ID: {ticket.id}</div>
+              <div>Status: {ticket.status}</div>
             </div>
           </div>
-        ))
-      }
+          <div className="absolute bottom-4 right-4">
+            <button className="bg-spgreen text-white rounded-lg px-4 py-2 hover:bg-green-600">
+              Confirm
+            </button>
+          </div>
+        </div>
+      ))}
+
+      </div>
+      <div className="m-3 p-3 rounded bg-pearlwhite shadow-md w-48 text-center">
+        <div className="font-bold">Stock Left</div>
+        <div className="text-4xl">{stockLeft}</div>
+      </div>
     </div>
+  );
+};
 
-    // better design
-    /* </div>
-        <div className="relative mx-auto max-w-md overflow-hidden rounded-lg bg-white shadow">
-        <div>
-          <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" className="w-full object-cover" alt="" />
-        </div>
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black"></div>
-        <div className="absolute inset-x-0 bottom-0 z-20 p-4">
-          <p className="mb-1 text-sm text-white text-opacity-80">Andrea Felsted • <time>18 Nov 2022</time></p>
-          <h3 className="text-xl font-medium text-white">Migrating to Sailboat UI</h3>
-          <p className="mt-1 text-white text-opacity-80">Sailboat UI is a modern UI component library for Tailwind CSS. Get started with 150+ open source components.</p>
-        </div>
-    </div> */
-  )
-}
-
-export default TicketShow
+export default TicketShow;

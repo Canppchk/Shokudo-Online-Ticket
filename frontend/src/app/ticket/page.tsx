@@ -81,12 +81,13 @@ export default function uiPage() {
             <hr className="border-t-2 border-gray-300 my-4 " />
             </div>
 
-            <div className="flex justify-center items-center w-full my-20">
-                <div className="block p-20 min-h-64 bg-pearlwhite w-full rounded-3xl shadow-lg p-6 m-4">
+            <div className="container mx-auto ">
+                <div className="block  min-h-64  w-1/2 rounded-3xl ">
                     {/* edit here */}
                     <TicketShow tickets={tickets}></TicketShow>
                     {/* ------------- */}
                 </div>
+                <div className="w-1/3"></div>
             </div>
             </body>
             </html>
