@@ -1,9 +1,9 @@
 import React from 'react'
 import { Menu, Ticket } from '../types'
-import { changeTicketStatus, updateMenuStock } from '../api'
+import { changeTicketStatus} from '../api'
 
 interface TicketProps {
-  tickets: Ticket[]
+  tickets: Ticket[] | null
 }
 
 const TicketShowUser = ({tickets}:TicketProps) => {
@@ -13,13 +13,15 @@ const TicketShowUser = ({tickets}:TicketProps) => {
 
   }
   
+  if (!tickets) return null;
+
   return (
             <div className="flex flex-col items-center">
               <div className="m-3 w-full">
                     {tickets.map((ticket) => (
                 <div key={ticket.id} className="m-8 p-3 rounded-3xl bg-pearlwhite shadow-lg w-full relative">
                   <div className="flex items-center">
-                    <img src="/Ticket-icon.png" alt="Ticket Icon" className="h-40 w-40 mr-4" /> {/* Adjust the path to your ticket icon */}
+                    <img src="/Ticket-icon.png" alt="Ticket Icon" className="h-40 w-40 mr-4" /> 
                     <div>
                       <div className="font-bold">Ticket ID: {ticket.id}</div>
                       <div>Status: {ticket.status}</div>

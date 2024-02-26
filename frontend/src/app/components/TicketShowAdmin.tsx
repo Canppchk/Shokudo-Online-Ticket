@@ -3,7 +3,7 @@ import { Menu, Ticket } from '../types'
 import { changeTicketStatus, updateMenuStock } from '../api'
 
 interface TicketProps {
-  adminTickets: Ticket[]
+  adminTickets: Ticket[] | null
 }
 
 const TicketShowAdmin = ({adminTickets}:TicketProps) => {
@@ -12,6 +12,8 @@ const TicketShowAdmin = ({adminTickets}:TicketProps) => {
 
   }
   
+  if (!adminTickets) return null;
+
   return (
       <div className="flex flex-col items-center">
       <div className="m-3 w-full">

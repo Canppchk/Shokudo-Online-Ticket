@@ -68,7 +68,7 @@ export default function uiPage() {
             
             <nav className="p-10">
             <div className="container mx-auto flex justify-between items-center">
-                <a href="#" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
+                <a href="/food" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
                 <div className="flex items-center">
                     <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
                     <button onClick={handleTicketButtonClick} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">

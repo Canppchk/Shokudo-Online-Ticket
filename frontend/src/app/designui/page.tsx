@@ -47,11 +47,11 @@ export default function uiPage() {
             
             <nav className="p-10">
             <div className="container mx-auto flex justify-between items-center">
-                <a href="#" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
+                <a href="/food" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
                 <div className="flex items-center">
                     <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
                     <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
-                        <Link href="/signup">Register</Link>
+                        <Link href="/login">Login</Link>
                     </button>
                 </div>  
             </div>
@@ -71,9 +71,9 @@ export default function uiPage() {
             <div className="flex justify-center items-center w-full my-20">
                 <div className="block max-w-sm p-20 min-h-64 bg-pearlwhite rounded-3xl shadow-lg p-6 m-4">
                     {/* edit here */}
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">PBL Project 2024</h5>
                     <p className="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                    <PayButton></PayButton>
+
                     {/* ------------- */}
                 </div>
             </div>

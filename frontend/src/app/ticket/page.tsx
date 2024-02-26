@@ -90,30 +90,21 @@ export default function uiPage() {
                 <div className="flex items-center">
                     <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
                     <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
-                        <Link href="/">Menu</Link>
+                        <Link href="/food">Menu</Link>
                     </button>
                 </div>  
             </div>
             </nav>
             <div className="container mx-auto flex justify-between items-end py-6">
                 {/* edit here */}
-                {
-                  role === 'true' 
-                    ? (
-                      <>
-                        <h1 className="font-serif text-6xl text-black">Confirm Ticket</h1>
-                        <p>Items: {adminTickets.length}</p>
-                      </>
-                    ) 
-                    : (
-                      <>
-                        <h1 className="font-serif text-6xl text-black">Ticket</h1>
-                        <p>Items: {tickets.length}</p>
-                      </>
-                    )
-                }
-
-                {/* {role === 'true' ? `Items: ${adminTickets.length}` : `Items: ${tickets.length}`} */}
+                <div className="flex items-baseline">
+                  <h1 className="font-serif text-6xl text-black">
+                    {role === 'true' ? 'Confirm Ticket' : 'Ticket'}
+                  </h1>
+                  <p className="text-3xl ml-4">
+                    {"Items: " + (role === 'true' ? adminTickets?.length ?? 0 : tickets?.length ?? 0)}
+                  </p>
+                </div>
 
                 {/* ------------- */}
                 <span className="font-sans text-3xl text-black">
@@ -135,7 +126,7 @@ export default function uiPage() {
                           
                             </div>
                 </div>
-                <div className="w-1/3">
+                {/* <div className="w-1/3">
                           {
                             menus.map(menu => (           
                                   <div key = {menu.id} className='flex items-center space-x-2'>
@@ -143,7 +134,7 @@ export default function uiPage() {
                                   </div>
                             ))
                         }
-                </div>
+                </div> */}
             </div>
             </body>
             </html>
