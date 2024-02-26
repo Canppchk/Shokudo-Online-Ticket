@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import Image from 'next/image';
 import { genSaltSync, hashSync } from "bcrypt-ts";
 import { getTicketGo, userValidate } from "../api";
-import TicketShow from "../components/TicketShow";
+import TicketShowUser from "../components/TicketShowUser";
 import { Ticket } from "../types";
 
 export default function uiPage() {
@@ -84,7 +84,7 @@ export default function uiPage() {
             <div className="container mx-auto ">
                 <div className="block  min-h-64  w-1/2 rounded-3xl ">
                     {/* edit here */}
-                    <TicketShow tickets={tickets}></TicketShow>
+                    <TicketShowUser tickets={tickets}></TicketShowUser>
                     {/* ------------- */}
                 </div>
                 <div className="w-1/3"></div>
