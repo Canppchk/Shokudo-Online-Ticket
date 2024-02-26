@@ -90,7 +90,7 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 		if err != nil {
 			return nil, err
 		}
-		if f.Stock > 0 {
+		if f.Stock >= 0 {
 			foods = append(foods, f)
 		} else {
 			return []Food{{

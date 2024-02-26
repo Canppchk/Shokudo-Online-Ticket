@@ -463,7 +463,8 @@ func createQR(wp *paypayopa.WebPayment) func(http.ResponseWriter, *http.Request)
 			CodeType:     paypayopa.CodeTypeOrderQR,
 			RequestedAt:  time.Now().Unix(),
 			RedirectType: paypayopa.RedirectTypeWebLink,
-			RedirectURL:  "http://localhost:10000/orderpayment/" + merchantPaymentID,
+			RedirectURL:  "http://localhost:3000/",
+			// RedirectURL:  "http://localhost:10000/orderpayment/" + merchantPaymentID,
 		}
 
 		qrcode, info, err := wp.CreateQRCode(r.Context(), payload)
