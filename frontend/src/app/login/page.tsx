@@ -71,6 +71,7 @@ export default function LoginPage() {
     
 
     useEffect(() => {
+        console.log(user)
         if(user.email.length > 0 && user.password.length > 0) {
             setButtonDisabled(false);
         } else{
