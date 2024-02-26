@@ -53,7 +53,7 @@ func getFoodNow(db *sql.DB) ([]Food, error) {
 	// Construct lunch and dinner time ranges using the current date
 	lunchStart := time.Date(year, month, day, 11, 0, 0, 0, loc) // 11:00 AM
 	lunchEnd := time.Date(year, month, day, 16, 0, 0, 0, loc)   // 4:00 PM
-	dinnerEnd := time.Date(year, month, day, 22, 0, 0, 0, loc)  // 10:00 PM
+	dinnerEnd := time.Date(year, month, day, 24, 0, 0, 0, loc)  // 10:00 PM
 
 	// Determine mealType based on the current time in Japan
 	var mealType string
