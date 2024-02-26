@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import Image from 'next/image';
@@ -9,8 +9,12 @@ import { genSaltSync, hashSync } from "bcrypt-ts";
 import { getTicketGo, userValidate } from "../api";
 import TicketShowUser from "../components/TicketShowUser";
 import { Ticket } from "../types";
+import TicketShowAdmin from "../components/TicketShowAdmin";
 
 export default function uiPage() {
+    const searchParams = useSearchParams()
+    const role = searchParams.get('role')
+
     const getCurrentDate = () => {
         const dateOptions: Intl.DateTimeFormatOptions = {
           year: 'numeric',
@@ -82,10 +86,10 @@ export default function uiPage() {
             </div>
 
             <div className="container mx-auto ">
-                <div className="block  min-h-64  w-1/2 rounded-3xl ">
-                    {/* edit here */}
-                    <TicketShowUser tickets={tickets}></TicketShowUser>
-                    {/* ------------- */}
+                <div>
+                      {
+                        role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
+                      }
                 </div>
                 <div className="w-1/3"></div>
             </div>
