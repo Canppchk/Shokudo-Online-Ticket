@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import { getAllMenusGo} from "../api";
 import { Menu } from "../types";
 import { useSearchParams, useRouter } from "next/navigation";
-import PayButton from "../components/PayButton";
+import PayButton from "./components/PayButton";
 
 export default function uiPage() {
   const searchParams = useSearchParams()
@@ -107,7 +107,7 @@ export default function uiPage() {
                                 </div>
                                 {
                                     role == 'true' ?
-                                    <div>
+                                    <div className="pt-5">
                                         <button onClick={handleUpdateButtonClick} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-5 rounded-lg hover:bg-green-600 focus:outline-none">
                                             <Link href={`/update`}>Update</Link>
                                         </button>

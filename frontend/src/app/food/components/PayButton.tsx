@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Menu } from "../types";
-import { getAllMenusGo } from "../api";
+import { Menu } from "../../types";
+import { getAllMenusGo } from "../../api";
 interface UserProps {
   name: string; // email is now optional
 }

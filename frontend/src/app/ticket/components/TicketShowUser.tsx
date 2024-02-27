@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Ticket } from '../types'
-import { changeTicketStatus, getTicketGo} from '../api'
+import { Ticket } from '../../types'
+import { changeTicketStatus, getTicketGo} from '../../api'
 
 interface TicketProps {
   owner: string; 

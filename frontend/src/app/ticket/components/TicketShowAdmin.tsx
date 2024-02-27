@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Ticket } from '../types'
-import { changeTicketStatus, getTicketGoAdmin} from '../api'
+import { Ticket } from '../../types'
+import { changeTicketStatus, getTicketGoAdmin} from '../../api'
 
 interface TicketProps {
   onTicketsUpdate: () => void; // Add this line

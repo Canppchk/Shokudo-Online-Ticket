@@ -3,8 +3,8 @@ import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import { getAllMenusGo, getTicketGo, getTicketGoAdmin} from "../api";
-import TicketShowUser from "../components/TicketShowUser";
-import TicketShowAdmin from "../components/TicketShowAdmin";
+import TicketShowUser from "./components/TicketShowUser";
+import TicketShowAdmin from "./components/TicketShowAdmin";
 import { Menu, Ticket } from "../types";
 
 export default function uiPage() {

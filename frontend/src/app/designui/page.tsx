@@ -69,11 +69,11 @@ export default function uiPage() {
             </div>
 
             <div className="flex justify-center items-center w-full my-20">
-                <div className="block max-w-sm p-20 min-h-64 bg-pearlwhite rounded-3xl shadow-lg p-6 m-4">
+                <div className="block w-1/4 p-20 min-h-64 bg-pearlwhite rounded-3xl shadow-lg p-6 m-4">
                     {/* edit here */}
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">PBL Project 2024</h5>
-                    <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Software Design Laboratory</h2>
-                      <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                    <h1 className="mb-8 text-4xl font-bold tracking-tight text-gray-900 ">PBL Project 2024</h1>
+                    <h2 className="mb-4 text-2xl font-semibold text-gray-900 ">Software Design Laboratory</h2>
+                      <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
                           <li>
                               Papon Choonhaklai
                           </li>
@@ -81,8 +81,8 @@ export default function uiPage() {
                               Miki Yonekura
                           </li>
                       </ul>
-                      <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Software Engineering Laboratory</h2>
-                      <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                      <h2 className="mb-4 mt-4 text-2xl font-semibold text-gray-900 ">Software Engineering Laboratory</h2>
+                      <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
                           <li>
                               Haruto Tanaka
                           </li>
