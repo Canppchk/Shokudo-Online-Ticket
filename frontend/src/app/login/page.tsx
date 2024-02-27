@@ -121,9 +121,6 @@ export default function LoginPage() {
                         <div className="p-6 space-y-4 mx-auto">
                             <div className="flex justify-center items-center space-x-20 pb-5">
                                 <Image src="/naist_logo_fix.png" alt="Login Logo" width={140} height={140} />
-                                {/* <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                    Sign in to your account
-                                </h1> */}
                             </div>
 
                             <form className="space-y-4 md:space-y-7 " action="#">
@@ -147,16 +144,6 @@ export default function LoginPage() {
                                     placeholder="PASSWORD"
                                     />
                                 </div>
-                                
-                                    {/* <div className="flex items-start">
-                                        <div className="flex items-center h-5">
-                                        </div>
-                                        <div className="ml-3 text-sm">
-                                            <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
-                                        </div>
-                                    </div>
-                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
-                                 */}
                                 <div className="flex items-center justify-between py-3">
                                 <button onClick={onLogin} className="w-full text-white bg-spgreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-green-600 focus:outline-none">Sign in</button>
                                 </div>
@@ -174,37 +161,3 @@ export default function LoginPage() {
 )
 
 }
-
-
-// (
-//     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-//         {/*"<h1>{loading ? "Processing" : "Login"}</h1>*/}
-//         {loading ? (
-//         <h1>Processing</h1>
-//         ) : (
-//         <Image src="/naist_logo_fix.png" alt="Login Logo" width={100} height={100} />
-//         )}
-//         <hr />
-//         <input 
-//         className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-//             id="email"
-//             type="text"
-//             value={user.email}
-//             onChange={(e) => setUser({...user, email: e.target.value})}
-//             placeholder="USERNAME"
-//             />
-//         <input 
-//         className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-//             id="password"
-//             type="password"
-//             value={user.password}
-//             onChange={(e) => setUser({...user, password: e.target.value})}
-//             placeholder="PASSWORD"
-//             />
-//             <button
-//             onClick={onLogin}
-//             className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>
-//             <Link href="/signup">First time? sign up here</Link>
-//         </div>
-// md:space-y-6 sm:p-8
-//     )
