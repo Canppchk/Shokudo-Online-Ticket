@@ -72,7 +72,24 @@ export default function uiPage() {
                 <div className="block max-w-sm p-20 min-h-64 bg-pearlwhite rounded-3xl shadow-lg p-6 m-4">
                     {/* edit here */}
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">PBL Project 2024</h5>
-                    <p className="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                    <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Software Design Laboratory</h2>
+                      <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                          <li>
+                              Papon Choonhaklai
+                          </li>
+                          <li>
+                              Miki Yonekura
+                          </li>
+                      </ul>
+                      <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Software Engineering Laboratory</h2>
+                      <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                          <li>
+                              Haruto Tanaka
+                          </li>
+                          <li>
+                              Indira Febriyanti
+                          </li>
+                      </ul>
 
                     {/* ------------- */}
                 </div>
