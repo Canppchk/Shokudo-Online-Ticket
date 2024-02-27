@@ -7,8 +7,8 @@ import { Menu } from "../types";
 import { addCartGo, addMenuGo, deleteMenuGo, getAllBasketGo, getAllMenusGo } from "../api";
 import Basket from "./components/Basket";
 import MenuListTest from "./components/MenuListTest";
-import Header from "../components/Header";
-import MenuList from "../components/MenuList";
+import Header from "./components/Header";
+import MenuList from "./components/MenuList";
 
 
 export default function Home() {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu } from '../types'
+import { Menu } from '../../types'
 
 interface MenuProps {
   menus: Menu[]
