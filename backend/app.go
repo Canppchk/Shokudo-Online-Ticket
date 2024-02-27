@@ -446,6 +446,7 @@ func createQR(wp *paypayopa.WebPayment) func(http.ResponseWriter, *http.Request)
 			Amount   uint   `json:"amount"`
 			Currency string `json:"currency"`
 		} `json:"amount"`
+		UserName string `json:"userName"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -491,7 +492,7 @@ func createQR(wp *paypayopa.WebPayment) func(http.ResponseWriter, *http.Request)
 			CodeType:     paypayopa.CodeTypeOrderQR,
 			RequestedAt:  time.Now().Unix(),
 			RedirectType: paypayopa.RedirectTypeWebLink,
-			RedirectURL:  "http://localhost:3000/food",
+			RedirectURL:  "http://localhost:3000/ticket?name=" + body.UserName,
 			// RedirectURL:  "http://localhost:10000/orderpayment/" + merchantPaymentID,
 		}
 
