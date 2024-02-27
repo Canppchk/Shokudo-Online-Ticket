@@ -66,7 +66,7 @@ export default function LoginPage() {
             router.push(`/food?role=${result.role}&name=${result.name}`);
             // router.push(`/food?role=${result.role}&email=${user.email}&name=${result.name}`);
         } else if (result.role == false){
-            router.push(`/food?&name=${result.name}`);
+            router.push(`/food?name=${result.name}`);
         } else{
             alert('Username and password do not match')
         }
