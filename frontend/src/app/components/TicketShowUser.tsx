@@ -1,16 +1,26 @@
-import React from 'react'
-import { Menu, Ticket } from '../types'
-import { changeTicketStatus} from '../api'
+import React, { useEffect, useState } from 'react'
+import { Ticket } from '../types'
+import { changeTicketStatus, getTicketGo} from '../api'
 
 interface TicketProps {
-  tickets: Ticket[] | null
+  owner: string; 
 }
 
-const TicketShowUser = ({tickets}:TicketProps) => {
+const TicketShowUser = ({ owner }: TicketProps) => {
+  const [tickets, setTickets] = useState<Ticket[] | null>(null);
 
-  const toPending = (id: number) => {
-    changeTicketStatus('Pending', id)
+  const fetchTickets = async () => {
+    const fetchedTickets = await getTicketGo(owner);
+    setTickets(fetchedTickets);
+  };
 
+  useEffect(() => {
+    fetchTickets();
+  }, []); // Empty dependency array to fetch tickets only on mount
+
+  const toPending = async (id: number) => {
+    await changeTicketStatus('Pending', id);
+    fetchTickets(); // Fetch tickets again to update the list
   }
 
   if (!tickets) return null;

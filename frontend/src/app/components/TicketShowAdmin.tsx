@@ -1,23 +1,30 @@
-import React from 'react'
-import { Menu, Ticket } from '../types'
-import { changeTicketStatus, updateMenuStock } from '../api'
+import React, { useEffect, useState } from 'react'
+import { Ticket } from '../types'
+import { changeTicketStatus, getTicketGoAdmin} from '../api'
 
-interface TicketProps {
-  adminTickets: Ticket[] | null
-}
+const TicketShowAdmin = () => {
+  const [tickets, setTickets] = useState<Ticket[] | null>(null);
 
-const TicketShowAdmin = ({adminTickets}:TicketProps) => {
-  const toAccepted = (id: number) => {
-    changeTicketStatus('Accepted', id)
+  const fetchTickets = async () => {
+    const fetchedTickets = await getTicketGoAdmin();
+    setTickets(fetchedTickets);
+  };
 
+  useEffect(() => {
+    fetchTickets();
+  }, []); // Empty dependency array to fetch tickets only on mount
+
+  const toAccepted = async (id: number) => {
+    await changeTicketStatus('Accepted', id);
+    fetchTickets(); // Fetch tickets again to update the list
   }
-  
-  if (!adminTickets) return null;
+
+  if (!tickets) return null;
 
   return (
       <div className="flex flex-col items-center">
       <div className="m-3 w-full">
-            {adminTickets.map((ticket) => (
+            {tickets.map((ticket) => (
         <div key={ticket.id} className="m-8 p-3 rounded-3xl bg-pearlwhite shadow-lg w-full relative">
           <div className="flex items-center">
                   <div className="flex items-start"> {/* Align items to the start (top) */}

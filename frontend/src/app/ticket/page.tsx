@@ -52,7 +52,7 @@ export default function uiPage() {
       const fetchAdminTickets = async () => {
         if (owner) { // ownerがnullでないことを確認
           console.log(owner)
-          const fetchedMenus = await getTicketGoAdmin(owner);
+          const fetchedMenus = await getTicketGoAdmin();
           setAdminTickets(fetchedMenus);
         } 
       }
@@ -127,7 +127,7 @@ export default function uiPage() {
                     <div>
                       <div>
                         {
-                          role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
+                          role == 'true' ? <TicketShowAdmin/> : <TicketShowUser owner={owner} />
                         }
                       </div>
                   </div>

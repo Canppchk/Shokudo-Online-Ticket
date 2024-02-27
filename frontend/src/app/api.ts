@@ -110,7 +110,7 @@ export const changeTicketStatus = async (status: string, num: number): Promise<T
     return menus;
 }
 
-export const getTicketGoAdmin = async (status: string): Promise<Ticket[]> => {
+export const getTicketGoAdmin = async (): Promise<Ticket[]> => {
     const res = await fetch(`http://localhost:10000/ticket/Admin`,{
         cache: 'no-store', //SSR
         method: "GET",
