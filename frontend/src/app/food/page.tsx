@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
-import { getAllMenusGo, userValidate } from "../api";
+import { getAllMenusGo} from "../api";
 import { Menu } from "../types";
 import { useSearchParams, useRouter } from "next/navigation";
 import PayButton from "../components/PayButton";

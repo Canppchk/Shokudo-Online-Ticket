@@ -1,13 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, {useEffect} from "react";
-import {useRouter} from "next/navigation";
-import axios from "axios";
-import { toast } from "react-hot-toast";
-import Image from 'next/image';
-import { genSaltSync, hashSync } from "bcrypt-ts";
-import { userValidate } from "../api";
-import PayButton from "../components/PayButton";
+import React from "react";
 
 export default function uiPage() {
     const getCurrentDate = () => {
