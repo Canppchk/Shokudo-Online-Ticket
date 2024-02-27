@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import {useRouter} from "next/navigation";
 
 export default function uiPage() {
     const getCurrentDate = () => {
@@ -29,6 +30,12 @@ export default function uiPage() {
       const meal = getCurrentMeal();
       const date = getCurrentDate();
 
+      const router = useRouter();
+      const onToLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault(); 
+        router.push(`/`); 
+        }
+
     return (
             <html lang="en">
             <head>
@@ -43,8 +50,8 @@ export default function uiPage() {
                 <a href="/food" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
                 <div className="flex items-center">
                     <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
-                    <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
-                        <Link href="/login">Login</Link>
+                    <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none">
+                        <Link href="/">Login</Link>
                     </button>
                 </div>  
             </div>

@@ -94,7 +94,7 @@ export default function LoginPage() {
             <a href="#" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
             <div className="flex items-center">
                 <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
-                <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
+                <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none">
                     <Link href="/signup">Register</Link>
                 </button>
             </div>  
@@ -144,8 +144,8 @@ export default function LoginPage() {
                                 <div className="flex items-center justify-between py-3">
                                 <button onClick={onLogin} className="w-full text-white bg-spgreen hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-green-600 focus:outline-none">Sign in</button>
                                 </div>
-                                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                    Don’t have an account yet? <a href="/signup" className="font-medium text-spgreen hover:underline dark:text-primary-500">Sign up</a>
+                                <p className="text-sm font-light text-gray-500">
+                                    Don’t have an account yet? <a href="/signup" className="font-medium text-spgreen hover:underline">Sign up</a>
                                 </p>
                             </form>
                         </div>

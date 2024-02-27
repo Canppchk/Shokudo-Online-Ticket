@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Ticket } from '../types'
 import { changeTicketStatus, getTicketGoAdmin} from '../api'
 
-const TicketShowAdmin = () => {
+interface TicketProps {
+  onTicketsUpdate: () => void; // Add this line
+}
+
+const TicketShowAdmin = ({ onTicketsUpdate }: TicketProps) => {
   const [tickets, setTickets] = useState<Ticket[] | null>(null);
 
   const fetchTickets = async () => {
@@ -17,6 +21,7 @@ const TicketShowAdmin = () => {
   const toAccepted = async (id: number) => {
     await changeTicketStatus('Accepted', id);
     fetchTickets(); // Fetch tickets again to update the list
+    onTicketsUpdate();
   }
 
   if (!tickets) return null;
@@ -31,6 +36,7 @@ const TicketShowAdmin = () => {
                     <img src="/Ticket-icon.png" alt="Ticket Icon" className="h-40 w-40 mr-4" />
                     <div className="pl-5 pt-5">
                       <div className="font-medium text-xl">Ticket ID: {ticket.id}</div>
+                      <div className="font-medium text-xl">Owner: {ticket.owner}</div>
                       <div className="font-medium text-xl text-spgreen">Status: {ticket.status}</div>
                     </div>
                   </div>

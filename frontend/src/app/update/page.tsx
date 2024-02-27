@@ -82,7 +82,7 @@ export default function Page() {
               >
                 My profile
               </a>
-              <button onClick={onMenu} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
+              <button onClick={onMenu} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none">
                         <Link href="/food" >Menu</Link>
               </button>
             </div>

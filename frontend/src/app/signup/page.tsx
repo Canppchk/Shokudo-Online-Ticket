@@ -56,6 +56,11 @@ export default function SignupPage() {
         }
     }, [user]);
 
+    const onToLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); 
+    router.push(`/`); 
+    }
+
 
     return (
         
@@ -72,7 +77,7 @@ export default function SignupPage() {
             <a href="#" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
             <div className="flex items-center">
                 <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
-                <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
+                <button onClick={onToLogin} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none">
                     <Link href="/">Login</Link>
                 </button>
             </div>  
@@ -95,7 +100,7 @@ export default function SignupPage() {
                 {/* edit here */}
                         <div className="p-6 space-y-4 mx-auto">
                             <div className="flex justify-center items-center space-x-20 pb-5">
-                                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                                     Create your account
                                 </h1>
                             </div>
