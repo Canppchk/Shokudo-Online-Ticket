@@ -1,67 +1,57 @@
-CREATE DATABASE sot;
+CREATE DATABASE IF NOT EXISTS sot;
+USE sot;
 
-CREATE TABLE Food (
+------------------------------------------
+Food TABLE
+
+CREATE TABLE IF NOT EXISTS Food (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(255),
-    Meal VARCHAR(255),
+    Name VARCHAR(255) NOT NULL,
+    Meal VARCHAR(255) NOT NULL,
     Detail TEXT,
-    Stock INT,
-    Price DECIMAL(10, 2),
-    Picture TEXT
+    Stock INT NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL,
+    Picture LONGTEXT
 );
 
-ALTER TABLE Food MODIFY Picture LONGTEXT;
+INSERT INTO Food (Name, Meal, Detail, Stock, Price, Picture) VALUES
+('Grilled Chicken', 'Dinner', 'Delicious grilled chicken with herbs', 20, 12.99, 'base64-encoded-image-string'),
+('Vegetable Pasta', 'Lunch', 'Healthy vegetable pasta with a light sauce', 15, 8.50, 'base64-encoded-image-string'),
+('Beef Burger', 'Lunch', 'Juicy beef burger with cheese and lettuce', 10, 11.00, 'base64-encoded-image-string'),
+('Seafood Salad', 'Dinner', 'Fresh seafood salad with shrimp and lemon dressing', 12, 15.00, 'base64-encoded-image-string');
 
-INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
-(1, 'Grilled Chicken', 'Dinner', 'Delicious grilled chicken with herbs', 20, 12.99, 'base64-encoded-image-string');
+------------------------------------------
+Ticket TABLE
 
-INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
-(2, 'Vegetable Pasta', 'Lunch', 'Healthy vegetable pasta with a light sauce', 15, 8.50, 'base64-encoded-image-string');
-
-INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
-(3, 'Beef Burger', 'Lunch', 'Juicy beef burger with cheese and lettuce', 10, 11.00, 'base64-encoded-image-string');
-
-INSERT INTO Food (Id, Name, Meal, Detail, Stock, Price, Picture) VALUES
-(4, 'Seafood Salad', 'Dinner', 'Fresh seafood salad with shrimp and lemon dressing', 12, 15.00, 'base64-encoded-image-string');
-
-------------------------------------
-Ticker TABLE
-
-CREATE TABLE Ticket (
+CREATE TABLE IF NOT EXISTS Ticket (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    Food_Id INT,
-    Date DATE,
-    Expire DATETIME,
-    Status VARCHAR(255),
-    FOREIGN KEY (Food_Id) REFERENCES Food(Id)
+    FoodId INT,
+    Date DATE NOT NULL,
+    Status VARCHAR(255) NOT NULL,
+    Owner VARCHAR(255), -- Assuming you want to add it directly rather than modifying later
+    FOREIGN KEY (FoodId) REFERENCES Food(Id)
 );
 
-SELECT Ticket.Id, Food.Name AS Food_name, Food.Meal, Food.Price, Food.Picture, Ticket.Date, Ticket.Expire, Ticket.Status
+-- Example JOIN query to fetch ticket details along with food information
+SELECT Ticket.Id, Food.Name AS Food_name, Food.Meal, Food.Price, Food.Picture, Ticket.Date, Ticket.Status, Ticket.Owner
 FROM Ticket
-JOIN Food ON Ticket.Food_Id = Food.Id;
-
--- Rename the 'Food_Id' column to 'FoodId'
-ALTER TABLE Ticket CHANGE COLUMN Food_Id FoodId INT;
-
--- Drop the 'Expire' column
-ALTER TABLE Ticket DROP COLUMN Expire;
-
--- Add a new 'Owner' column, assuming it's of type VARCHAR
-ALTER TABLE Ticket ADD COLUMN Owner VARCHAR(255);
+JOIN Food ON Ticket.FoodId = Food.Id;
 
 ------------------------------------------
 User TABLE
 # Create a user table.
 # Role: true represents "admin", while false represents "customer".
 
-CREATE TABLE User (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role BOOLEAN NOT NULL
+CREATE TABLE IF NOT EXISTS User (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE, -- Assuming Email should be unique
+    Password VARCHAR(255) NOT NULL,
+    Role BOOLEAN NOT NULL -- TRUE for admin, FALSE for customer
 );
 
 # The password is the result of encrypting the string P4ssword by bcrypt with the number of stretches set to 8.
-INSERT INTO User VALUES (1, 'admin user1', 'sample@naist.com', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', true);
-INSERT INTO User VALUES (2, 'customer user1', 'sample@naist.com', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', false);
+INSERT INTO User (Name, Email, Password, Role) VALUES
+('admin user1', 'admin@naist.com', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', TRUE),
+('customer user1', 'customer@naist.com', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', FALSE);
+
