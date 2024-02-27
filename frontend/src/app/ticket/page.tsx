@@ -2,15 +2,10 @@
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
-import axios from "axios";
-import { toast } from "react-hot-toast";
-import Image from 'next/image';
-import { genSaltSync, hashSync } from "bcrypt-ts";
-import { getAllMenusGo, getTicketGo, getTicketGoAdmin, updateMenuStock, userValidate } from "../api";
+import { getAllMenusGo, getTicketGo, getTicketGoAdmin} from "../api";
 import TicketShowUser from "../components/TicketShowUser";
 import { Menu, Ticket } from "../types";
 import TicketShowAdmin from "../components/TicketShowAdmin";
-import { strict } from "assert";
 
 export default function uiPage() {
     const searchParams = useSearchParams()

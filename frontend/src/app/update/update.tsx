@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import { Menu } from "../types";
 import { addMenuGo, updateMenuGo } from "../api";
-import {useRouter, useSearchParams} from "next/navigation";
 
 
 interface MenuProps {

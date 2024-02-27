@@ -2,10 +2,7 @@
 import Link from "next/link";
 import React, {useEffect} from "react";
 import { useRouter } from 'next/navigation';
-import axios from "axios";
-import { toast } from "react-hot-toast";
 import Image from 'next/image';
-import { genSaltSync, hashSync } from "bcrypt-ts";
 import { userValidate } from "./api";
 
 // source https://github.com/Mister-Hope/bcrypt-ts, https://github.com/hiteshchoudhary/nextjs-fullstack-auth/tree/main

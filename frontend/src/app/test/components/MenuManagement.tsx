@@ -1,8 +1,7 @@
 'use client'
 
 import { Menu} from '@/app/types'
-import React, { ChangeEvent, useEffect, useState } from 'react'
-import { v4 as uuidv4} from 'uuid';
+import React, { ChangeEvent, useState } from 'react'
 
 interface MenuProps{
     menus: Menu[]
