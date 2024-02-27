@@ -15,7 +15,7 @@ import { strict } from "assert";
 export default function uiPage() {
     const searchParams = useSearchParams()
     const role = searchParams.get('role')
-    const owner = searchParams.get('name')
+    const owner = searchParams.get('name') ?? ''
 
     const getCurrentDate = () => {
         const dateOptions: Intl.DateTimeFormatOptions = {
@@ -75,6 +75,19 @@ export default function uiPage() {
           fetchAdminTickets();
       },[])
 
+      const router = useRouter();
+      const onMenu = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault(); 
+        if (role == "true") {
+            router.push(`/food?role=${role}&name=${owner}`);
+            // router.push(`/food?role=${result.role}&email=${user.email}&name=${result.name}`);
+        } else {
+            router.push(`/food?&name=${owner}`);
+            // alert('Username and password do not match')
+        }
+
+    }
+
     return (
             <html lang="en">
             <head>
@@ -89,8 +102,8 @@ export default function uiPage() {
                 <a href="#" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
                 <div className="flex items-center">
                     <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
-                    <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
-                        <Link href="/food">Menu</Link>
+                    <button onClick={onMenu} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
+                        <Link href="/food" >Menu</Link>
                     </button>
                 </div>  
             </div>
@@ -115,26 +128,30 @@ export default function uiPage() {
             <hr className="border-t-2 border-gray-300 my-4 " />
             </div>
 
-            <div className="container mx-auto ">
+            <div className="container mx-auto flex ">
               <div className="block  min-h-64  w-1/2 rounded-3xl ">             
-                              <div>
-                                <div>
-                                  {
-                                    role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
-                                  }
-                                </div>
-                          
-                            </div>
-                </div>
-                {/* <div className="w-1/3">
-                          {
-                            menus.map(menu => (           
-                                  <div key = {menu.id} className='flex items-center space-x-2'>
-                                      {menu.stock}
-                                  </div>
-                            ))
+                    <div>
+                      <div>
+                        {
+                          role == 'true' ? <TicketShowAdmin adminTickets={adminTickets} /> : <TicketShowUser tickets={tickets} />
                         }
-                </div> */}
+                      </div>
+                  </div>
+                  
+                  
+                </div>
+                {/* New block to be placed on the right */}
+                <div className="block min-h-64 w-1/4 h-80 rounded-3xl shadow-lg bg-pearlwhite ml-auto mt-10 mr-36 flex justify-center items-center">
+                  {/* Content of the second block */}
+                  {
+                    menus.map(menu => (
+                      <div key={menu.id} className='text-center'>
+                        <span className="text-3xl font-semibold">Stock Left</span>
+                        <div className="text-9xl font-normal my-4">{menu.stock}</div>
+                      </div>
+                    ))
+                  }
+                </div>
             </div>
             </body>
             </html>

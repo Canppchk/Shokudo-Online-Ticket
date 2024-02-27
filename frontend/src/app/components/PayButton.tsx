@@ -47,7 +47,8 @@ function PaymentButton({name}:UserProps) {
         amount: {
           amount: menu.price,
           currency: "JPY"
-        }
+        },
+        userName: name, 
       };
 
     try {

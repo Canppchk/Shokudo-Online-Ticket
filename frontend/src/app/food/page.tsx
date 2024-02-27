@@ -11,7 +11,8 @@ export default function uiPage() {
   const searchParams = useSearchParams()
   const role = searchParams.get('role')
   const email = searchParams.get('email')
-  const name = searchParams.get('name')
+  // const name = searchParams.get('name') 
+  const name = searchParams.get('name') ?? ''
   console.log(role,email,name)
 
 

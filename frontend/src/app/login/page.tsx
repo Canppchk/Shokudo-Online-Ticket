@@ -49,7 +49,7 @@ export default function LoginPage() {
     const [loading, setLoading] = React.useState(false);
 
 
-    const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    const onLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); 
 
         // const salt = genSaltSync(10);
@@ -60,12 +60,17 @@ export default function LoginPage() {
         console.log('Show results here'+result.role+result.name)
 
 
-
+        
+        
         if (result.role == true) {
-            router.push(`/food?role=${result.role}&email=${user.email}&name=${result.name}`);
-        } else {
+            router.push(`/food?role=${result.role}&name=${result.name}`);
+            // router.push(`/food?role=${result.role}&email=${user.email}&name=${result.name}`);
+        } else if (result.role == false){
+            router.push(`/food?&name=${result.name}`);
+        } else{
             alert('Username and password do not match')
         }
+
 
     }
     
