@@ -52,6 +52,20 @@ CREATE TABLE IF NOT EXISTS User (
 
 # The password is the result of encrypting the string P4ssword by bcrypt with the number of stretches set to 8.
 INSERT INTO User (Name, Email, Password, Role) VALUES
-('admin user1', 'admin@naist.com', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', TRUE),
-('customer user1', 'customer@naist.com', '$2a$08$Y6EDuwrg5lT3VLmoteDI0OQNVyqWOHvgFt5QFvs9bhIBFwok88PX.', FALSE);
+('Admin', 'admin@naist.com', 'password', TRUE),
+('Papon', 'papon@naist.com', 'password', FALSE),
+('Yonekura', 'yonekura@naist.com', 'password', FALSE),
+('Haruto', 'haruto@naist.com', 'password', FALSE),
+('Indira', 'indira@naist.com', 'password', FALSE);
+
+------------------------------------------
+Reset all TABLE
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE User;
+TRUNCATE TABLE Ticket;
+TRUNCATE TABLE Food;
+SET FOREIGN_KEY_CHECKS = 1;
+
+
 
