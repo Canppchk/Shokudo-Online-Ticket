@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "b8aab577-dfbd-4af8-8edc-3376ff2c5074",
+		"name": "Paypay API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14398489"
+	},
+	"item": [
+		{
+			"name": "Get QR",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"orderItems\": [\n    {\n      \"name\": \"Green Tea Ice Cream\",\n      \"category\": \"Desserts\",\n      \"quantity\": 1,\n      \"productId\": 201,\n      \"unitPrice\": {\n        \"amount\": 1,\n        \"currency\": \"JPY\"\n      }\n    }\n  ],\n  \"amount\": {\n    \"amount\": 1,\n    \"currency\": \"JPY\"\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:10000/create-qr"
+			},
+			"response": []
+		},
+		{
+			"name": "Check payment status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:10000/order-status/95b5d100-f56c-438d-a52a-146ae4c8bee1"
+			},
+			"response": []
+		}
+	]
+}

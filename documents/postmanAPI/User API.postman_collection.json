@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "0ed5727c-962c-4b71-a21d-65039e4b2ec6",
+		"name": "UserAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14398489"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"can\",\n\t\"email\":  \"admintest7@mail.com\" ,\n\t\"password\" : \"test\",\n    \"role\": true\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:10000/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Authen User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"mid@\",\n\t\"password\":  \"mid\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:10000/authenticate"
+			},
+			"response": []
+		},
+		{
+			"name": "Read User by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:10000/user/4"
+			},
+			"response": []
+		}
+	]
+}
