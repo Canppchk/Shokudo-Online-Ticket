@@ -85,8 +85,7 @@ export default function uiPage() {
             router.push(`/food?&name=${owner}`);
             // alert('Username and password do not match')
         }
-
-    }
+      }
 
     return (
             <html lang="en">

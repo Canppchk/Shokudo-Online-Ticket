@@ -3,12 +3,16 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Menu } from "../types";
 import { addMenuGo, updateMenuGo } from "../api";
+import {useRouter, useSearchParams} from "next/navigation";
 
 interface MenuProps {
   fetchedMenu: Menu;
 }
 
 export default function UpdatePage({ fetchedMenu }: MenuProps) {
+  const searchParams = useSearchParams()
+  const role = searchParams.get('role')
+  const owner = searchParams.get('name') ?? ''
   const [updatedMenu, setUpdatedMenu] = useState<Menu>(fetchedMenu); // Renamed setMenu to setUpdatedMenu for clarity
 
   
@@ -63,6 +67,18 @@ export default function UpdatePage({ fetchedMenu }: MenuProps) {
   const meal = getCurrentMeal();
   const date = getCurrentDate();
 
+  const router = useRouter();
+  const onMenu = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); 
+    if (role == "true") {
+        router.push(`/food?role=${role}&name=${owner}`);
+        // router.push(`/food?role=${result.role}&email=${user.email}&name=${result.name}`);
+    } else {
+        router.push(`/food?&name=${owner}`);
+        // alert('Username and password do not match')
+    }
+  }
+
   return (
     <html lang="en">
       <head>
@@ -83,8 +99,8 @@ export default function UpdatePage({ fetchedMenu }: MenuProps) {
               >
                 My profile
               </a>
-              <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
-                <Link href="/ticket">Ticket</Link>
+              <button onClick={onMenu} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded hover:bg-green-600 focus:outline-none">
+                        <Link href="/food" >Menu</Link>
               </button>
             </div>
           </div>
