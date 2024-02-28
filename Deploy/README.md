@@ -1,5 +1,8 @@
 # How to deploy in server
-
+Coppy Deploy folder to server
+```
+scp Shokudo-Online-Ticket-main.zip dev@163.221.29.107:~/
+```
 ## Backend
 ```
 cd backend
@@ -21,7 +24,7 @@ sudo ufw reload
 sudo ufw enable
 sudo ufw status
 ```
-#### Setup Reverse Proxy
+### Setup Reverse Proxy
 change working directory to Nginx sites-available directory
 ```
 cd /etc/nginx/sites-available/
@@ -54,7 +57,7 @@ Reload Nginx configurations
 ```
 sudo nginx -s reload
 ```
-#### Creating a Systemd Unit File
+### Creating a Systemd Unit File
 ```
 sudo vi /lib/systemd/system/goweb.service
 ```
@@ -77,7 +80,7 @@ Start service and check status
 sudo service goweb start
 sudo service goweb status
 ```
-#### Reference
+### Reference
 ```
 https://www.youtube.com/watch?v=50LfgfveD_A&t=959s
 ```
