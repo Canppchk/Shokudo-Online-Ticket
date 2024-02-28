@@ -53,13 +53,7 @@ export default function Page() {
   const router = useRouter();
       const onMenu = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); 
-        if (role == "true") {
-            router.push(`/food?role=${role}&name=${owner}`);
-            // router.push(`/food?role=${result.role}&email=${user.email}&name=${result.name}`);
-        } else {
-            router.push(`/food?&name=${owner}`);
-            // alert('Username and password do not match')
-        }
+            router.push(`/food?role=true&name=${owner}`);
       }
 
   return (
