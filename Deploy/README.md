@@ -6,14 +6,14 @@ slides: [link](https://naistjp-my.sharepoint.com/personal/kohei_ichikawa_ms_ext_
 ```
 cd backend
 ```
-Run a server.
+Build go module
 ```
 go build .
 ```
-or
+Run backend server using nginx
 ```
-go build
-./backend
+[go build
+./backend](https://www.youtube.com/watch?v=50LfgfveD_A&t=959s)
 ```
 The MySQL server is automatically connected to the lab's server, and the API server is set up on the university's local network.
 
