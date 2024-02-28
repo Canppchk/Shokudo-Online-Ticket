@@ -8,7 +8,7 @@ cd backend
 ```
 Run a server.
 ```
-go run .
+go build .
 ```
 or
 ```
@@ -23,9 +23,9 @@ cd frontend
 ```
 start app
 ```
-npm run dev
+docker build -t frontend .
 ```
 mock api
 ```
-npm run json server 
+docker run -d -p 3000:3000 frontend
 ```
