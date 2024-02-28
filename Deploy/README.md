@@ -12,8 +12,8 @@ go build .
 ```
 Run backend server using nginx
 ```
-[go build
-./backend](https://www.youtube.com/watch?v=50LfgfveD_A&t=959s)
+https://www.youtube.com/watch?v=50LfgfveD_A&t=959s
+https://www.digitalocean.com/community/tutorials/how-to-deploy-a-go-web-application-using-nginx-on-ubuntu-18-04
 ```
 The MySQL server is automatically connected to the lab's server, and the API server is set up on the university's local network.
 
