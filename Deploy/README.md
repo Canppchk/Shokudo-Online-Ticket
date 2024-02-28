@@ -28,9 +28,11 @@ change working directory to Nginx sites-available directory
 ```
 cd /etc/nginx/sites-available/
 ```
+Create a new file with the name of the domain on which you wish to expose your application.
 ```
 sudo vi backend
 ```
+Coppy this to backend
 ```
 server {
     listen 80;
@@ -41,19 +43,24 @@ server {
     }
 }
 ```
+Create a symlink of this Nginx configuration in the sites-enabled 
 ```
 sudo ln -s /etc/nginx/sites-available/backend /etc/nginx/sites-enabled/backend
 ```
+Remove default sites-enabled
 ```
 cd ../sites-enabled/
 sudo rm default
 ```
+Reload Nginx configurations
 ```
 sudo nginx -s reload
 ```
+#### Creating a Systemd Unit File
 ```
 sudo vi /lib/systemd/system/goweb.service
 ```
+Coppy this to goweb.service
 ```
 [Unit]
 Description=goweb
@@ -67,6 +74,7 @@ ExecStart=/home/dev/Shokudo-Online-Ticket-main/backend/backend
 [Install]
 WantedBy=multi-user.target
 ```
+Start service and check status
 ```
 sudo service goweb start
 sudo service goweb status
@@ -83,11 +91,11 @@ https://www.digitalocean.com/community/tutorials/how-to-deploy-a-go-web-applicat
 ```
 cd frontend
 ```
-start app
+Build frontend image
 ```
 docker build -t frontend .
 ```
-mock api
+Run docker container with expose port 3000
 ```
 docker run -d -p 3000:3000 frontend
 ```
