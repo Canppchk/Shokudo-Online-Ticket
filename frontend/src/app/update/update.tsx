@@ -21,18 +21,70 @@ export default function UpdatePage({ fetchedMenu }: MenuProps) {
     // Re-fetch menu or update state as needed
   };
 
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result as string;
+  //       // Ensure you're updating the state based on the previous state to avoid issues with stale state
+  //       setUpdatedMenu(prevMenu => ({ ...prevMenu, picture: base64String }));
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      const img = document.createElement('img');
       const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        // Ensure you're updating the state based on the previous state to avoid issues with stale state
-        setUpdatedMenu(prevMenu => ({ ...prevMenu, picture: base64String }));
+      reader.onload = (e) => {
+        img.src = e.target?.result as string;
+        img.onload = () => {
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 600;
+          let width = img.width;
+          let height = img.height;
+  
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+  
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+  
+          if (ctx) { // Check if ctx is not null
+            // Fill the canvas with a white background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+            // Draw the image onto the canvas
+            ctx.drawImage(img, 0, 0, width, height);
+  
+            // Convert the canvas to a data URL and update the state
+            const dataUrl = canvas.toDataURL('image/jpeg');
+            setUpdatedMenu((prevMenu) => ({ ...prevMenu, picture: dataUrl }));
+          } else {
+            // Handle the error case where the canvas context couldn't be obtained
+            console.error('Failed to get canvas context');
+          }
+        };
       };
       reader.readAsDataURL(file);
     }
   };
+  
 
   // Check for updatedMenu instead of menu
   if (!updatedMenu) return null; // Or some loading indicator
