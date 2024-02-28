@@ -9,9 +9,69 @@ cd backend
 Build go module
 ```
 go build .
+./backend
 ```
-Run backend server using nginx
-###Reference
+Install Nginx
+```
+sudo apt-get install nginx
+```
+Allow Firewall
+```
+sudo ufw app list
+sudo ufw allow "Nginx Full"
+sudo ufw reload
+sudo ufw enable
+sudo ufw status
+```
+#### Setup Reverse Proxy
+change working directory to Nginx sites-available directory
+```
+cd /etc/nginx/sites-available/
+```
+```
+sudo vi backend
+```
+```
+server {
+    listen 80;
+    listen [::]:80;
+
+    location / {
+        proxy_pass http://localhost:8080;
+    }
+}
+```
+```
+sudo ln -s /etc/nginx/sites-available/backend /etc/nginx/sites-enabled/backend
+```
+```
+cd ../sites-enabled/
+sudo rm default
+```
+```
+sudo nginx -s reload
+```
+```
+sudo vi /lib/systemd/system/goweb.service
+```
+```
+[Unit]
+Description=goweb
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+ExecStart=/home/dev/Shokudo-Online-Ticket-main/backend/backend
+
+[Install]
+WantedBy=multi-user.target
+```
+```
+sudo service goweb start
+sudo service goweb status
+```
+#### Reference
 ```
 https://www.youtube.com/watch?v=50LfgfveD_A&t=959s
 ```
