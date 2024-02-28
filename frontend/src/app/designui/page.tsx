@@ -50,7 +50,7 @@ export default function uiPage() {
                 <a href="/food" className="font-serif text-spgreen text-4xl">Shokudo Online Ticket</a>
                 <div className="flex items-center">
                     <a href="/designui" className="text-black text-sm py-2 px-10 rounded-lg mr-2">My profile</a>
-                    <button className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none">
+                    <button onClick={onToLogin} className="font-sans bg-spgreen text-white text-sm md:text-base py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none">
                         <Link href="/">Login</Link>
                     </button>
                 </div>  
