@@ -67,10 +67,6 @@ INSERT INTO User (Name, Email, Password, Role) VALUES
 ('Haruto', 'haruto@naist.com', 'password', FALSE),
 ('Indira', 'indira@naist.com', 'password', FALSE);
 ```
-Coppy Deploy folder to server
-```
-scp Shokudo-Online-Ticket-main.zip dev@163.221.29.107:~/
-```
 Reset all TABLE
 ```
 SET FOREIGN_KEY_CHECKS = 0;
@@ -78,6 +74,10 @@ TRUNCATE TABLE User;
 TRUNCATE TABLE Ticket;
 TRUNCATE TABLE Food;
 SET FOREIGN_KEY_CHECKS = 1;
+```
+Coppy Deploy folder to server
+```
+scp Shokudo-Online-Ticket-main.zip dev@163.221.29.107:~/
 ```
 ## Backend
 ```
