@@ -568,9 +568,9 @@ func (app *App) handleRoutes() {
 	wp := paypayopa.NewWebPayment(
 		paypayopa.NewCredentials(
 			paypayopa.EnvSandbox,
-			"a_5tW30Yqslc_4Jhe",
-			"y/Rp41c5AvLy6XjwqukUY0N30b8XDUcxYB9QUDieYSY=",
-			"735282888246697984",
+			"Key Id",
+			"Key Secret",
+			"Merchant ID",
 		),
 	)
 
